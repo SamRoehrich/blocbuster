@@ -1,0 +1,82 @@
+enum UserLevel {
+    FREE
+    PAID
+    COACH
+    ATHLETE
+    ADMIN
+}
+
+type Query {
+    getUser: User!
+}
+
+type Mutation {
+    createUser(id: Int!, userName: String!): User!
+}
+
+type User {
+    id: ID! 
+    userName: String!
+    fullName: String!
+    email: String! 
+    password: String!
+    city: String!
+    state: String!
+    homeGym: String!
+    logBook: [LogItem!]
+    userClimbingStats: [UserClimbingStats!]
+    posts: [Post]
+    userLevel: UserLevel!
+    phase: String
+    schedule: [Workout!]
+}
+
+type LogItem {
+    user: User!
+    id: ID!
+    createdAt: String!
+    title: String!
+    description: String!
+    comment: String
+}
+
+type UserClimbingStats {
+    id: ID! 
+    user: User!
+    createdAt: String!
+    apeIndex: Int!
+    height: Int!
+    weight: Int!
+    maxVGrade: Int!
+    maxSportGrade: String!
+    maxEdgeLoad: Int!
+    maxEdgeTestSize: Int!
+    SWREdge: Float
+    maxPullLoad: Int!
+    SWRBar: Float
+    oneArmHangLoadLeft: Int!
+    oneArmHangLoadRight: Int!
+    oneArmHangSWR: Float!
+    goalVGrade: Int!
+    goalSportGrade: String!
+}
+
+type Post {
+    id: ID! 
+    user: User!
+    title: String!
+    content: String!
+    comments: [Comment!]
+}
+
+type Comment {
+    post: Post!
+    user: User!
+    content: String!
+}
+
+type Workout {
+    author: String!
+    title: String!
+    description: String!
+}

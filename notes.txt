@@ -1,0 +1,104 @@
+freeclimbingtraining.com
+
+purpose:
+online tool to offer free climbing trainig programs for anyone. 
+
+functionality:
+custom 5 week programs for either base phase or peak phase
+accept and process current metrics as well as future goals
+establish timeframes to reach goals 
+allow for custom workouts
+message board/forum for teams 
+
+an app that provides tailored training plans for 10$/month as well as free options. Can integrate with team programs to allow a hub
+for coaches to program team calendars and ciriculum. 
+
+core: 
+workout library
+user auth
+timer (native)
+native
+stats mutations
+footage archive
+
+types:
+query:(
+    getUser
+    getAthletes
+    getStats
+    getSchedule
+    getWorkout
+)
+mutations:(
+    addUser
+    addPost
+    addWorkout
+    addTestingResults
+    addWorkoutResponse
+    addPost
+    
+    updatUser(user, fieldsToUpdate)
+    updateUserStats(user, fieldsToUpdate) 
+)
+
+type User: {
+    id
+    username
+    fullName
+    email
+    password
+    city
+    state
+    homegym
+    [logbook]
+    [stats]
+    [posts]
+    [likes]
+    [customSettings]
+    [userLevel] //admin, team coach, athlete, premium, free
+    phase
+    schedule //at root because every athlete will have a schedule 
+}
+
+//add extended user types for coach athlete premium and free
+//example fields
+//team, workouts, athletes(coach),
+
+type Post {
+    id
+    User
+
+}
+
+file structure
+-root
+--server
+  --prisma
+    -ddatamodel
+    -prisma.yml
+  --src
+   -index.js
+   -schema.gql
+   -generated/prisma-client
+   -resolvers
+    -Users
+    -mutations
+    -querys
+    -stats
+    -posts
+   utils.js
+  --docker-compose
+  package.json
+--client
+    create react app
+--native
+    expo
+
+dependencies
+react
+react-native
+graphql
+apollo
+prisma
+docker
+postgres
