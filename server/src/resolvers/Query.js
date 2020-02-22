@@ -1,7 +1,11 @@
-function getUser(args, context) {
-    return context.prisma.user()
+function getUsers(args, context) {
+    return context.prisma.Users()
+}
+
+async function getUser(parent, args, context) {
+    return 
 }
 
 module.exports = {
-    getUser,
+    getUsers,
 }

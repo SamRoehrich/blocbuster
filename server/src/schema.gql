@@ -7,17 +7,38 @@ enum UserLevel {
 }
 
 type Query {
-    getUser: User!
+    getUsers: [User]!
 }
 
 type Mutation {
-    createUser(id: Int!, userName: String!): User!
+    signUp(
+        id: Int!, 
+        userName: String!,
+        fullName: String!,
+        name: String!,
+        email: String!,
+        password: String!,
+        city: String!,
+        state: String!,
+        homeGym: String!,
+        userLevel: UserLevel!,
+    ): AuthPayload
+
+    login(email: String, password: String!, userName: String): AuthPayload
+
+    post(userName: String!, title: String!, content: String!): Post
+}
+
+type AuthPayload {
+    token: String!
+    user: User!
 }
 
 type User {
     id: ID! 
     userName: String!
     fullName: String!
+    name: String!
     email: String! 
     password: String!
     city: String!
@@ -62,7 +83,7 @@ type UserClimbingStats {
 }
 
 type Post {
-    id: ID! 
+    id: ID
     user: User!
     title: String!
     content: String!

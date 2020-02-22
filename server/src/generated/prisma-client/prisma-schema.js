@@ -847,6 +847,7 @@ type User {
   id: ID!
   userName: String!
   fullName: String!
+  name: String!
   email: String!
   password: String!
   city: String!
@@ -1447,6 +1448,7 @@ input UserCreateInput {
   id: ID
   userName: String!
   fullName: String!
+  name: String!
   email: String!
   password: String!
   city: String!
@@ -1484,6 +1486,7 @@ input UserCreateWithoutLogBookInput {
   id: ID
   userName: String!
   fullName: String!
+  name: String!
   email: String!
   password: String!
   city: String!
@@ -1500,6 +1503,7 @@ input UserCreateWithoutPostsInput {
   id: ID
   userName: String!
   fullName: String!
+  name: String!
   email: String!
   password: String!
   city: String!
@@ -1516,6 +1520,7 @@ input UserCreateWithoutUserClimbingStatsInput {
   id: ID
   userName: String!
   fullName: String!
+  name: String!
   email: String!
   password: String!
   city: String!
@@ -1548,6 +1553,8 @@ enum UserOrderByInput {
   userName_DESC
   fullName_ASC
   fullName_DESC
+  name_ASC
+  name_DESC
   email_ASC
   email_DESC
   password_ASC
@@ -1568,6 +1575,7 @@ type UserPreviousValues {
   id: ID!
   userName: String!
   fullName: String!
+  name: String!
   email: String!
   password: String!
   city: String!
@@ -1598,6 +1606,7 @@ input UserSubscriptionWhereInput {
 input UserUpdateDataInput {
   userName: String
   fullName: String
+  name: String
   email: String
   password: String
   city: String
@@ -1614,6 +1623,7 @@ input UserUpdateDataInput {
 input UserUpdateInput {
   userName: String
   fullName: String
+  name: String
   email: String
   password: String
   city: String
@@ -1630,6 +1640,7 @@ input UserUpdateInput {
 input UserUpdateManyMutationInput {
   userName: String
   fullName: String
+  name: String
   email: String
   password: String
   city: String
@@ -1670,6 +1681,7 @@ input UserUpdateOneRequiredWithoutUserClimbingStatsInput {
 input UserUpdateWithoutLogBookDataInput {
   userName: String
   fullName: String
+  name: String
   email: String
   password: String
   city: String
@@ -1685,6 +1697,7 @@ input UserUpdateWithoutLogBookDataInput {
 input UserUpdateWithoutPostsDataInput {
   userName: String
   fullName: String
+  name: String
   email: String
   password: String
   city: String
@@ -1700,6 +1713,7 @@ input UserUpdateWithoutPostsDataInput {
 input UserUpdateWithoutUserClimbingStatsDataInput {
   userName: String
   fullName: String
+  name: String
   email: String
   password: String
   city: String
@@ -1775,6 +1789,20 @@ input UserWhereInput {
   fullName_not_starts_with: String
   fullName_ends_with: String
   fullName_not_ends_with: String
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
   email: String
   email_not: String
   email_in: [String!]

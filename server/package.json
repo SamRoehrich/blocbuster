@@ -5,7 +5,9 @@
   "license": "MIT",
   "dependencies": {
     "apollo-server": "^2.10.1",
+    "bcryptjs": "^2.4.3",
     "graphql": "^14.6.0",
+    "jsonwebtoken": "^8.5.1",
     "prisma-client-lib": "^1.34.10"
   }
 }

@@ -15,10 +15,14 @@ const resolvers = {
 const server = new ApolloServer({
     typeDefs,
     resolvers,
-    context: {
-        prisma,
-    }
+    context: request => {
+        return {
+          ...request,
+          prisma,
+        }
+    },
 })
+
 
 server.listen().then(({ url }) => {
     console.log(`Server running at ${url}`)

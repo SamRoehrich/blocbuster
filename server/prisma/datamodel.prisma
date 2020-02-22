@@ -10,6 +10,7 @@ type User {
     id: ID! @id
     userName: String!
     fullName: String!
+    name: String!
     email: String! @unique
     password: String!
     city: String!
