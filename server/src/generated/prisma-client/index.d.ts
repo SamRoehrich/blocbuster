@@ -16,11 +16,18 @@ export type AtLeastOne<T, U = { [K in keyof T]: Pick<T, K> }> = Partial<T> &
 export type Maybe<T> = T | undefined | null;
 
 export interface Exists {
+  athlete: (where?: AthleteWhereInput) => Promise<boolean>;
+  athleteStats: (where?: AthleteStatsWhereInput) => Promise<boolean>;
+  coach: (where?: CoachWhereInput) => Promise<boolean>;
   comment: (where?: CommentWhereInput) => Promise<boolean>;
+  headCoach: (where?: HeadCoachWhereInput) => Promise<boolean>;
   logItem: (where?: LogItemWhereInput) => Promise<boolean>;
+  parent: (where?: ParentWhereInput) => Promise<boolean>;
   post: (where?: PostWhereInput) => Promise<boolean>;
-  user: (where?: UserWhereInput) => Promise<boolean>;
-  userClimbingStats: (where?: UserClimbingStatsWhereInput) => Promise<boolean>;
+  result: (where?: ResultWhereInput) => Promise<boolean>;
+  schedule: (where?: ScheduleWhereInput) => Promise<boolean>;
+  subTeam: (where?: SubTeamWhereInput) => Promise<boolean>;
+  team: (where?: TeamWhereInput) => Promise<boolean>;
   workout: (where?: WorkoutWhereInput) => Promise<boolean>;
 }
 
@@ -43,6 +50,65 @@ export interface Prisma {
    * Queries
    */
 
+  athlete: (where: AthleteWhereUniqueInput) => AthleteNullablePromise;
+  athletes: (args?: {
+    where?: AthleteWhereInput;
+    orderBy?: AthleteOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => FragmentableArray<Athlete>;
+  athletesConnection: (args?: {
+    where?: AthleteWhereInput;
+    orderBy?: AthleteOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => AthleteConnectionPromise;
+  athleteStats: (
+    where: AthleteStatsWhereUniqueInput
+  ) => AthleteStatsNullablePromise;
+  athleteStatses: (args?: {
+    where?: AthleteStatsWhereInput;
+    orderBy?: AthleteStatsOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => FragmentableArray<AthleteStats>;
+  athleteStatsesConnection: (args?: {
+    where?: AthleteStatsWhereInput;
+    orderBy?: AthleteStatsOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => AthleteStatsConnectionPromise;
+  coach: (where: CoachWhereUniqueInput) => CoachNullablePromise;
+  coaches: (args?: {
+    where?: CoachWhereInput;
+    orderBy?: CoachOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => FragmentableArray<Coach>;
+  coachesConnection: (args?: {
+    where?: CoachWhereInput;
+    orderBy?: CoachOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => CoachConnectionPromise;
   comment: (where: CommentWhereUniqueInput) => CommentNullablePromise;
   comments: (args?: {
     where?: CommentWhereInput;
@@ -62,6 +128,25 @@ export interface Prisma {
     first?: Int;
     last?: Int;
   }) => CommentConnectionPromise;
+  headCoach: (where: HeadCoachWhereUniqueInput) => HeadCoachNullablePromise;
+  headCoaches: (args?: {
+    where?: HeadCoachWhereInput;
+    orderBy?: HeadCoachOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => FragmentableArray<HeadCoach>;
+  headCoachesConnection: (args?: {
+    where?: HeadCoachWhereInput;
+    orderBy?: HeadCoachOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => HeadCoachConnectionPromise;
   logItem: (where: LogItemWhereUniqueInput) => LogItemNullablePromise;
   logItems: (args?: {
     where?: LogItemWhereInput;
@@ -81,6 +166,25 @@ export interface Prisma {
     first?: Int;
     last?: Int;
   }) => LogItemConnectionPromise;
+  parent: (where: ParentWhereUniqueInput) => ParentNullablePromise;
+  parents: (args?: {
+    where?: ParentWhereInput;
+    orderBy?: ParentOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => FragmentableArray<Parent>;
+  parentsConnection: (args?: {
+    where?: ParentWhereInput;
+    orderBy?: ParentOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => ParentConnectionPromise;
   post: (where: PostWhereUniqueInput) => PostNullablePromise;
   posts: (args?: {
     where?: PostWhereInput;
@@ -100,46 +204,82 @@ export interface Prisma {
     first?: Int;
     last?: Int;
   }) => PostConnectionPromise;
-  user: (where: UserWhereUniqueInput) => UserNullablePromise;
-  users: (args?: {
-    where?: UserWhereInput;
-    orderBy?: UserOrderByInput;
+  result: (where: ResultWhereUniqueInput) => ResultNullablePromise;
+  results: (args?: {
+    where?: ResultWhereInput;
+    orderBy?: ResultOrderByInput;
     skip?: Int;
     after?: String;
     before?: String;
     first?: Int;
     last?: Int;
-  }) => FragmentableArray<User>;
-  usersConnection: (args?: {
-    where?: UserWhereInput;
-    orderBy?: UserOrderByInput;
+  }) => FragmentableArray<Result>;
+  resultsConnection: (args?: {
+    where?: ResultWhereInput;
+    orderBy?: ResultOrderByInput;
     skip?: Int;
     after?: String;
     before?: String;
     first?: Int;
     last?: Int;
-  }) => UserConnectionPromise;
-  userClimbingStats: (
-    where: UserClimbingStatsWhereUniqueInput
-  ) => UserClimbingStatsNullablePromise;
-  userClimbingStatses: (args?: {
-    where?: UserClimbingStatsWhereInput;
-    orderBy?: UserClimbingStatsOrderByInput;
+  }) => ResultConnectionPromise;
+  schedule: (where: ScheduleWhereUniqueInput) => ScheduleNullablePromise;
+  schedules: (args?: {
+    where?: ScheduleWhereInput;
+    orderBy?: ScheduleOrderByInput;
     skip?: Int;
     after?: String;
     before?: String;
     first?: Int;
     last?: Int;
-  }) => FragmentableArray<UserClimbingStats>;
-  userClimbingStatsesConnection: (args?: {
-    where?: UserClimbingStatsWhereInput;
-    orderBy?: UserClimbingStatsOrderByInput;
+  }) => FragmentableArray<Schedule>;
+  schedulesConnection: (args?: {
+    where?: ScheduleWhereInput;
+    orderBy?: ScheduleOrderByInput;
     skip?: Int;
     after?: String;
     before?: String;
     first?: Int;
     last?: Int;
-  }) => UserClimbingStatsConnectionPromise;
+  }) => ScheduleConnectionPromise;
+  subTeam: (where: SubTeamWhereUniqueInput) => SubTeamNullablePromise;
+  subTeams: (args?: {
+    where?: SubTeamWhereInput;
+    orderBy?: SubTeamOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => FragmentableArray<SubTeam>;
+  subTeamsConnection: (args?: {
+    where?: SubTeamWhereInput;
+    orderBy?: SubTeamOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => SubTeamConnectionPromise;
+  team: (where: TeamWhereUniqueInput) => TeamNullablePromise;
+  teams: (args?: {
+    where?: TeamWhereInput;
+    orderBy?: TeamOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => FragmentableArray<Team>;
+  teamsConnection: (args?: {
+    where?: TeamWhereInput;
+    orderBy?: TeamOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => TeamConnectionPromise;
   workout: (where: WorkoutWhereUniqueInput) => WorkoutNullablePromise;
   workouts: (args?: {
     where?: WorkoutWhereInput;
@@ -165,6 +305,58 @@ export interface Prisma {
    * Mutations
    */
 
+  createAthlete: (data: AthleteCreateInput) => AthletePromise;
+  updateAthlete: (args: {
+    data: AthleteUpdateInput;
+    where: AthleteWhereUniqueInput;
+  }) => AthletePromise;
+  updateManyAthletes: (args: {
+    data: AthleteUpdateManyMutationInput;
+    where?: AthleteWhereInput;
+  }) => BatchPayloadPromise;
+  upsertAthlete: (args: {
+    where: AthleteWhereUniqueInput;
+    create: AthleteCreateInput;
+    update: AthleteUpdateInput;
+  }) => AthletePromise;
+  deleteAthlete: (where: AthleteWhereUniqueInput) => AthletePromise;
+  deleteManyAthletes: (where?: AthleteWhereInput) => BatchPayloadPromise;
+  createAthleteStats: (data: AthleteStatsCreateInput) => AthleteStatsPromise;
+  updateAthleteStats: (args: {
+    data: AthleteStatsUpdateInput;
+    where: AthleteStatsWhereUniqueInput;
+  }) => AthleteStatsPromise;
+  updateManyAthleteStatses: (args: {
+    data: AthleteStatsUpdateManyMutationInput;
+    where?: AthleteStatsWhereInput;
+  }) => BatchPayloadPromise;
+  upsertAthleteStats: (args: {
+    where: AthleteStatsWhereUniqueInput;
+    create: AthleteStatsCreateInput;
+    update: AthleteStatsUpdateInput;
+  }) => AthleteStatsPromise;
+  deleteAthleteStats: (
+    where: AthleteStatsWhereUniqueInput
+  ) => AthleteStatsPromise;
+  deleteManyAthleteStatses: (
+    where?: AthleteStatsWhereInput
+  ) => BatchPayloadPromise;
+  createCoach: (data: CoachCreateInput) => CoachPromise;
+  updateCoach: (args: {
+    data: CoachUpdateInput;
+    where: CoachWhereUniqueInput;
+  }) => CoachPromise;
+  updateManyCoaches: (args: {
+    data: CoachUpdateManyMutationInput;
+    where?: CoachWhereInput;
+  }) => BatchPayloadPromise;
+  upsertCoach: (args: {
+    where: CoachWhereUniqueInput;
+    create: CoachCreateInput;
+    update: CoachUpdateInput;
+  }) => CoachPromise;
+  deleteCoach: (where: CoachWhereUniqueInput) => CoachPromise;
+  deleteManyCoaches: (where?: CoachWhereInput) => BatchPayloadPromise;
   createComment: (data: CommentCreateInput) => CommentPromise;
   updateComment: (args: {
     data: CommentUpdateInput;
@@ -181,6 +373,22 @@ export interface Prisma {
   }) => CommentPromise;
   deleteComment: (where: CommentWhereUniqueInput) => CommentPromise;
   deleteManyComments: (where?: CommentWhereInput) => BatchPayloadPromise;
+  createHeadCoach: (data: HeadCoachCreateInput) => HeadCoachPromise;
+  updateHeadCoach: (args: {
+    data: HeadCoachUpdateInput;
+    where: HeadCoachWhereUniqueInput;
+  }) => HeadCoachPromise;
+  updateManyHeadCoaches: (args: {
+    data: HeadCoachUpdateManyMutationInput;
+    where?: HeadCoachWhereInput;
+  }) => BatchPayloadPromise;
+  upsertHeadCoach: (args: {
+    where: HeadCoachWhereUniqueInput;
+    create: HeadCoachCreateInput;
+    update: HeadCoachUpdateInput;
+  }) => HeadCoachPromise;
+  deleteHeadCoach: (where: HeadCoachWhereUniqueInput) => HeadCoachPromise;
+  deleteManyHeadCoaches: (where?: HeadCoachWhereInput) => BatchPayloadPromise;
   createLogItem: (data: LogItemCreateInput) => LogItemPromise;
   updateLogItem: (args: {
     data: LogItemUpdateInput;
@@ -197,6 +405,22 @@ export interface Prisma {
   }) => LogItemPromise;
   deleteLogItem: (where: LogItemWhereUniqueInput) => LogItemPromise;
   deleteManyLogItems: (where?: LogItemWhereInput) => BatchPayloadPromise;
+  createParent: (data: ParentCreateInput) => ParentPromise;
+  updateParent: (args: {
+    data: ParentUpdateInput;
+    where: ParentWhereUniqueInput;
+  }) => ParentPromise;
+  updateManyParents: (args: {
+    data: ParentUpdateManyMutationInput;
+    where?: ParentWhereInput;
+  }) => BatchPayloadPromise;
+  upsertParent: (args: {
+    where: ParentWhereUniqueInput;
+    create: ParentCreateInput;
+    update: ParentUpdateInput;
+  }) => ParentPromise;
+  deleteParent: (where: ParentWhereUniqueInput) => ParentPromise;
+  deleteManyParents: (where?: ParentWhereInput) => BatchPayloadPromise;
   createPost: (data: PostCreateInput) => PostPromise;
   updatePost: (args: {
     data: PostUpdateInput;
@@ -213,44 +437,62 @@ export interface Prisma {
   }) => PostPromise;
   deletePost: (where: PostWhereUniqueInput) => PostPromise;
   deleteManyPosts: (where?: PostWhereInput) => BatchPayloadPromise;
-  createUser: (data: UserCreateInput) => UserPromise;
-  updateUser: (args: {
-    data: UserUpdateInput;
-    where: UserWhereUniqueInput;
-  }) => UserPromise;
-  updateManyUsers: (args: {
-    data: UserUpdateManyMutationInput;
-    where?: UserWhereInput;
+  createResult: (data: ResultCreateInput) => ResultPromise;
+  updateResult: (args: {
+    data: ResultUpdateInput;
+    where: ResultWhereUniqueInput;
+  }) => ResultPromise;
+  updateManyResults: (args: {
+    data: ResultUpdateManyMutationInput;
+    where?: ResultWhereInput;
   }) => BatchPayloadPromise;
-  upsertUser: (args: {
-    where: UserWhereUniqueInput;
-    create: UserCreateInput;
-    update: UserUpdateInput;
-  }) => UserPromise;
-  deleteUser: (where: UserWhereUniqueInput) => UserPromise;
-  deleteManyUsers: (where?: UserWhereInput) => BatchPayloadPromise;
-  createUserClimbingStats: (
-    data: UserClimbingStatsCreateInput
-  ) => UserClimbingStatsPromise;
-  updateUserClimbingStats: (args: {
-    data: UserClimbingStatsUpdateInput;
-    where: UserClimbingStatsWhereUniqueInput;
-  }) => UserClimbingStatsPromise;
-  updateManyUserClimbingStatses: (args: {
-    data: UserClimbingStatsUpdateManyMutationInput;
-    where?: UserClimbingStatsWhereInput;
+  upsertResult: (args: {
+    where: ResultWhereUniqueInput;
+    create: ResultCreateInput;
+    update: ResultUpdateInput;
+  }) => ResultPromise;
+  deleteResult: (where: ResultWhereUniqueInput) => ResultPromise;
+  deleteManyResults: (where?: ResultWhereInput) => BatchPayloadPromise;
+  createSchedule: (data: ScheduleCreateInput) => SchedulePromise;
+  updateSchedule: (args: {
+    data: ScheduleUpdateInput;
+    where: ScheduleWhereUniqueInput;
+  }) => SchedulePromise;
+  upsertSchedule: (args: {
+    where: ScheduleWhereUniqueInput;
+    create: ScheduleCreateInput;
+    update: ScheduleUpdateInput;
+  }) => SchedulePromise;
+  deleteSchedule: (where: ScheduleWhereUniqueInput) => SchedulePromise;
+  deleteManySchedules: (where?: ScheduleWhereInput) => BatchPayloadPromise;
+  createSubTeam: (data: SubTeamCreateInput) => SubTeamPromise;
+  updateSubTeam: (args: {
+    data: SubTeamUpdateInput;
+    where: SubTeamWhereUniqueInput;
+  }) => SubTeamPromise;
+  upsertSubTeam: (args: {
+    where: SubTeamWhereUniqueInput;
+    create: SubTeamCreateInput;
+    update: SubTeamUpdateInput;
+  }) => SubTeamPromise;
+  deleteSubTeam: (where: SubTeamWhereUniqueInput) => SubTeamPromise;
+  deleteManySubTeams: (where?: SubTeamWhereInput) => BatchPayloadPromise;
+  createTeam: (data: TeamCreateInput) => TeamPromise;
+  updateTeam: (args: {
+    data: TeamUpdateInput;
+    where: TeamWhereUniqueInput;
+  }) => TeamPromise;
+  updateManyTeams: (args: {
+    data: TeamUpdateManyMutationInput;
+    where?: TeamWhereInput;
   }) => BatchPayloadPromise;
-  upsertUserClimbingStats: (args: {
-    where: UserClimbingStatsWhereUniqueInput;
-    create: UserClimbingStatsCreateInput;
-    update: UserClimbingStatsUpdateInput;
-  }) => UserClimbingStatsPromise;
-  deleteUserClimbingStats: (
-    where: UserClimbingStatsWhereUniqueInput
-  ) => UserClimbingStatsPromise;
-  deleteManyUserClimbingStatses: (
-    where?: UserClimbingStatsWhereInput
-  ) => BatchPayloadPromise;
+  upsertTeam: (args: {
+    where: TeamWhereUniqueInput;
+    create: TeamCreateInput;
+    update: TeamUpdateInput;
+  }) => TeamPromise;
+  deleteTeam: (where: TeamWhereUniqueInput) => TeamPromise;
+  deleteManyTeams: (where?: TeamWhereInput) => BatchPayloadPromise;
   createWorkout: (data: WorkoutCreateInput) => WorkoutPromise;
   updateWorkout: (args: {
     data: WorkoutUpdateInput;
@@ -276,21 +518,42 @@ export interface Prisma {
 }
 
 export interface Subscription {
+  athlete: (
+    where?: AthleteSubscriptionWhereInput
+  ) => AthleteSubscriptionPayloadSubscription;
+  athleteStats: (
+    where?: AthleteStatsSubscriptionWhereInput
+  ) => AthleteStatsSubscriptionPayloadSubscription;
+  coach: (
+    where?: CoachSubscriptionWhereInput
+  ) => CoachSubscriptionPayloadSubscription;
   comment: (
     where?: CommentSubscriptionWhereInput
   ) => CommentSubscriptionPayloadSubscription;
+  headCoach: (
+    where?: HeadCoachSubscriptionWhereInput
+  ) => HeadCoachSubscriptionPayloadSubscription;
   logItem: (
     where?: LogItemSubscriptionWhereInput
   ) => LogItemSubscriptionPayloadSubscription;
+  parent: (
+    where?: ParentSubscriptionWhereInput
+  ) => ParentSubscriptionPayloadSubscription;
   post: (
     where?: PostSubscriptionWhereInput
   ) => PostSubscriptionPayloadSubscription;
-  user: (
-    where?: UserSubscriptionWhereInput
-  ) => UserSubscriptionPayloadSubscription;
-  userClimbingStats: (
-    where?: UserClimbingStatsSubscriptionWhereInput
-  ) => UserClimbingStatsSubscriptionPayloadSubscription;
+  result: (
+    where?: ResultSubscriptionWhereInput
+  ) => ResultSubscriptionPayloadSubscription;
+  schedule: (
+    where?: ScheduleSubscriptionWhereInput
+  ) => ScheduleSubscriptionPayloadSubscription;
+  subTeam: (
+    where?: SubTeamSubscriptionWhereInput
+  ) => SubTeamSubscriptionPayloadSubscription;
+  team: (
+    where?: TeamSubscriptionWhereInput
+  ) => TeamSubscriptionPayloadSubscription;
   workout: (
     where?: WorkoutSubscriptionWhereInput
   ) => WorkoutSubscriptionPayloadSubscription;
@@ -304,21 +567,13 @@ export interface ClientConstructor<T> {
  * Types
  */
 
-export type UserLevel = "FREE" | "ADMIN" | "COACH" | "PAID" | "ATHLETE";
-
-export type LogItemOrderByInput =
+export type CommentOrderByInput =
   | "id_ASC"
   | "id_DESC"
-  | "createdAt_ASC"
-  | "createdAt_DESC"
-  | "title_ASC"
-  | "title_DESC"
-  | "description_ASC"
-  | "description_DESC"
-  | "comment_ASC"
-  | "comment_DESC";
+  | "content_ASC"
+  | "content_DESC";
 
-export type UserClimbingStatsOrderByInput =
+export type AthleteStatsOrderByInput =
   | "id_ASC"
   | "id_DESC"
   | "createdAt_ASC"
@@ -362,6 +617,24 @@ export type PostOrderByInput =
   | "content_ASC"
   | "content_DESC";
 
+export type TeamOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "teamName_ASC"
+  | "teamName_DESC"
+  | "phase_ASC"
+  | "phase_DESC"
+  | "city_ASC"
+  | "city_DESC"
+  | "state_ASC"
+  | "state_DESC"
+  | "homeGym_ASC"
+  | "homeGym_DESC"
+  | "teamKey_ASC"
+  | "teamKey_DESC"
+  | "coachKey_ASC"
+  | "coachKey_DESC";
+
 export type WorkoutOrderByInput =
   | "id_ASC"
   | "id_DESC"
@@ -372,76 +645,643 @@ export type WorkoutOrderByInput =
   | "description_ASC"
   | "description_DESC";
 
-export type CommentOrderByInput =
+export type ResultOrderByInput =
   | "id_ASC"
   | "id_DESC"
-  | "content_ASC"
-  | "content_DESC";
+  | "rpe_ASC"
+  | "rpe_DESC"
+  | "compResult_ASC"
+  | "compResult_DESC"
+  | "sessionResult_ASC"
+  | "sessionResult_DESC";
 
-export type UserOrderByInput =
+export type ParentOrderByInput =
   | "id_ASC"
   | "id_DESC"
-  | "userName_ASC"
-  | "userName_DESC"
-  | "fullName_ASC"
-  | "fullName_DESC"
-  | "name_ASC"
-  | "name_DESC"
   | "email_ASC"
   | "email_DESC"
   | "password_ASC"
   | "password_DESC"
-  | "city_ASC"
-  | "city_DESC"
-  | "state_ASC"
-  | "state_DESC"
-  | "homeGym_ASC"
-  | "homeGym_DESC"
-  | "userLevel_ASC"
-  | "userLevel_DESC"
+  | "phoneNumber_ASC"
+  | "phoneNumber_DESC";
+
+export type AthleteOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "fullName_ASC"
+  | "fullName_DESC"
+  | "email_ASC"
+  | "email_DESC"
+  | "password_ASC"
+  | "password_DESC"
+  | "teamKey_ASC"
+  | "teamKey_DESC"
   | "phase_ASC"
   | "phase_DESC";
 
+export type CoachOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "fullName_ASC"
+  | "fullName_DESC"
+  | "email_ASC"
+  | "email_DESC"
+  | "password_ASC"
+  | "password_DESC"
+  | "teamKey_ASC"
+  | "teamKey_DESC"
+  | "coachKey_ASC"
+  | "coachKey_DESC";
+
+export type SubTeamOrderByInput = "id_ASC" | "id_DESC";
+
+export type HeadCoachOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "fullName_ASC"
+  | "fullName_DESC"
+  | "email_ASC"
+  | "email_DESC"
+  | "password_ASC"
+  | "password_DESC"
+  | "teamKey_ASC"
+  | "teamKey_DESC"
+  | "coachKey_ASC"
+  | "coachKey_DESC";
+
+export type ScheduleOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "createdAt_ASC"
+  | "createdAt_DESC";
+
 export type MutationType = "CREATED" | "UPDATED" | "DELETED";
 
-export interface LogItemUpdateManyDataInput {
-  title?: Maybe<String>;
-  description?: Maybe<String>;
-  comment?: Maybe<String>;
+export type LogItemOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "createdAt_ASC"
+  | "createdAt_DESC"
+  | "title_ASC"
+  | "title_DESC"
+  | "description_ASC"
+  | "description_DESC"
+  | "comment_ASC"
+  | "comment_DESC";
+
+export interface TeamUpdateWithoutHeadCoachDataInput {
+  teamName?: Maybe<String>;
+  athletes?: Maybe<AthleteUpdateManyWithoutTeamInput>;
+  coahces?: Maybe<CoachUpdateManyWithoutTeamInput>;
+  subTeams?: Maybe<SubTeamUpdateManyInput>;
+  library?: Maybe<WorkoutUpdateManyInput>;
+  posts?: Maybe<PostUpdateManyInput>;
+  schedule?: Maybe<ScheduleUpdateOneWithoutTeamInput>;
+  phase?: Maybe<String>;
+  city?: Maybe<String>;
+  state?: Maybe<String>;
+  homeGym?: Maybe<String>;
+  teamKey?: Maybe<String>;
+  coachKey?: Maybe<String>;
 }
 
-export type CommentWhereUniqueInput = AtLeastOne<{
+export type AthleteWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
+  email?: Maybe<String>;
 }>;
 
-export interface UserCreateOneInput {
-  create?: Maybe<UserCreateInput>;
-  connect?: Maybe<UserWhereUniqueInput>;
-}
-
-export interface CommentUpdateManyMutationInput {
-  content?: Maybe<String>;
-}
-
-export interface UserCreateInput {
+export interface WorkoutScalarWhereInput {
   id?: Maybe<ID_Input>;
-  userName: String;
-  fullName: String;
-  name: String;
-  email: String;
-  password: String;
-  city: String;
-  state: String;
-  homeGym: String;
-  logBook?: Maybe<LogItemCreateManyWithoutUserInput>;
-  userClimbingStats?: Maybe<UserClimbingStatsCreateManyWithoutUserInput>;
-  posts?: Maybe<PostCreateManyWithoutUserInput>;
-  userLevel: UserLevel;
-  phase?: Maybe<String>;
-  schedule?: Maybe<WorkoutCreateManyInput>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  author?: Maybe<String>;
+  author_not?: Maybe<String>;
+  author_in?: Maybe<String[] | String>;
+  author_not_in?: Maybe<String[] | String>;
+  author_lt?: Maybe<String>;
+  author_lte?: Maybe<String>;
+  author_gt?: Maybe<String>;
+  author_gte?: Maybe<String>;
+  author_contains?: Maybe<String>;
+  author_not_contains?: Maybe<String>;
+  author_starts_with?: Maybe<String>;
+  author_not_starts_with?: Maybe<String>;
+  author_ends_with?: Maybe<String>;
+  author_not_ends_with?: Maybe<String>;
+  title?: Maybe<String>;
+  title_not?: Maybe<String>;
+  title_in?: Maybe<String[] | String>;
+  title_not_in?: Maybe<String[] | String>;
+  title_lt?: Maybe<String>;
+  title_lte?: Maybe<String>;
+  title_gt?: Maybe<String>;
+  title_gte?: Maybe<String>;
+  title_contains?: Maybe<String>;
+  title_not_contains?: Maybe<String>;
+  title_starts_with?: Maybe<String>;
+  title_not_starts_with?: Maybe<String>;
+  title_ends_with?: Maybe<String>;
+  title_not_ends_with?: Maybe<String>;
+  description?: Maybe<String>;
+  description_not?: Maybe<String>;
+  description_in?: Maybe<String[] | String>;
+  description_not_in?: Maybe<String[] | String>;
+  description_lt?: Maybe<String>;
+  description_lte?: Maybe<String>;
+  description_gt?: Maybe<String>;
+  description_gte?: Maybe<String>;
+  description_contains?: Maybe<String>;
+  description_not_contains?: Maybe<String>;
+  description_starts_with?: Maybe<String>;
+  description_not_starts_with?: Maybe<String>;
+  description_ends_with?: Maybe<String>;
+  description_not_ends_with?: Maybe<String>;
+  AND?: Maybe<WorkoutScalarWhereInput[] | WorkoutScalarWhereInput>;
+  OR?: Maybe<WorkoutScalarWhereInput[] | WorkoutScalarWhereInput>;
+  NOT?: Maybe<WorkoutScalarWhereInput[] | WorkoutScalarWhereInput>;
 }
 
-export interface UserClimbingStatsScalarWhereInput {
+export interface LogItemWhereInput {
+  user?: Maybe<AthleteWhereInput>;
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  createdAt?: Maybe<DateTimeInput>;
+  createdAt_not?: Maybe<DateTimeInput>;
+  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_lt?: Maybe<DateTimeInput>;
+  createdAt_lte?: Maybe<DateTimeInput>;
+  createdAt_gt?: Maybe<DateTimeInput>;
+  createdAt_gte?: Maybe<DateTimeInput>;
+  title?: Maybe<String>;
+  title_not?: Maybe<String>;
+  title_in?: Maybe<String[] | String>;
+  title_not_in?: Maybe<String[] | String>;
+  title_lt?: Maybe<String>;
+  title_lte?: Maybe<String>;
+  title_gt?: Maybe<String>;
+  title_gte?: Maybe<String>;
+  title_contains?: Maybe<String>;
+  title_not_contains?: Maybe<String>;
+  title_starts_with?: Maybe<String>;
+  title_not_starts_with?: Maybe<String>;
+  title_ends_with?: Maybe<String>;
+  title_not_ends_with?: Maybe<String>;
+  description?: Maybe<String>;
+  description_not?: Maybe<String>;
+  description_in?: Maybe<String[] | String>;
+  description_not_in?: Maybe<String[] | String>;
+  description_lt?: Maybe<String>;
+  description_lte?: Maybe<String>;
+  description_gt?: Maybe<String>;
+  description_gte?: Maybe<String>;
+  description_contains?: Maybe<String>;
+  description_not_contains?: Maybe<String>;
+  description_starts_with?: Maybe<String>;
+  description_not_starts_with?: Maybe<String>;
+  description_ends_with?: Maybe<String>;
+  description_not_ends_with?: Maybe<String>;
+  results?: Maybe<ResultWhereInput>;
+  comment?: Maybe<String>;
+  comment_not?: Maybe<String>;
+  comment_in?: Maybe<String[] | String>;
+  comment_not_in?: Maybe<String[] | String>;
+  comment_lt?: Maybe<String>;
+  comment_lte?: Maybe<String>;
+  comment_gt?: Maybe<String>;
+  comment_gte?: Maybe<String>;
+  comment_contains?: Maybe<String>;
+  comment_not_contains?: Maybe<String>;
+  comment_starts_with?: Maybe<String>;
+  comment_not_starts_with?: Maybe<String>;
+  comment_ends_with?: Maybe<String>;
+  comment_not_ends_with?: Maybe<String>;
+  AND?: Maybe<LogItemWhereInput[] | LogItemWhereInput>;
+  OR?: Maybe<LogItemWhereInput[] | LogItemWhereInput>;
+  NOT?: Maybe<LogItemWhereInput[] | LogItemWhereInput>;
+}
+
+export interface CommentCreateManyWithoutPostInput {
+  create?: Maybe<
+    CommentCreateWithoutPostInput[] | CommentCreateWithoutPostInput
+  >;
+  connect?: Maybe<CommentWhereUniqueInput[] | CommentWhereUniqueInput>;
+}
+
+export interface AthleteStatsUpdateManyMutationInput {
+  apeIndex?: Maybe<Int>;
+  height?: Maybe<Int>;
+  weight?: Maybe<Int>;
+  maxVGrade?: Maybe<Int>;
+  maxSportGrade?: Maybe<String>;
+  maxEdgeLoad?: Maybe<Int>;
+  maxEdgeTestSize?: Maybe<Int>;
+  SWREdge?: Maybe<Float>;
+  maxPullLoad?: Maybe<Int>;
+  SWRBar?: Maybe<Float>;
+  oneArmHangLoadLeft?: Maybe<Int>;
+  oneArmHangLoadRight?: Maybe<Int>;
+  oneArmHangSWR?: Maybe<Float>;
+  goalVGrade?: Maybe<Int>;
+  goalSportGrade?: Maybe<String>;
+}
+
+export interface CommentCreateWithoutPostInput {
+  id?: Maybe<ID_Input>;
+  coach?: Maybe<CoachCreateOneInput>;
+  athlete?: Maybe<AthleteCreateOneInput>;
+  content: String;
+}
+
+export interface WorkoutUpdateManyWithWhereNestedInput {
+  where: WorkoutScalarWhereInput;
+  data: WorkoutUpdateManyDataInput;
+}
+
+export interface ScheduleCreateOneWithoutTeamInput {
+  create?: Maybe<ScheduleCreateWithoutTeamInput>;
+  connect?: Maybe<ScheduleWhereUniqueInput>;
+}
+
+export interface TeamSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<TeamWhereInput>;
+  AND?: Maybe<TeamSubscriptionWhereInput[] | TeamSubscriptionWhereInput>;
+  OR?: Maybe<TeamSubscriptionWhereInput[] | TeamSubscriptionWhereInput>;
+  NOT?: Maybe<TeamSubscriptionWhereInput[] | TeamSubscriptionWhereInput>;
+}
+
+export interface ScheduleCreateWithoutTeamInput {
+  id?: Maybe<ID_Input>;
+  createdBy?: Maybe<CoachCreateOneInput>;
+  athletes?: Maybe<AthleteCreateManyInput>;
+}
+
+export interface SubTeamSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<SubTeamWhereInput>;
+  AND?: Maybe<SubTeamSubscriptionWhereInput[] | SubTeamSubscriptionWhereInput>;
+  OR?: Maybe<SubTeamSubscriptionWhereInput[] | SubTeamSubscriptionWhereInput>;
+  NOT?: Maybe<SubTeamSubscriptionWhereInput[] | SubTeamSubscriptionWhereInput>;
+}
+
+export interface AthleteUpdateInput {
+  fullName?: Maybe<String>;
+  email?: Maybe<String>;
+  password?: Maybe<String>;
+  stats?: Maybe<AthleteStatsUpdateManyWithoutUserInput>;
+  parents?: Maybe<ParentUpdateManyWithoutAthleteInput>;
+  team?: Maybe<TeamUpdateOneWithoutAthletesInput>;
+  teamKey?: Maybe<String>;
+  library?: Maybe<WorkoutUpdateManyInput>;
+  logBook?: Maybe<LogItemUpdateManyWithoutUserInput>;
+  phase?: Maybe<String>;
+}
+
+export interface ScheduleSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<ScheduleWhereInput>;
+  AND?: Maybe<
+    ScheduleSubscriptionWhereInput[] | ScheduleSubscriptionWhereInput
+  >;
+  OR?: Maybe<ScheduleSubscriptionWhereInput[] | ScheduleSubscriptionWhereInput>;
+  NOT?: Maybe<
+    ScheduleSubscriptionWhereInput[] | ScheduleSubscriptionWhereInput
+  >;
+}
+
+export interface AthleteStatsUpdateManyWithoutUserInput {
+  create?: Maybe<
+    AthleteStatsCreateWithoutUserInput[] | AthleteStatsCreateWithoutUserInput
+  >;
+  delete?: Maybe<AthleteStatsWhereUniqueInput[] | AthleteStatsWhereUniqueInput>;
+  connect?: Maybe<
+    AthleteStatsWhereUniqueInput[] | AthleteStatsWhereUniqueInput
+  >;
+  set?: Maybe<AthleteStatsWhereUniqueInput[] | AthleteStatsWhereUniqueInput>;
+  disconnect?: Maybe<
+    AthleteStatsWhereUniqueInput[] | AthleteStatsWhereUniqueInput
+  >;
+  update?: Maybe<
+    | AthleteStatsUpdateWithWhereUniqueWithoutUserInput[]
+    | AthleteStatsUpdateWithWhereUniqueWithoutUserInput
+  >;
+  upsert?: Maybe<
+    | AthleteStatsUpsertWithWhereUniqueWithoutUserInput[]
+    | AthleteStatsUpsertWithWhereUniqueWithoutUserInput
+  >;
+  deleteMany?: Maybe<
+    AthleteStatsScalarWhereInput[] | AthleteStatsScalarWhereInput
+  >;
+  updateMany?: Maybe<
+    | AthleteStatsUpdateManyWithWhereNestedInput[]
+    | AthleteStatsUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface PostWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  coach?: Maybe<CoachWhereInput>;
+  title?: Maybe<String>;
+  title_not?: Maybe<String>;
+  title_in?: Maybe<String[] | String>;
+  title_not_in?: Maybe<String[] | String>;
+  title_lt?: Maybe<String>;
+  title_lte?: Maybe<String>;
+  title_gt?: Maybe<String>;
+  title_gte?: Maybe<String>;
+  title_contains?: Maybe<String>;
+  title_not_contains?: Maybe<String>;
+  title_starts_with?: Maybe<String>;
+  title_not_starts_with?: Maybe<String>;
+  title_ends_with?: Maybe<String>;
+  title_not_ends_with?: Maybe<String>;
+  content?: Maybe<String>;
+  content_not?: Maybe<String>;
+  content_in?: Maybe<String[] | String>;
+  content_not_in?: Maybe<String[] | String>;
+  content_lt?: Maybe<String>;
+  content_lte?: Maybe<String>;
+  content_gt?: Maybe<String>;
+  content_gte?: Maybe<String>;
+  content_contains?: Maybe<String>;
+  content_not_contains?: Maybe<String>;
+  content_starts_with?: Maybe<String>;
+  content_not_starts_with?: Maybe<String>;
+  content_ends_with?: Maybe<String>;
+  content_not_ends_with?: Maybe<String>;
+  comments_every?: Maybe<CommentWhereInput>;
+  comments_some?: Maybe<CommentWhereInput>;
+  comments_none?: Maybe<CommentWhereInput>;
+  AND?: Maybe<PostWhereInput[] | PostWhereInput>;
+  OR?: Maybe<PostWhereInput[] | PostWhereInput>;
+  NOT?: Maybe<PostWhereInput[] | PostWhereInput>;
+}
+
+export interface AthleteStatsUpdateWithWhereUniqueWithoutUserInput {
+  where: AthleteStatsWhereUniqueInput;
+  data: AthleteStatsUpdateWithoutUserDataInput;
+}
+
+export interface WorkoutWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  author?: Maybe<String>;
+  author_not?: Maybe<String>;
+  author_in?: Maybe<String[] | String>;
+  author_not_in?: Maybe<String[] | String>;
+  author_lt?: Maybe<String>;
+  author_lte?: Maybe<String>;
+  author_gt?: Maybe<String>;
+  author_gte?: Maybe<String>;
+  author_contains?: Maybe<String>;
+  author_not_contains?: Maybe<String>;
+  author_starts_with?: Maybe<String>;
+  author_not_starts_with?: Maybe<String>;
+  author_ends_with?: Maybe<String>;
+  author_not_ends_with?: Maybe<String>;
+  title?: Maybe<String>;
+  title_not?: Maybe<String>;
+  title_in?: Maybe<String[] | String>;
+  title_not_in?: Maybe<String[] | String>;
+  title_lt?: Maybe<String>;
+  title_lte?: Maybe<String>;
+  title_gt?: Maybe<String>;
+  title_gte?: Maybe<String>;
+  title_contains?: Maybe<String>;
+  title_not_contains?: Maybe<String>;
+  title_starts_with?: Maybe<String>;
+  title_not_starts_with?: Maybe<String>;
+  title_ends_with?: Maybe<String>;
+  title_not_ends_with?: Maybe<String>;
+  description?: Maybe<String>;
+  description_not?: Maybe<String>;
+  description_in?: Maybe<String[] | String>;
+  description_not_in?: Maybe<String[] | String>;
+  description_lt?: Maybe<String>;
+  description_lte?: Maybe<String>;
+  description_gt?: Maybe<String>;
+  description_gte?: Maybe<String>;
+  description_contains?: Maybe<String>;
+  description_not_contains?: Maybe<String>;
+  description_starts_with?: Maybe<String>;
+  description_not_starts_with?: Maybe<String>;
+  description_ends_with?: Maybe<String>;
+  description_not_ends_with?: Maybe<String>;
+  AND?: Maybe<WorkoutWhereInput[] | WorkoutWhereInput>;
+  OR?: Maybe<WorkoutWhereInput[] | WorkoutWhereInput>;
+  NOT?: Maybe<WorkoutWhereInput[] | WorkoutWhereInput>;
+}
+
+export interface AthleteStatsUpdateWithoutUserDataInput {
+  apeIndex?: Maybe<Int>;
+  height?: Maybe<Int>;
+  weight?: Maybe<Int>;
+  maxVGrade?: Maybe<Int>;
+  maxSportGrade?: Maybe<String>;
+  maxEdgeLoad?: Maybe<Int>;
+  maxEdgeTestSize?: Maybe<Int>;
+  SWREdge?: Maybe<Float>;
+  maxPullLoad?: Maybe<Int>;
+  SWRBar?: Maybe<Float>;
+  oneArmHangLoadLeft?: Maybe<Int>;
+  oneArmHangLoadRight?: Maybe<Int>;
+  oneArmHangSWR?: Maybe<Float>;
+  goalVGrade?: Maybe<Int>;
+  goalSportGrade?: Maybe<String>;
+}
+
+export interface SubTeamWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  headCoach?: Maybe<HeadCoachWhereInput>;
+  ahtletes_every?: Maybe<AthleteWhereInput>;
+  ahtletes_some?: Maybe<AthleteWhereInput>;
+  ahtletes_none?: Maybe<AthleteWhereInput>;
+  coahces_every?: Maybe<CoachWhereInput>;
+  coahces_some?: Maybe<CoachWhereInput>;
+  coahces_none?: Maybe<CoachWhereInput>;
+  library_every?: Maybe<WorkoutWhereInput>;
+  library_some?: Maybe<WorkoutWhereInput>;
+  library_none?: Maybe<WorkoutWhereInput>;
+  posts_every?: Maybe<PostWhereInput>;
+  posts_some?: Maybe<PostWhereInput>;
+  posts_none?: Maybe<PostWhereInput>;
+  AND?: Maybe<SubTeamWhereInput[] | SubTeamWhereInput>;
+  OR?: Maybe<SubTeamWhereInput[] | SubTeamWhereInput>;
+  NOT?: Maybe<SubTeamWhereInput[] | SubTeamWhereInput>;
+}
+
+export interface AthleteStatsUpsertWithWhereUniqueWithoutUserInput {
+  where: AthleteStatsWhereUniqueInput;
+  update: AthleteStatsUpdateWithoutUserDataInput;
+  create: AthleteStatsCreateWithoutUserInput;
+}
+
+export interface CoachWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  fullName?: Maybe<String>;
+  fullName_not?: Maybe<String>;
+  fullName_in?: Maybe<String[] | String>;
+  fullName_not_in?: Maybe<String[] | String>;
+  fullName_lt?: Maybe<String>;
+  fullName_lte?: Maybe<String>;
+  fullName_gt?: Maybe<String>;
+  fullName_gte?: Maybe<String>;
+  fullName_contains?: Maybe<String>;
+  fullName_not_contains?: Maybe<String>;
+  fullName_starts_with?: Maybe<String>;
+  fullName_not_starts_with?: Maybe<String>;
+  fullName_ends_with?: Maybe<String>;
+  fullName_not_ends_with?: Maybe<String>;
+  team?: Maybe<TeamWhereInput>;
+  teams_every?: Maybe<SubTeamWhereInput>;
+  teams_some?: Maybe<SubTeamWhereInput>;
+  teams_none?: Maybe<SubTeamWhereInput>;
+  email?: Maybe<String>;
+  email_not?: Maybe<String>;
+  email_in?: Maybe<String[] | String>;
+  email_not_in?: Maybe<String[] | String>;
+  email_lt?: Maybe<String>;
+  email_lte?: Maybe<String>;
+  email_gt?: Maybe<String>;
+  email_gte?: Maybe<String>;
+  email_contains?: Maybe<String>;
+  email_not_contains?: Maybe<String>;
+  email_starts_with?: Maybe<String>;
+  email_not_starts_with?: Maybe<String>;
+  email_ends_with?: Maybe<String>;
+  email_not_ends_with?: Maybe<String>;
+  password?: Maybe<String>;
+  password_not?: Maybe<String>;
+  password_in?: Maybe<String[] | String>;
+  password_not_in?: Maybe<String[] | String>;
+  password_lt?: Maybe<String>;
+  password_lte?: Maybe<String>;
+  password_gt?: Maybe<String>;
+  password_gte?: Maybe<String>;
+  password_contains?: Maybe<String>;
+  password_not_contains?: Maybe<String>;
+  password_starts_with?: Maybe<String>;
+  password_not_starts_with?: Maybe<String>;
+  password_ends_with?: Maybe<String>;
+  password_not_ends_with?: Maybe<String>;
+  teamKey?: Maybe<String>;
+  teamKey_not?: Maybe<String>;
+  teamKey_in?: Maybe<String[] | String>;
+  teamKey_not_in?: Maybe<String[] | String>;
+  teamKey_lt?: Maybe<String>;
+  teamKey_lte?: Maybe<String>;
+  teamKey_gt?: Maybe<String>;
+  teamKey_gte?: Maybe<String>;
+  teamKey_contains?: Maybe<String>;
+  teamKey_not_contains?: Maybe<String>;
+  teamKey_starts_with?: Maybe<String>;
+  teamKey_not_starts_with?: Maybe<String>;
+  teamKey_ends_with?: Maybe<String>;
+  teamKey_not_ends_with?: Maybe<String>;
+  coachKey?: Maybe<String>;
+  coachKey_not?: Maybe<String>;
+  coachKey_in?: Maybe<String[] | String>;
+  coachKey_not_in?: Maybe<String[] | String>;
+  coachKey_lt?: Maybe<String>;
+  coachKey_lte?: Maybe<String>;
+  coachKey_gt?: Maybe<String>;
+  coachKey_gte?: Maybe<String>;
+  coachKey_contains?: Maybe<String>;
+  coachKey_not_contains?: Maybe<String>;
+  coachKey_starts_with?: Maybe<String>;
+  coachKey_not_starts_with?: Maybe<String>;
+  coachKey_ends_with?: Maybe<String>;
+  coachKey_not_ends_with?: Maybe<String>;
+  AND?: Maybe<CoachWhereInput[] | CoachWhereInput>;
+  OR?: Maybe<CoachWhereInput[] | CoachWhereInput>;
+  NOT?: Maybe<CoachWhereInput[] | CoachWhereInput>;
+}
+
+export interface AthleteStatsScalarWhereInput {
   id?: Maybe<ID_Input>;
   id_not?: Maybe<ID_Input>;
   id_in?: Maybe<ID_Input[] | ID_Input>;
@@ -596,23 +1436,12 @@ export interface UserClimbingStatsScalarWhereInput {
   goalSportGrade_not_starts_with?: Maybe<String>;
   goalSportGrade_ends_with?: Maybe<String>;
   goalSportGrade_not_ends_with?: Maybe<String>;
-  AND?: Maybe<
-    UserClimbingStatsScalarWhereInput[] | UserClimbingStatsScalarWhereInput
-  >;
-  OR?: Maybe<
-    UserClimbingStatsScalarWhereInput[] | UserClimbingStatsScalarWhereInput
-  >;
-  NOT?: Maybe<
-    UserClimbingStatsScalarWhereInput[] | UserClimbingStatsScalarWhereInput
-  >;
+  AND?: Maybe<AthleteStatsScalarWhereInput[] | AthleteStatsScalarWhereInput>;
+  OR?: Maybe<AthleteStatsScalarWhereInput[] | AthleteStatsScalarWhereInput>;
+  NOT?: Maybe<AthleteStatsScalarWhereInput[] | AthleteStatsScalarWhereInput>;
 }
 
-export interface PostCreateManyWithoutUserInput {
-  create?: Maybe<PostCreateWithoutUserInput[] | PostCreateWithoutUserInput>;
-  connect?: Maybe<PostWhereUniqueInput[] | PostWhereUniqueInput>;
-}
-
-export interface CommentWhereInput {
+export interface HeadCoachWhereInput {
   id?: Maybe<ID_Input>;
   id_not?: Maybe<ID_Input>;
   id_in?: Maybe<ID_Input[] | ID_Input>;
@@ -627,155 +1456,889 @@ export interface CommentWhereInput {
   id_not_starts_with?: Maybe<ID_Input>;
   id_ends_with?: Maybe<ID_Input>;
   id_not_ends_with?: Maybe<ID_Input>;
-  post?: Maybe<PostWhereInput>;
-  user?: Maybe<UserWhereInput>;
-  content?: Maybe<String>;
-  content_not?: Maybe<String>;
-  content_in?: Maybe<String[] | String>;
-  content_not_in?: Maybe<String[] | String>;
-  content_lt?: Maybe<String>;
-  content_lte?: Maybe<String>;
-  content_gt?: Maybe<String>;
-  content_gte?: Maybe<String>;
-  content_contains?: Maybe<String>;
-  content_not_contains?: Maybe<String>;
-  content_starts_with?: Maybe<String>;
-  content_not_starts_with?: Maybe<String>;
-  content_ends_with?: Maybe<String>;
-  content_not_ends_with?: Maybe<String>;
-  AND?: Maybe<CommentWhereInput[] | CommentWhereInput>;
-  OR?: Maybe<CommentWhereInput[] | CommentWhereInput>;
-  NOT?: Maybe<CommentWhereInput[] | CommentWhereInput>;
+  team?: Maybe<TeamWhereInput>;
+  fullName?: Maybe<String>;
+  fullName_not?: Maybe<String>;
+  fullName_in?: Maybe<String[] | String>;
+  fullName_not_in?: Maybe<String[] | String>;
+  fullName_lt?: Maybe<String>;
+  fullName_lte?: Maybe<String>;
+  fullName_gt?: Maybe<String>;
+  fullName_gte?: Maybe<String>;
+  fullName_contains?: Maybe<String>;
+  fullName_not_contains?: Maybe<String>;
+  fullName_starts_with?: Maybe<String>;
+  fullName_not_starts_with?: Maybe<String>;
+  fullName_ends_with?: Maybe<String>;
+  fullName_not_ends_with?: Maybe<String>;
+  email?: Maybe<String>;
+  email_not?: Maybe<String>;
+  email_in?: Maybe<String[] | String>;
+  email_not_in?: Maybe<String[] | String>;
+  email_lt?: Maybe<String>;
+  email_lte?: Maybe<String>;
+  email_gt?: Maybe<String>;
+  email_gte?: Maybe<String>;
+  email_contains?: Maybe<String>;
+  email_not_contains?: Maybe<String>;
+  email_starts_with?: Maybe<String>;
+  email_not_starts_with?: Maybe<String>;
+  email_ends_with?: Maybe<String>;
+  email_not_ends_with?: Maybe<String>;
+  password?: Maybe<String>;
+  password_not?: Maybe<String>;
+  password_in?: Maybe<String[] | String>;
+  password_not_in?: Maybe<String[] | String>;
+  password_lt?: Maybe<String>;
+  password_lte?: Maybe<String>;
+  password_gt?: Maybe<String>;
+  password_gte?: Maybe<String>;
+  password_contains?: Maybe<String>;
+  password_not_contains?: Maybe<String>;
+  password_starts_with?: Maybe<String>;
+  password_not_starts_with?: Maybe<String>;
+  password_ends_with?: Maybe<String>;
+  password_not_ends_with?: Maybe<String>;
+  teamKey?: Maybe<String>;
+  teamKey_not?: Maybe<String>;
+  teamKey_in?: Maybe<String[] | String>;
+  teamKey_not_in?: Maybe<String[] | String>;
+  teamKey_lt?: Maybe<String>;
+  teamKey_lte?: Maybe<String>;
+  teamKey_gt?: Maybe<String>;
+  teamKey_gte?: Maybe<String>;
+  teamKey_contains?: Maybe<String>;
+  teamKey_not_contains?: Maybe<String>;
+  teamKey_starts_with?: Maybe<String>;
+  teamKey_not_starts_with?: Maybe<String>;
+  teamKey_ends_with?: Maybe<String>;
+  teamKey_not_ends_with?: Maybe<String>;
+  coachKey?: Maybe<String>;
+  coachKey_not?: Maybe<String>;
+  coachKey_in?: Maybe<String[] | String>;
+  coachKey_not_in?: Maybe<String[] | String>;
+  coachKey_lt?: Maybe<String>;
+  coachKey_lte?: Maybe<String>;
+  coachKey_gt?: Maybe<String>;
+  coachKey_gte?: Maybe<String>;
+  coachKey_contains?: Maybe<String>;
+  coachKey_not_contains?: Maybe<String>;
+  coachKey_starts_with?: Maybe<String>;
+  coachKey_not_starts_with?: Maybe<String>;
+  coachKey_ends_with?: Maybe<String>;
+  coachKey_not_ends_with?: Maybe<String>;
+  AND?: Maybe<HeadCoachWhereInput[] | HeadCoachWhereInput>;
+  OR?: Maybe<HeadCoachWhereInput[] | HeadCoachWhereInput>;
+  NOT?: Maybe<HeadCoachWhereInput[] | HeadCoachWhereInput>;
 }
 
-export interface PostCreateWithoutUserInput {
+export interface AthleteStatsUpdateManyWithWhereNestedInput {
+  where: AthleteStatsScalarWhereInput;
+  data: AthleteStatsUpdateManyDataInput;
+}
+
+export interface CoachSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<CoachWhereInput>;
+  AND?: Maybe<CoachSubscriptionWhereInput[] | CoachSubscriptionWhereInput>;
+  OR?: Maybe<CoachSubscriptionWhereInput[] | CoachSubscriptionWhereInput>;
+  NOT?: Maybe<CoachSubscriptionWhereInput[] | CoachSubscriptionWhereInput>;
+}
+
+export interface AthleteStatsUpdateManyDataInput {
+  apeIndex?: Maybe<Int>;
+  height?: Maybe<Int>;
+  weight?: Maybe<Int>;
+  maxVGrade?: Maybe<Int>;
+  maxSportGrade?: Maybe<String>;
+  maxEdgeLoad?: Maybe<Int>;
+  maxEdgeTestSize?: Maybe<Int>;
+  SWREdge?: Maybe<Float>;
+  maxPullLoad?: Maybe<Int>;
+  SWRBar?: Maybe<Float>;
+  oneArmHangLoadLeft?: Maybe<Int>;
+  oneArmHangLoadRight?: Maybe<Int>;
+  oneArmHangSWR?: Maybe<Float>;
+  goalVGrade?: Maybe<Int>;
+  goalSportGrade?: Maybe<String>;
+}
+
+export interface AthleteStatsSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<AthleteStatsWhereInput>;
+  AND?: Maybe<
+    AthleteStatsSubscriptionWhereInput[] | AthleteStatsSubscriptionWhereInput
+  >;
+  OR?: Maybe<
+    AthleteStatsSubscriptionWhereInput[] | AthleteStatsSubscriptionWhereInput
+  >;
+  NOT?: Maybe<
+    AthleteStatsSubscriptionWhereInput[] | AthleteStatsSubscriptionWhereInput
+  >;
+}
+
+export interface ParentUpdateManyWithoutAthleteInput {
+  create?: Maybe<
+    ParentCreateWithoutAthleteInput[] | ParentCreateWithoutAthleteInput
+  >;
+  delete?: Maybe<ParentWhereUniqueInput[] | ParentWhereUniqueInput>;
+  connect?: Maybe<ParentWhereUniqueInput[] | ParentWhereUniqueInput>;
+  set?: Maybe<ParentWhereUniqueInput[] | ParentWhereUniqueInput>;
+  disconnect?: Maybe<ParentWhereUniqueInput[] | ParentWhereUniqueInput>;
+  update?: Maybe<
+    | ParentUpdateWithWhereUniqueWithoutAthleteInput[]
+    | ParentUpdateWithWhereUniqueWithoutAthleteInput
+  >;
+  upsert?: Maybe<
+    | ParentUpsertWithWhereUniqueWithoutAthleteInput[]
+    | ParentUpsertWithWhereUniqueWithoutAthleteInput
+  >;
+  deleteMany?: Maybe<ParentScalarWhereInput[] | ParentScalarWhereInput>;
+  updateMany?: Maybe<
+    | ParentUpdateManyWithWhereNestedInput[]
+    | ParentUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface WorkoutUpdateManyMutationInput {
+  author?: Maybe<String>;
+  title?: Maybe<String>;
+  description?: Maybe<String>;
+}
+
+export interface ParentUpdateWithWhereUniqueWithoutAthleteInput {
+  where: ParentWhereUniqueInput;
+  data: ParentUpdateWithoutAthleteDataInput;
+}
+
+export interface TeamUpdateManyMutationInput {
+  teamName?: Maybe<String>;
+  phase?: Maybe<String>;
+  city?: Maybe<String>;
+  state?: Maybe<String>;
+  homeGym?: Maybe<String>;
+  teamKey?: Maybe<String>;
+  coachKey?: Maybe<String>;
+}
+
+export interface ParentUpdateWithoutAthleteDataInput {
+  email?: Maybe<String>;
+  password?: Maybe<String>;
+  phoneNumber?: Maybe<String>;
+}
+
+export interface TeamCreateInput {
+  id?: Maybe<ID_Input>;
+  teamName: String;
+  headCoach?: Maybe<HeadCoachCreateOneWithoutTeamInput>;
+  athletes?: Maybe<AthleteCreateManyWithoutTeamInput>;
+  coahces?: Maybe<CoachCreateManyWithoutTeamInput>;
+  subTeams?: Maybe<SubTeamCreateManyInput>;
+  library?: Maybe<WorkoutCreateManyInput>;
+  posts?: Maybe<PostCreateManyInput>;
+  schedule?: Maybe<ScheduleCreateOneWithoutTeamInput>;
+  phase?: Maybe<String>;
+  city: String;
+  state: String;
+  homeGym: String;
+  teamKey?: Maybe<String>;
+  coachKey?: Maybe<String>;
+}
+
+export interface ParentUpsertWithWhereUniqueWithoutAthleteInput {
+  where: ParentWhereUniqueInput;
+  update: ParentUpdateWithoutAthleteDataInput;
+  create: ParentCreateWithoutAthleteInput;
+}
+
+export interface SubTeamUpdateInput {
+  headCoach?: Maybe<HeadCoachUpdateOneRequiredInput>;
+  ahtletes?: Maybe<AthleteUpdateManyInput>;
+  coahces?: Maybe<CoachUpdateManyWithoutTeamsInput>;
+  library?: Maybe<WorkoutUpdateManyInput>;
+  posts?: Maybe<PostUpdateManyInput>;
+}
+
+export interface ParentScalarWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  email?: Maybe<String>;
+  email_not?: Maybe<String>;
+  email_in?: Maybe<String[] | String>;
+  email_not_in?: Maybe<String[] | String>;
+  email_lt?: Maybe<String>;
+  email_lte?: Maybe<String>;
+  email_gt?: Maybe<String>;
+  email_gte?: Maybe<String>;
+  email_contains?: Maybe<String>;
+  email_not_contains?: Maybe<String>;
+  email_starts_with?: Maybe<String>;
+  email_not_starts_with?: Maybe<String>;
+  email_ends_with?: Maybe<String>;
+  email_not_ends_with?: Maybe<String>;
+  password?: Maybe<String>;
+  password_not?: Maybe<String>;
+  password_in?: Maybe<String[] | String>;
+  password_not_in?: Maybe<String[] | String>;
+  password_lt?: Maybe<String>;
+  password_lte?: Maybe<String>;
+  password_gt?: Maybe<String>;
+  password_gte?: Maybe<String>;
+  password_contains?: Maybe<String>;
+  password_not_contains?: Maybe<String>;
+  password_starts_with?: Maybe<String>;
+  password_not_starts_with?: Maybe<String>;
+  password_ends_with?: Maybe<String>;
+  password_not_ends_with?: Maybe<String>;
+  phoneNumber?: Maybe<String>;
+  phoneNumber_not?: Maybe<String>;
+  phoneNumber_in?: Maybe<String[] | String>;
+  phoneNumber_not_in?: Maybe<String[] | String>;
+  phoneNumber_lt?: Maybe<String>;
+  phoneNumber_lte?: Maybe<String>;
+  phoneNumber_gt?: Maybe<String>;
+  phoneNumber_gte?: Maybe<String>;
+  phoneNumber_contains?: Maybe<String>;
+  phoneNumber_not_contains?: Maybe<String>;
+  phoneNumber_starts_with?: Maybe<String>;
+  phoneNumber_not_starts_with?: Maybe<String>;
+  phoneNumber_ends_with?: Maybe<String>;
+  phoneNumber_not_ends_with?: Maybe<String>;
+  AND?: Maybe<ParentScalarWhereInput[] | ParentScalarWhereInput>;
+  OR?: Maybe<ParentScalarWhereInput[] | ParentScalarWhereInput>;
+  NOT?: Maybe<ParentScalarWhereInput[] | ParentScalarWhereInput>;
+}
+
+export interface TeamUpdateWithoutScheduleDataInput {
+  teamName?: Maybe<String>;
+  headCoach?: Maybe<HeadCoachUpdateOneWithoutTeamInput>;
+  athletes?: Maybe<AthleteUpdateManyWithoutTeamInput>;
+  coahces?: Maybe<CoachUpdateManyWithoutTeamInput>;
+  subTeams?: Maybe<SubTeamUpdateManyInput>;
+  library?: Maybe<WorkoutUpdateManyInput>;
+  posts?: Maybe<PostUpdateManyInput>;
+  phase?: Maybe<String>;
+  city?: Maybe<String>;
+  state?: Maybe<String>;
+  homeGym?: Maybe<String>;
+  teamKey?: Maybe<String>;
+  coachKey?: Maybe<String>;
+}
+
+export interface ParentUpdateManyWithWhereNestedInput {
+  where: ParentScalarWhereInput;
+  data: ParentUpdateManyDataInput;
+}
+
+export interface TeamUpdateOneWithoutScheduleInput {
+  create?: Maybe<TeamCreateWithoutScheduleInput>;
+  update?: Maybe<TeamUpdateWithoutScheduleDataInput>;
+  upsert?: Maybe<TeamUpsertWithoutScheduleInput>;
+  delete?: Maybe<Boolean>;
+  disconnect?: Maybe<Boolean>;
+  connect?: Maybe<TeamWhereUniqueInput>;
+}
+
+export interface ParentUpdateManyDataInput {
+  email?: Maybe<String>;
+  password?: Maybe<String>;
+  phoneNumber?: Maybe<String>;
+}
+
+export interface TeamCreateWithoutScheduleInput {
+  id?: Maybe<ID_Input>;
+  teamName: String;
+  headCoach?: Maybe<HeadCoachCreateOneWithoutTeamInput>;
+  athletes?: Maybe<AthleteCreateManyWithoutTeamInput>;
+  coahces?: Maybe<CoachCreateManyWithoutTeamInput>;
+  subTeams?: Maybe<SubTeamCreateManyInput>;
+  library?: Maybe<WorkoutCreateManyInput>;
+  posts?: Maybe<PostCreateManyInput>;
+  phase?: Maybe<String>;
+  city: String;
+  state: String;
+  homeGym: String;
+  teamKey?: Maybe<String>;
+  coachKey?: Maybe<String>;
+}
+
+export interface TeamUpdateOneWithoutAthletesInput {
+  create?: Maybe<TeamCreateWithoutAthletesInput>;
+  update?: Maybe<TeamUpdateWithoutAthletesDataInput>;
+  upsert?: Maybe<TeamUpsertWithoutAthletesInput>;
+  delete?: Maybe<Boolean>;
+  disconnect?: Maybe<Boolean>;
+  connect?: Maybe<TeamWhereUniqueInput>;
+}
+
+export interface TeamCreateOneWithoutScheduleInput {
+  create?: Maybe<TeamCreateWithoutScheduleInput>;
+  connect?: Maybe<TeamWhereUniqueInput>;
+}
+
+export interface TeamUpdateWithoutAthletesDataInput {
+  teamName?: Maybe<String>;
+  headCoach?: Maybe<HeadCoachUpdateOneWithoutTeamInput>;
+  coahces?: Maybe<CoachUpdateManyWithoutTeamInput>;
+  subTeams?: Maybe<SubTeamUpdateManyInput>;
+  library?: Maybe<WorkoutUpdateManyInput>;
+  posts?: Maybe<PostUpdateManyInput>;
+  schedule?: Maybe<ScheduleUpdateOneWithoutTeamInput>;
+  phase?: Maybe<String>;
+  city?: Maybe<String>;
+  state?: Maybe<String>;
+  homeGym?: Maybe<String>;
+  teamKey?: Maybe<String>;
+  coachKey?: Maybe<String>;
+}
+
+export interface ResultUpdateManyMutationInput {
+  rpe?: Maybe<Int>;
+  compResult?: Maybe<Int>;
+  sessionResult?: Maybe<String>;
+}
+
+export interface HeadCoachUpdateOneWithoutTeamInput {
+  create?: Maybe<HeadCoachCreateWithoutTeamInput>;
+  update?: Maybe<HeadCoachUpdateWithoutTeamDataInput>;
+  upsert?: Maybe<HeadCoachUpsertWithoutTeamInput>;
+  delete?: Maybe<Boolean>;
+  disconnect?: Maybe<Boolean>;
+  connect?: Maybe<HeadCoachWhereUniqueInput>;
+}
+
+export interface ParentWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  athlete_every?: Maybe<AthleteWhereInput>;
+  athlete_some?: Maybe<AthleteWhereInput>;
+  athlete_none?: Maybe<AthleteWhereInput>;
+  email?: Maybe<String>;
+  email_not?: Maybe<String>;
+  email_in?: Maybe<String[] | String>;
+  email_not_in?: Maybe<String[] | String>;
+  email_lt?: Maybe<String>;
+  email_lte?: Maybe<String>;
+  email_gt?: Maybe<String>;
+  email_gte?: Maybe<String>;
+  email_contains?: Maybe<String>;
+  email_not_contains?: Maybe<String>;
+  email_starts_with?: Maybe<String>;
+  email_not_starts_with?: Maybe<String>;
+  email_ends_with?: Maybe<String>;
+  email_not_ends_with?: Maybe<String>;
+  password?: Maybe<String>;
+  password_not?: Maybe<String>;
+  password_in?: Maybe<String[] | String>;
+  password_not_in?: Maybe<String[] | String>;
+  password_lt?: Maybe<String>;
+  password_lte?: Maybe<String>;
+  password_gt?: Maybe<String>;
+  password_gte?: Maybe<String>;
+  password_contains?: Maybe<String>;
+  password_not_contains?: Maybe<String>;
+  password_starts_with?: Maybe<String>;
+  password_not_starts_with?: Maybe<String>;
+  password_ends_with?: Maybe<String>;
+  password_not_ends_with?: Maybe<String>;
+  phoneNumber?: Maybe<String>;
+  phoneNumber_not?: Maybe<String>;
+  phoneNumber_in?: Maybe<String[] | String>;
+  phoneNumber_not_in?: Maybe<String[] | String>;
+  phoneNumber_lt?: Maybe<String>;
+  phoneNumber_lte?: Maybe<String>;
+  phoneNumber_gt?: Maybe<String>;
+  phoneNumber_gte?: Maybe<String>;
+  phoneNumber_contains?: Maybe<String>;
+  phoneNumber_not_contains?: Maybe<String>;
+  phoneNumber_starts_with?: Maybe<String>;
+  phoneNumber_not_starts_with?: Maybe<String>;
+  phoneNumber_ends_with?: Maybe<String>;
+  phoneNumber_not_ends_with?: Maybe<String>;
+  AND?: Maybe<ParentWhereInput[] | ParentWhereInput>;
+  OR?: Maybe<ParentWhereInput[] | ParentWhereInput>;
+  NOT?: Maybe<ParentWhereInput[] | ParentWhereInput>;
+}
+
+export interface HeadCoachUpdateWithoutTeamDataInput {
+  fullName?: Maybe<String>;
+  email?: Maybe<String>;
+  password?: Maybe<String>;
+  teamKey?: Maybe<String>;
+  coachKey?: Maybe<String>;
+}
+
+export interface PostUpdateManyMutationInput {
+  title?: Maybe<String>;
+  content?: Maybe<String>;
+}
+
+export interface HeadCoachUpsertWithoutTeamInput {
+  update: HeadCoachUpdateWithoutTeamDataInput;
+  create: HeadCoachCreateWithoutTeamInput;
+}
+
+export type LogItemWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
+
+export interface CoachUpdateManyWithoutTeamInput {
+  create?: Maybe<CoachCreateWithoutTeamInput[] | CoachCreateWithoutTeamInput>;
+  delete?: Maybe<CoachWhereUniqueInput[] | CoachWhereUniqueInput>;
+  connect?: Maybe<CoachWhereUniqueInput[] | CoachWhereUniqueInput>;
+  set?: Maybe<CoachWhereUniqueInput[] | CoachWhereUniqueInput>;
+  disconnect?: Maybe<CoachWhereUniqueInput[] | CoachWhereUniqueInput>;
+  update?: Maybe<
+    | CoachUpdateWithWhereUniqueWithoutTeamInput[]
+    | CoachUpdateWithWhereUniqueWithoutTeamInput
+  >;
+  upsert?: Maybe<
+    | CoachUpsertWithWhereUniqueWithoutTeamInput[]
+    | CoachUpsertWithWhereUniqueWithoutTeamInput
+  >;
+  deleteMany?: Maybe<CoachScalarWhereInput[] | CoachScalarWhereInput>;
+  updateMany?: Maybe<
+    CoachUpdateManyWithWhereNestedInput[] | CoachUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface AthleteUpsertWithWhereUniqueWithoutParentsInput {
+  where: AthleteWhereUniqueInput;
+  update: AthleteUpdateWithoutParentsDataInput;
+  create: AthleteCreateWithoutParentsInput;
+}
+
+export interface CoachUpdateWithWhereUniqueWithoutTeamInput {
+  where: CoachWhereUniqueInput;
+  data: CoachUpdateWithoutTeamDataInput;
+}
+
+export type ParentWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
+
+export interface CoachUpdateWithoutTeamDataInput {
+  fullName?: Maybe<String>;
+  teams?: Maybe<SubTeamUpdateManyWithoutCoahcesInput>;
+  email?: Maybe<String>;
+  password?: Maybe<String>;
+  teamKey?: Maybe<String>;
+  coachKey?: Maybe<String>;
+}
+
+export interface AthleteUpdateManyWithoutParentsInput {
+  create?: Maybe<
+    AthleteCreateWithoutParentsInput[] | AthleteCreateWithoutParentsInput
+  >;
+  delete?: Maybe<AthleteWhereUniqueInput[] | AthleteWhereUniqueInput>;
+  connect?: Maybe<AthleteWhereUniqueInput[] | AthleteWhereUniqueInput>;
+  set?: Maybe<AthleteWhereUniqueInput[] | AthleteWhereUniqueInput>;
+  disconnect?: Maybe<AthleteWhereUniqueInput[] | AthleteWhereUniqueInput>;
+  update?: Maybe<
+    | AthleteUpdateWithWhereUniqueWithoutParentsInput[]
+    | AthleteUpdateWithWhereUniqueWithoutParentsInput
+  >;
+  upsert?: Maybe<
+    | AthleteUpsertWithWhereUniqueWithoutParentsInput[]
+    | AthleteUpsertWithWhereUniqueWithoutParentsInput
+  >;
+  deleteMany?: Maybe<AthleteScalarWhereInput[] | AthleteScalarWhereInput>;
+  updateMany?: Maybe<
+    | AthleteUpdateManyWithWhereNestedInput[]
+    | AthleteUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface SubTeamUpdateManyWithoutCoahcesInput {
+  create?: Maybe<
+    SubTeamCreateWithoutCoahcesInput[] | SubTeamCreateWithoutCoahcesInput
+  >;
+  delete?: Maybe<SubTeamWhereUniqueInput[] | SubTeamWhereUniqueInput>;
+  connect?: Maybe<SubTeamWhereUniqueInput[] | SubTeamWhereUniqueInput>;
+  set?: Maybe<SubTeamWhereUniqueInput[] | SubTeamWhereUniqueInput>;
+  disconnect?: Maybe<SubTeamWhereUniqueInput[] | SubTeamWhereUniqueInput>;
+  update?: Maybe<
+    | SubTeamUpdateWithWhereUniqueWithoutCoahcesInput[]
+    | SubTeamUpdateWithWhereUniqueWithoutCoahcesInput
+  >;
+  upsert?: Maybe<
+    | SubTeamUpsertWithWhereUniqueWithoutCoahcesInput[]
+    | SubTeamUpsertWithWhereUniqueWithoutCoahcesInput
+  >;
+  deleteMany?: Maybe<SubTeamScalarWhereInput[] | SubTeamScalarWhereInput>;
+}
+
+export type PostWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
+
+export interface SubTeamUpdateWithWhereUniqueWithoutCoahcesInput {
+  where: SubTeamWhereUniqueInput;
+  data: SubTeamUpdateWithoutCoahcesDataInput;
+}
+
+export interface AthleteCreateManyWithoutParentsInput {
+  create?: Maybe<
+    AthleteCreateWithoutParentsInput[] | AthleteCreateWithoutParentsInput
+  >;
+  connect?: Maybe<AthleteWhereUniqueInput[] | AthleteWhereUniqueInput>;
+}
+
+export interface SubTeamUpdateWithoutCoahcesDataInput {
+  headCoach?: Maybe<HeadCoachUpdateOneRequiredInput>;
+  ahtletes?: Maybe<AthleteUpdateManyInput>;
+  library?: Maybe<WorkoutUpdateManyInput>;
+  posts?: Maybe<PostUpdateManyInput>;
+}
+
+export type ResultWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
+
+export interface HeadCoachUpdateOneRequiredInput {
+  create?: Maybe<HeadCoachCreateInput>;
+  update?: Maybe<HeadCoachUpdateDataInput>;
+  upsert?: Maybe<HeadCoachUpsertNestedInput>;
+  connect?: Maybe<HeadCoachWhereUniqueInput>;
+}
+
+export interface LogItemUpdateManyMutationInput {
+  title?: Maybe<String>;
+  description?: Maybe<String>;
+  comment?: Maybe<String>;
+}
+
+export interface HeadCoachUpdateDataInput {
+  team?: Maybe<TeamUpdateOneWithoutHeadCoachInput>;
+  fullName?: Maybe<String>;
+  email?: Maybe<String>;
+  password?: Maybe<String>;
+  teamKey?: Maybe<String>;
+  coachKey?: Maybe<String>;
+}
+
+export interface AthleteUpdateWithoutLogBookDataInput {
+  fullName?: Maybe<String>;
+  email?: Maybe<String>;
+  password?: Maybe<String>;
+  stats?: Maybe<AthleteStatsUpdateManyWithoutUserInput>;
+  parents?: Maybe<ParentUpdateManyWithoutAthleteInput>;
+  team?: Maybe<TeamUpdateOneWithoutAthletesInput>;
+  teamKey?: Maybe<String>;
+  library?: Maybe<WorkoutUpdateManyInput>;
+  phase?: Maybe<String>;
+}
+
+export interface TeamUpdateOneWithoutHeadCoachInput {
+  create?: Maybe<TeamCreateWithoutHeadCoachInput>;
+  update?: Maybe<TeamUpdateWithoutHeadCoachDataInput>;
+  upsert?: Maybe<TeamUpsertWithoutHeadCoachInput>;
+  delete?: Maybe<Boolean>;
+  disconnect?: Maybe<Boolean>;
+  connect?: Maybe<TeamWhereUniqueInput>;
+}
+
+export interface AthleteStatsWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  user?: Maybe<AthleteWhereInput>;
+  createdAt?: Maybe<DateTimeInput>;
+  createdAt_not?: Maybe<DateTimeInput>;
+  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_lt?: Maybe<DateTimeInput>;
+  createdAt_lte?: Maybe<DateTimeInput>;
+  createdAt_gt?: Maybe<DateTimeInput>;
+  createdAt_gte?: Maybe<DateTimeInput>;
+  apeIndex?: Maybe<Int>;
+  apeIndex_not?: Maybe<Int>;
+  apeIndex_in?: Maybe<Int[] | Int>;
+  apeIndex_not_in?: Maybe<Int[] | Int>;
+  apeIndex_lt?: Maybe<Int>;
+  apeIndex_lte?: Maybe<Int>;
+  apeIndex_gt?: Maybe<Int>;
+  apeIndex_gte?: Maybe<Int>;
+  height?: Maybe<Int>;
+  height_not?: Maybe<Int>;
+  height_in?: Maybe<Int[] | Int>;
+  height_not_in?: Maybe<Int[] | Int>;
+  height_lt?: Maybe<Int>;
+  height_lte?: Maybe<Int>;
+  height_gt?: Maybe<Int>;
+  height_gte?: Maybe<Int>;
+  weight?: Maybe<Int>;
+  weight_not?: Maybe<Int>;
+  weight_in?: Maybe<Int[] | Int>;
+  weight_not_in?: Maybe<Int[] | Int>;
+  weight_lt?: Maybe<Int>;
+  weight_lte?: Maybe<Int>;
+  weight_gt?: Maybe<Int>;
+  weight_gte?: Maybe<Int>;
+  maxVGrade?: Maybe<Int>;
+  maxVGrade_not?: Maybe<Int>;
+  maxVGrade_in?: Maybe<Int[] | Int>;
+  maxVGrade_not_in?: Maybe<Int[] | Int>;
+  maxVGrade_lt?: Maybe<Int>;
+  maxVGrade_lte?: Maybe<Int>;
+  maxVGrade_gt?: Maybe<Int>;
+  maxVGrade_gte?: Maybe<Int>;
+  maxSportGrade?: Maybe<String>;
+  maxSportGrade_not?: Maybe<String>;
+  maxSportGrade_in?: Maybe<String[] | String>;
+  maxSportGrade_not_in?: Maybe<String[] | String>;
+  maxSportGrade_lt?: Maybe<String>;
+  maxSportGrade_lte?: Maybe<String>;
+  maxSportGrade_gt?: Maybe<String>;
+  maxSportGrade_gte?: Maybe<String>;
+  maxSportGrade_contains?: Maybe<String>;
+  maxSportGrade_not_contains?: Maybe<String>;
+  maxSportGrade_starts_with?: Maybe<String>;
+  maxSportGrade_not_starts_with?: Maybe<String>;
+  maxSportGrade_ends_with?: Maybe<String>;
+  maxSportGrade_not_ends_with?: Maybe<String>;
+  maxEdgeLoad?: Maybe<Int>;
+  maxEdgeLoad_not?: Maybe<Int>;
+  maxEdgeLoad_in?: Maybe<Int[] | Int>;
+  maxEdgeLoad_not_in?: Maybe<Int[] | Int>;
+  maxEdgeLoad_lt?: Maybe<Int>;
+  maxEdgeLoad_lte?: Maybe<Int>;
+  maxEdgeLoad_gt?: Maybe<Int>;
+  maxEdgeLoad_gte?: Maybe<Int>;
+  maxEdgeTestSize?: Maybe<Int>;
+  maxEdgeTestSize_not?: Maybe<Int>;
+  maxEdgeTestSize_in?: Maybe<Int[] | Int>;
+  maxEdgeTestSize_not_in?: Maybe<Int[] | Int>;
+  maxEdgeTestSize_lt?: Maybe<Int>;
+  maxEdgeTestSize_lte?: Maybe<Int>;
+  maxEdgeTestSize_gt?: Maybe<Int>;
+  maxEdgeTestSize_gte?: Maybe<Int>;
+  SWREdge?: Maybe<Float>;
+  SWREdge_not?: Maybe<Float>;
+  SWREdge_in?: Maybe<Float[] | Float>;
+  SWREdge_not_in?: Maybe<Float[] | Float>;
+  SWREdge_lt?: Maybe<Float>;
+  SWREdge_lte?: Maybe<Float>;
+  SWREdge_gt?: Maybe<Float>;
+  SWREdge_gte?: Maybe<Float>;
+  maxPullLoad?: Maybe<Int>;
+  maxPullLoad_not?: Maybe<Int>;
+  maxPullLoad_in?: Maybe<Int[] | Int>;
+  maxPullLoad_not_in?: Maybe<Int[] | Int>;
+  maxPullLoad_lt?: Maybe<Int>;
+  maxPullLoad_lte?: Maybe<Int>;
+  maxPullLoad_gt?: Maybe<Int>;
+  maxPullLoad_gte?: Maybe<Int>;
+  SWRBar?: Maybe<Float>;
+  SWRBar_not?: Maybe<Float>;
+  SWRBar_in?: Maybe<Float[] | Float>;
+  SWRBar_not_in?: Maybe<Float[] | Float>;
+  SWRBar_lt?: Maybe<Float>;
+  SWRBar_lte?: Maybe<Float>;
+  SWRBar_gt?: Maybe<Float>;
+  SWRBar_gte?: Maybe<Float>;
+  oneArmHangLoadLeft?: Maybe<Int>;
+  oneArmHangLoadLeft_not?: Maybe<Int>;
+  oneArmHangLoadLeft_in?: Maybe<Int[] | Int>;
+  oneArmHangLoadLeft_not_in?: Maybe<Int[] | Int>;
+  oneArmHangLoadLeft_lt?: Maybe<Int>;
+  oneArmHangLoadLeft_lte?: Maybe<Int>;
+  oneArmHangLoadLeft_gt?: Maybe<Int>;
+  oneArmHangLoadLeft_gte?: Maybe<Int>;
+  oneArmHangLoadRight?: Maybe<Int>;
+  oneArmHangLoadRight_not?: Maybe<Int>;
+  oneArmHangLoadRight_in?: Maybe<Int[] | Int>;
+  oneArmHangLoadRight_not_in?: Maybe<Int[] | Int>;
+  oneArmHangLoadRight_lt?: Maybe<Int>;
+  oneArmHangLoadRight_lte?: Maybe<Int>;
+  oneArmHangLoadRight_gt?: Maybe<Int>;
+  oneArmHangLoadRight_gte?: Maybe<Int>;
+  oneArmHangSWR?: Maybe<Float>;
+  oneArmHangSWR_not?: Maybe<Float>;
+  oneArmHangSWR_in?: Maybe<Float[] | Float>;
+  oneArmHangSWR_not_in?: Maybe<Float[] | Float>;
+  oneArmHangSWR_lt?: Maybe<Float>;
+  oneArmHangSWR_lte?: Maybe<Float>;
+  oneArmHangSWR_gt?: Maybe<Float>;
+  oneArmHangSWR_gte?: Maybe<Float>;
+  goalVGrade?: Maybe<Int>;
+  goalVGrade_not?: Maybe<Int>;
+  goalVGrade_in?: Maybe<Int[] | Int>;
+  goalVGrade_not_in?: Maybe<Int[] | Int>;
+  goalVGrade_lt?: Maybe<Int>;
+  goalVGrade_lte?: Maybe<Int>;
+  goalVGrade_gt?: Maybe<Int>;
+  goalVGrade_gte?: Maybe<Int>;
+  goalSportGrade?: Maybe<String>;
+  goalSportGrade_not?: Maybe<String>;
+  goalSportGrade_in?: Maybe<String[] | String>;
+  goalSportGrade_not_in?: Maybe<String[] | String>;
+  goalSportGrade_lt?: Maybe<String>;
+  goalSportGrade_lte?: Maybe<String>;
+  goalSportGrade_gt?: Maybe<String>;
+  goalSportGrade_gte?: Maybe<String>;
+  goalSportGrade_contains?: Maybe<String>;
+  goalSportGrade_not_contains?: Maybe<String>;
+  goalSportGrade_starts_with?: Maybe<String>;
+  goalSportGrade_not_starts_with?: Maybe<String>;
+  goalSportGrade_ends_with?: Maybe<String>;
+  goalSportGrade_not_ends_with?: Maybe<String>;
+  AND?: Maybe<AthleteStatsWhereInput[] | AthleteStatsWhereInput>;
+  OR?: Maybe<AthleteStatsWhereInput[] | AthleteStatsWhereInput>;
+  NOT?: Maybe<AthleteStatsWhereInput[] | AthleteStatsWhereInput>;
+}
+
+export interface PostCreateOneWithoutCommentsInput {
+  create?: Maybe<PostCreateWithoutCommentsInput>;
+  connect?: Maybe<PostWhereUniqueInput>;
+}
+
+export interface LogItemUpdateInput {
+  user?: Maybe<AthleteUpdateOneRequiredWithoutLogBookInput>;
+  title?: Maybe<String>;
+  description?: Maybe<String>;
+  results?: Maybe<ResultUpdateOneRequiredInput>;
+  comment?: Maybe<String>;
+}
+
+export interface AthleteUpdateManyWithoutTeamInput {
+  create?: Maybe<
+    AthleteCreateWithoutTeamInput[] | AthleteCreateWithoutTeamInput
+  >;
+  delete?: Maybe<AthleteWhereUniqueInput[] | AthleteWhereUniqueInput>;
+  connect?: Maybe<AthleteWhereUniqueInput[] | AthleteWhereUniqueInput>;
+  set?: Maybe<AthleteWhereUniqueInput[] | AthleteWhereUniqueInput>;
+  disconnect?: Maybe<AthleteWhereUniqueInput[] | AthleteWhereUniqueInput>;
+  update?: Maybe<
+    | AthleteUpdateWithWhereUniqueWithoutTeamInput[]
+    | AthleteUpdateWithWhereUniqueWithoutTeamInput
+  >;
+  upsert?: Maybe<
+    | AthleteUpsertWithWhereUniqueWithoutTeamInput[]
+    | AthleteUpsertWithWhereUniqueWithoutTeamInput
+  >;
+  deleteMany?: Maybe<AthleteScalarWhereInput[] | AthleteScalarWhereInput>;
+  updateMany?: Maybe<
+    | AthleteUpdateManyWithWhereNestedInput[]
+    | AthleteUpdateManyWithWhereNestedInput
+  >;
+}
+
+export type SubTeamWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
+
+export interface AthleteUpdateWithWhereUniqueWithoutTeamInput {
+  where: AthleteWhereUniqueInput;
+  data: AthleteUpdateWithoutTeamDataInput;
+}
+
+export interface LogItemCreateInput {
+  user: AthleteCreateOneWithoutLogBookInput;
   id?: Maybe<ID_Input>;
   title: String;
-  content: String;
-  comments?: Maybe<CommentCreateManyWithoutPostInput>;
+  description: String;
+  results: ResultCreateOneInput;
+  comment?: Maybe<String>;
 }
 
-export interface WorkoutWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  author?: Maybe<String>;
-  author_not?: Maybe<String>;
-  author_in?: Maybe<String[] | String>;
-  author_not_in?: Maybe<String[] | String>;
-  author_lt?: Maybe<String>;
-  author_lte?: Maybe<String>;
-  author_gt?: Maybe<String>;
-  author_gte?: Maybe<String>;
-  author_contains?: Maybe<String>;
-  author_not_contains?: Maybe<String>;
-  author_starts_with?: Maybe<String>;
-  author_not_starts_with?: Maybe<String>;
-  author_ends_with?: Maybe<String>;
-  author_not_ends_with?: Maybe<String>;
-  title?: Maybe<String>;
-  title_not?: Maybe<String>;
-  title_in?: Maybe<String[] | String>;
-  title_not_in?: Maybe<String[] | String>;
-  title_lt?: Maybe<String>;
-  title_lte?: Maybe<String>;
-  title_gt?: Maybe<String>;
-  title_gte?: Maybe<String>;
-  title_contains?: Maybe<String>;
-  title_not_contains?: Maybe<String>;
-  title_starts_with?: Maybe<String>;
-  title_not_starts_with?: Maybe<String>;
-  title_ends_with?: Maybe<String>;
-  title_not_ends_with?: Maybe<String>;
-  description?: Maybe<String>;
-  description_not?: Maybe<String>;
-  description_in?: Maybe<String[] | String>;
-  description_not_in?: Maybe<String[] | String>;
-  description_lt?: Maybe<String>;
-  description_lte?: Maybe<String>;
-  description_gt?: Maybe<String>;
-  description_gte?: Maybe<String>;
-  description_contains?: Maybe<String>;
-  description_not_contains?: Maybe<String>;
-  description_starts_with?: Maybe<String>;
-  description_not_starts_with?: Maybe<String>;
-  description_ends_with?: Maybe<String>;
-  description_not_ends_with?: Maybe<String>;
-  AND?: Maybe<WorkoutWhereInput[] | WorkoutWhereInput>;
-  OR?: Maybe<WorkoutWhereInput[] | WorkoutWhereInput>;
-  NOT?: Maybe<WorkoutWhereInput[] | WorkoutWhereInput>;
+export interface AthleteUpdateWithoutTeamDataInput {
+  fullName?: Maybe<String>;
+  email?: Maybe<String>;
+  password?: Maybe<String>;
+  stats?: Maybe<AthleteStatsUpdateManyWithoutUserInput>;
+  parents?: Maybe<ParentUpdateManyWithoutAthleteInput>;
+  teamKey?: Maybe<String>;
+  library?: Maybe<WorkoutUpdateManyInput>;
+  logBook?: Maybe<LogItemUpdateManyWithoutUserInput>;
+  phase?: Maybe<String>;
 }
 
-export interface CommentCreateManyWithoutPostInput {
-  create?: Maybe<
-    CommentCreateWithoutPostInput[] | CommentCreateWithoutPostInput
-  >;
-  connect?: Maybe<CommentWhereUniqueInput[] | CommentWhereUniqueInput>;
-}
+export type TeamWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
 
-export interface UserClimbingStatsSubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<UserClimbingStatsWhereInput>;
-  AND?: Maybe<
-    | UserClimbingStatsSubscriptionWhereInput[]
-    | UserClimbingStatsSubscriptionWhereInput
+export interface WorkoutUpdateManyInput {
+  create?: Maybe<WorkoutCreateInput[] | WorkoutCreateInput>;
+  update?: Maybe<
+    | WorkoutUpdateWithWhereUniqueNestedInput[]
+    | WorkoutUpdateWithWhereUniqueNestedInput
   >;
-  OR?: Maybe<
-    | UserClimbingStatsSubscriptionWhereInput[]
-    | UserClimbingStatsSubscriptionWhereInput
+  upsert?: Maybe<
+    | WorkoutUpsertWithWhereUniqueNestedInput[]
+    | WorkoutUpsertWithWhereUniqueNestedInput
   >;
-  NOT?: Maybe<
-    | UserClimbingStatsSubscriptionWhereInput[]
-    | UserClimbingStatsSubscriptionWhereInput
+  delete?: Maybe<WorkoutWhereUniqueInput[] | WorkoutWhereUniqueInput>;
+  connect?: Maybe<WorkoutWhereUniqueInput[] | WorkoutWhereUniqueInput>;
+  set?: Maybe<WorkoutWhereUniqueInput[] | WorkoutWhereUniqueInput>;
+  disconnect?: Maybe<WorkoutWhereUniqueInput[] | WorkoutWhereUniqueInput>;
+  deleteMany?: Maybe<WorkoutScalarWhereInput[] | WorkoutScalarWhereInput>;
+  updateMany?: Maybe<
+    | WorkoutUpdateManyWithWhereNestedInput[]
+    | WorkoutUpdateManyWithWhereNestedInput
   >;
 }
 
-export interface CommentCreateWithoutPostInput {
-  id?: Maybe<ID_Input>;
-  user: UserCreateOneInput;
-  content: String;
-}
-
-export interface UserSubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<UserWhereInput>;
-  AND?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
-  OR?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
-  NOT?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
-}
-
-export interface CommentUpdateInput {
-  post?: Maybe<PostUpdateOneRequiredWithoutCommentsInput>;
-  user?: Maybe<UserUpdateOneRequiredInput>;
+export interface CommentUpdateManyMutationInput {
   content?: Maybe<String>;
 }
 
-export interface PostSubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<PostWhereInput>;
-  AND?: Maybe<PostSubscriptionWhereInput[] | PostSubscriptionWhereInput>;
-  OR?: Maybe<PostSubscriptionWhereInput[] | PostSubscriptionWhereInput>;
-  NOT?: Maybe<PostSubscriptionWhereInput[] | PostSubscriptionWhereInput>;
+export interface WorkoutUpdateWithWhereUniqueNestedInput {
+  where: WorkoutWhereUniqueInput;
+  data: WorkoutUpdateDataInput;
+}
+
+export interface PostUpdateWithoutCommentsDataInput {
+  coach?: Maybe<CoachUpdateOneRequiredInput>;
+  title?: Maybe<String>;
+  content?: Maybe<String>;
+}
+
+export interface WorkoutUpdateDataInput {
+  author?: Maybe<String>;
+  title?: Maybe<String>;
+  description?: Maybe<String>;
 }
 
 export interface PostUpdateOneRequiredWithoutCommentsInput {
@@ -785,60 +2348,123 @@ export interface PostUpdateOneRequiredWithoutCommentsInput {
   connect?: Maybe<PostWhereUniqueInput>;
 }
 
-export interface CommentSubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<CommentWhereInput>;
-  AND?: Maybe<CommentSubscriptionWhereInput[] | CommentSubscriptionWhereInput>;
-  OR?: Maybe<CommentSubscriptionWhereInput[] | CommentSubscriptionWhereInput>;
-  NOT?: Maybe<CommentSubscriptionWhereInput[] | CommentSubscriptionWhereInput>;
+export interface WorkoutUpsertWithWhereUniqueNestedInput {
+  where: WorkoutWhereUniqueInput;
+  update: WorkoutUpdateDataInput;
+  create: WorkoutCreateInput;
 }
 
-export interface PostUpdateWithoutCommentsDataInput {
-  user?: Maybe<UserUpdateOneRequiredWithoutPostsInput>;
-  title?: Maybe<String>;
-  content?: Maybe<String>;
+export interface PostCreateWithoutCommentsInput {
+  id?: Maybe<ID_Input>;
+  coach: CoachCreateOneInput;
+  title: String;
+  content: String;
 }
 
-export interface WorkoutUpdateInput {
+export interface ResultWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  rpe?: Maybe<Int>;
+  rpe_not?: Maybe<Int>;
+  rpe_in?: Maybe<Int[] | Int>;
+  rpe_not_in?: Maybe<Int[] | Int>;
+  rpe_lt?: Maybe<Int>;
+  rpe_lte?: Maybe<Int>;
+  rpe_gt?: Maybe<Int>;
+  rpe_gte?: Maybe<Int>;
+  compResult?: Maybe<Int>;
+  compResult_not?: Maybe<Int>;
+  compResult_in?: Maybe<Int[] | Int>;
+  compResult_not_in?: Maybe<Int[] | Int>;
+  compResult_lt?: Maybe<Int>;
+  compResult_lte?: Maybe<Int>;
+  compResult_gt?: Maybe<Int>;
+  compResult_gte?: Maybe<Int>;
+  sessionResult?: Maybe<String>;
+  sessionResult_not?: Maybe<String>;
+  sessionResult_in?: Maybe<String[] | String>;
+  sessionResult_not_in?: Maybe<String[] | String>;
+  sessionResult_lt?: Maybe<String>;
+  sessionResult_lte?: Maybe<String>;
+  sessionResult_gt?: Maybe<String>;
+  sessionResult_gte?: Maybe<String>;
+  sessionResult_contains?: Maybe<String>;
+  sessionResult_not_contains?: Maybe<String>;
+  sessionResult_starts_with?: Maybe<String>;
+  sessionResult_not_starts_with?: Maybe<String>;
+  sessionResult_ends_with?: Maybe<String>;
+  sessionResult_not_ends_with?: Maybe<String>;
+  athlete?: Maybe<AthleteWhereInput>;
+  AND?: Maybe<ResultWhereInput[] | ResultWhereInput>;
+  OR?: Maybe<ResultWhereInput[] | ResultWhereInput>;
+  NOT?: Maybe<ResultWhereInput[] | ResultWhereInput>;
+}
+
+export interface AthleteCreateInput {
+  id?: Maybe<ID_Input>;
+  fullName: String;
+  email: String;
+  password: String;
+  stats?: Maybe<AthleteStatsCreateManyWithoutUserInput>;
+  parents?: Maybe<ParentCreateManyWithoutAthleteInput>;
+  team?: Maybe<TeamCreateOneWithoutAthletesInput>;
+  teamKey: String;
+  library?: Maybe<WorkoutCreateManyInput>;
+  logBook?: Maybe<LogItemCreateManyWithoutUserInput>;
+  phase?: Maybe<String>;
+}
+
+export interface CommentCreateInput {
+  id?: Maybe<ID_Input>;
+  post: PostCreateOneWithoutCommentsInput;
+  coach?: Maybe<CoachCreateOneInput>;
+  athlete?: Maybe<AthleteCreateOneInput>;
+  content: String;
+}
+
+export interface AthleteStatsCreateWithoutUserInput {
+  id?: Maybe<ID_Input>;
+  apeIndex: Int;
+  height: Int;
+  weight: Int;
+  maxVGrade: Int;
+  maxSportGrade: String;
+  maxEdgeLoad: Int;
+  maxEdgeTestSize: Int;
+  SWREdge?: Maybe<Float>;
+  maxPullLoad: Int;
+  SWRBar?: Maybe<Float>;
+  oneArmHangLoadLeft: Int;
+  oneArmHangLoadRight: Int;
+  oneArmHangSWR: Float;
+  goalVGrade: Int;
+  goalSportGrade: String;
+}
+
+export interface WorkoutUpdateManyDataInput {
   author?: Maybe<String>;
   title?: Maybe<String>;
   description?: Maybe<String>;
 }
 
-export interface UserUpdateOneRequiredWithoutPostsInput {
-  create?: Maybe<UserCreateWithoutPostsInput>;
-  update?: Maybe<UserUpdateWithoutPostsDataInput>;
-  upsert?: Maybe<UserUpsertWithoutPostsInput>;
-  connect?: Maybe<UserWhereUniqueInput>;
+export interface ParentCreateWithoutAthleteInput {
+  id?: Maybe<ID_Input>;
+  email: String;
+  password: String;
+  phoneNumber: String;
 }
-
-export interface UserUpsertWithoutUserClimbingStatsInput {
-  update: UserUpdateWithoutUserClimbingStatsDataInput;
-  create: UserCreateWithoutUserClimbingStatsInput;
-}
-
-export interface UserUpdateWithoutPostsDataInput {
-  userName?: Maybe<String>;
-  fullName?: Maybe<String>;
-  name?: Maybe<String>;
-  email?: Maybe<String>;
-  password?: Maybe<String>;
-  city?: Maybe<String>;
-  state?: Maybe<String>;
-  homeGym?: Maybe<String>;
-  logBook?: Maybe<LogItemUpdateManyWithoutUserInput>;
-  userClimbingStats?: Maybe<UserClimbingStatsUpdateManyWithoutUserInput>;
-  userLevel?: Maybe<UserLevel>;
-  phase?: Maybe<String>;
-  schedule?: Maybe<WorkoutUpdateManyInput>;
-}
-
-export type LogItemWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-}>;
 
 export interface LogItemUpdateManyWithoutUserInput {
   create?: Maybe<
@@ -863,23 +2489,21 @@ export interface LogItemUpdateManyWithoutUserInput {
   >;
 }
 
-export interface UserClimbingStatsUpdateInput {
-  user?: Maybe<UserUpdateOneRequiredWithoutUserClimbingStatsInput>;
-  apeIndex?: Maybe<Int>;
-  height?: Maybe<Int>;
-  weight?: Maybe<Int>;
-  maxVGrade?: Maybe<Int>;
-  maxSportGrade?: Maybe<String>;
-  maxEdgeLoad?: Maybe<Int>;
-  maxEdgeTestSize?: Maybe<Int>;
-  SWREdge?: Maybe<Float>;
-  maxPullLoad?: Maybe<Int>;
-  SWRBar?: Maybe<Float>;
-  oneArmHangLoadLeft?: Maybe<Int>;
-  oneArmHangLoadRight?: Maybe<Int>;
-  oneArmHangSWR?: Maybe<Float>;
-  goalVGrade?: Maybe<Int>;
-  goalSportGrade?: Maybe<String>;
+export interface TeamCreateWithoutAthletesInput {
+  id?: Maybe<ID_Input>;
+  teamName: String;
+  headCoach?: Maybe<HeadCoachCreateOneWithoutTeamInput>;
+  coahces?: Maybe<CoachCreateManyWithoutTeamInput>;
+  subTeams?: Maybe<SubTeamCreateManyInput>;
+  library?: Maybe<WorkoutCreateManyInput>;
+  posts?: Maybe<PostCreateManyInput>;
+  schedule?: Maybe<ScheduleCreateOneWithoutTeamInput>;
+  phase?: Maybe<String>;
+  city: String;
+  state: String;
+  homeGym: String;
+  teamKey?: Maybe<String>;
+  coachKey?: Maybe<String>;
 }
 
 export interface LogItemUpdateWithWhereUniqueWithoutUserInput {
@@ -887,34 +2511,137 @@ export interface LogItemUpdateWithWhereUniqueWithoutUserInput {
   data: LogItemUpdateWithoutUserDataInput;
 }
 
-export type PostWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-}>;
+export interface HeadCoachCreateWithoutTeamInput {
+  id?: Maybe<ID_Input>;
+  fullName: String;
+  email: String;
+  password: String;
+  teamKey: String;
+  coachKey: String;
+}
 
 export interface LogItemUpdateWithoutUserDataInput {
   title?: Maybe<String>;
   description?: Maybe<String>;
+  results?: Maybe<ResultUpdateOneRequiredInput>;
   comment?: Maybe<String>;
 }
 
-export interface UserClimbingStatsCreateInput {
+export interface CoachCreateWithoutTeamInput {
   id?: Maybe<ID_Input>;
-  user: UserCreateOneWithoutUserClimbingStatsInput;
-  apeIndex: Int;
-  height: Int;
-  weight: Int;
-  maxVGrade: Int;
-  maxSportGrade: String;
-  maxEdgeLoad: Int;
-  maxEdgeTestSize: Int;
-  SWREdge?: Maybe<Float>;
-  maxPullLoad: Int;
-  SWRBar?: Maybe<Float>;
-  oneArmHangLoadLeft: Int;
-  oneArmHangLoadRight: Int;
-  oneArmHangSWR: Float;
-  goalVGrade: Int;
-  goalSportGrade: String;
+  fullName: String;
+  teams?: Maybe<SubTeamCreateManyWithoutCoahcesInput>;
+  email: String;
+  password: String;
+  teamKey: String;
+  coachKey: String;
+}
+
+export interface ResultUpdateOneRequiredInput {
+  create?: Maybe<ResultCreateInput>;
+  update?: Maybe<ResultUpdateDataInput>;
+  upsert?: Maybe<ResultUpsertNestedInput>;
+  connect?: Maybe<ResultWhereUniqueInput>;
+}
+
+export interface SubTeamCreateWithoutCoahcesInput {
+  id?: Maybe<ID_Input>;
+  headCoach: HeadCoachCreateOneInput;
+  ahtletes?: Maybe<AthleteCreateManyInput>;
+  library?: Maybe<WorkoutCreateManyInput>;
+  posts?: Maybe<PostCreateManyInput>;
+}
+
+export interface ResultUpdateDataInput {
+  rpe?: Maybe<Int>;
+  compResult?: Maybe<Int>;
+  sessionResult?: Maybe<String>;
+  athlete?: Maybe<AthleteUpdateOneRequiredInput>;
+}
+
+export interface HeadCoachCreateInput {
+  id?: Maybe<ID_Input>;
+  team?: Maybe<TeamCreateOneWithoutHeadCoachInput>;
+  fullName: String;
+  email: String;
+  password: String;
+  teamKey: String;
+  coachKey: String;
+}
+
+export interface AthleteUpdateOneRequiredInput {
+  create?: Maybe<AthleteCreateInput>;
+  update?: Maybe<AthleteUpdateDataInput>;
+  upsert?: Maybe<AthleteUpsertNestedInput>;
+  connect?: Maybe<AthleteWhereUniqueInput>;
+}
+
+export interface TeamCreateWithoutHeadCoachInput {
+  id?: Maybe<ID_Input>;
+  teamName: String;
+  athletes?: Maybe<AthleteCreateManyWithoutTeamInput>;
+  coahces?: Maybe<CoachCreateManyWithoutTeamInput>;
+  subTeams?: Maybe<SubTeamCreateManyInput>;
+  library?: Maybe<WorkoutCreateManyInput>;
+  posts?: Maybe<PostCreateManyInput>;
+  schedule?: Maybe<ScheduleCreateOneWithoutTeamInput>;
+  phase?: Maybe<String>;
+  city: String;
+  state: String;
+  homeGym: String;
+  teamKey?: Maybe<String>;
+  coachKey?: Maybe<String>;
+}
+
+export interface AthleteUpdateDataInput {
+  fullName?: Maybe<String>;
+  email?: Maybe<String>;
+  password?: Maybe<String>;
+  stats?: Maybe<AthleteStatsUpdateManyWithoutUserInput>;
+  parents?: Maybe<ParentUpdateManyWithoutAthleteInput>;
+  team?: Maybe<TeamUpdateOneWithoutAthletesInput>;
+  teamKey?: Maybe<String>;
+  library?: Maybe<WorkoutUpdateManyInput>;
+  logBook?: Maybe<LogItemUpdateManyWithoutUserInput>;
+  phase?: Maybe<String>;
+}
+
+export interface AthleteCreateWithoutTeamInput {
+  id?: Maybe<ID_Input>;
+  fullName: String;
+  email: String;
+  password: String;
+  stats?: Maybe<AthleteStatsCreateManyWithoutUserInput>;
+  parents?: Maybe<ParentCreateManyWithoutAthleteInput>;
+  teamKey: String;
+  library?: Maybe<WorkoutCreateManyInput>;
+  logBook?: Maybe<LogItemCreateManyWithoutUserInput>;
+  phase?: Maybe<String>;
+}
+
+export interface AthleteUpsertNestedInput {
+  update: AthleteUpdateDataInput;
+  create: AthleteCreateInput;
+}
+
+export interface WorkoutCreateInput {
+  id?: Maybe<ID_Input>;
+  author: String;
+  title: String;
+  description: String;
+}
+
+export interface ResultUpsertNestedInput {
+  update: ResultUpdateDataInput;
+  create: ResultCreateInput;
+}
+
+export interface LogItemCreateWithoutUserInput {
+  id?: Maybe<ID_Input>;
+  title: String;
+  description: String;
+  results: ResultCreateOneInput;
+  comment?: Maybe<String>;
 }
 
 export interface LogItemUpsertWithWhereUniqueWithoutUserInput {
@@ -923,10 +2650,13 @@ export interface LogItemUpsertWithWhereUniqueWithoutUserInput {
   create: LogItemCreateWithoutUserInput;
 }
 
-export type UserWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-  email?: Maybe<String>;
-}>;
+export interface ResultCreateInput {
+  id?: Maybe<ID_Input>;
+  rpe?: Maybe<Int>;
+  compResult?: Maybe<Int>;
+  sessionResult?: Maybe<String>;
+  athlete: AthleteCreateOneInput;
+}
 
 export interface LogItemScalarWhereInput {
   id?: Maybe<ID_Input>;
@@ -998,9 +2728,9 @@ export interface LogItemScalarWhereInput {
   NOT?: Maybe<LogItemScalarWhereInput[] | LogItemScalarWhereInput>;
 }
 
-export interface PostUpdateManyMutationInput {
-  title?: Maybe<String>;
-  content?: Maybe<String>;
+export interface SubTeamCreateManyInput {
+  create?: Maybe<SubTeamCreateInput[] | SubTeamCreateInput>;
+  connect?: Maybe<SubTeamWhereUniqueInput[] | SubTeamWhereUniqueInput>;
 }
 
 export interface LogItemUpdateManyWithWhereNestedInput {
@@ -1008,273 +2738,51 @@ export interface LogItemUpdateManyWithWhereNestedInput {
   data: LogItemUpdateManyDataInput;
 }
 
-export interface PostCreateInput {
-  id?: Maybe<ID_Input>;
-  user: UserCreateOneWithoutPostsInput;
-  title: String;
-  content: String;
-  comments?: Maybe<CommentCreateManyWithoutPostInput>;
+export interface AthleteCreateManyInput {
+  create?: Maybe<AthleteCreateInput[] | AthleteCreateInput>;
+  connect?: Maybe<AthleteWhereUniqueInput[] | AthleteWhereUniqueInput>;
 }
 
-export interface UserCreateOneWithoutLogBookInput {
-  create?: Maybe<UserCreateWithoutLogBookInput>;
-  connect?: Maybe<UserWhereUniqueInput>;
-}
-
-export interface LogItemUpdateManyMutationInput {
+export interface LogItemUpdateManyDataInput {
   title?: Maybe<String>;
   description?: Maybe<String>;
   comment?: Maybe<String>;
 }
 
-export interface UserClimbingStatsUpdateManyWithoutUserInput {
-  create?: Maybe<
-    | UserClimbingStatsCreateWithoutUserInput[]
-    | UserClimbingStatsCreateWithoutUserInput
-  >;
-  delete?: Maybe<
-    UserClimbingStatsWhereUniqueInput[] | UserClimbingStatsWhereUniqueInput
-  >;
-  connect?: Maybe<
-    UserClimbingStatsWhereUniqueInput[] | UserClimbingStatsWhereUniqueInput
-  >;
-  set?: Maybe<
-    UserClimbingStatsWhereUniqueInput[] | UserClimbingStatsWhereUniqueInput
-  >;
-  disconnect?: Maybe<
-    UserClimbingStatsWhereUniqueInput[] | UserClimbingStatsWhereUniqueInput
-  >;
-  update?: Maybe<
-    | UserClimbingStatsUpdateWithWhereUniqueWithoutUserInput[]
-    | UserClimbingStatsUpdateWithWhereUniqueWithoutUserInput
-  >;
-  upsert?: Maybe<
-    | UserClimbingStatsUpsertWithWhereUniqueWithoutUserInput[]
-    | UserClimbingStatsUpsertWithWhereUniqueWithoutUserInput
-  >;
-  deleteMany?: Maybe<
-    UserClimbingStatsScalarWhereInput[] | UserClimbingStatsScalarWhereInput
-  >;
-  updateMany?: Maybe<
-    | UserClimbingStatsUpdateManyWithWhereNestedInput[]
-    | UserClimbingStatsUpdateManyWithWhereNestedInput
-  >;
-}
-
-export interface UserUpdateWithoutLogBookDataInput {
-  userName?: Maybe<String>;
-  fullName?: Maybe<String>;
-  name?: Maybe<String>;
-  email?: Maybe<String>;
-  password?: Maybe<String>;
-  city?: Maybe<String>;
-  state?: Maybe<String>;
-  homeGym?: Maybe<String>;
-  userClimbingStats?: Maybe<UserClimbingStatsUpdateManyWithoutUserInput>;
-  posts?: Maybe<PostUpdateManyWithoutUserInput>;
-  userLevel?: Maybe<UserLevel>;
-  phase?: Maybe<String>;
-  schedule?: Maybe<WorkoutUpdateManyInput>;
-}
-
-export interface UserClimbingStatsUpdateWithWhereUniqueWithoutUserInput {
-  where: UserClimbingStatsWhereUniqueInput;
-  data: UserClimbingStatsUpdateWithoutUserDataInput;
-}
-
-export interface UserUpdateOneRequiredWithoutLogBookInput {
-  create?: Maybe<UserCreateWithoutLogBookInput>;
-  update?: Maybe<UserUpdateWithoutLogBookDataInput>;
-  upsert?: Maybe<UserUpsertWithoutLogBookInput>;
-  connect?: Maybe<UserWhereUniqueInput>;
-}
-
-export interface UserClimbingStatsUpdateWithoutUserDataInput {
-  apeIndex?: Maybe<Int>;
-  height?: Maybe<Int>;
-  weight?: Maybe<Int>;
-  maxVGrade?: Maybe<Int>;
-  maxSportGrade?: Maybe<String>;
-  maxEdgeLoad?: Maybe<Int>;
-  maxEdgeTestSize?: Maybe<Int>;
-  SWREdge?: Maybe<Float>;
-  maxPullLoad?: Maybe<Int>;
-  SWRBar?: Maybe<Float>;
-  oneArmHangLoadLeft?: Maybe<Int>;
-  oneArmHangLoadRight?: Maybe<Int>;
-  oneArmHangSWR?: Maybe<Float>;
-  goalVGrade?: Maybe<Int>;
-  goalSportGrade?: Maybe<String>;
-}
-
-export interface UserCreateWithoutLogBookInput {
+export interface CoachCreateWithoutTeamsInput {
   id?: Maybe<ID_Input>;
-  userName: String;
   fullName: String;
-  name: String;
+  team?: Maybe<TeamCreateOneWithoutCoahcesInput>;
   email: String;
   password: String;
+  teamKey: String;
+  coachKey: String;
+}
+
+export interface AthleteUpsertWithWhereUniqueWithoutTeamInput {
+  where: AthleteWhereUniqueInput;
+  update: AthleteUpdateWithoutTeamDataInput;
+  create: AthleteCreateWithoutTeamInput;
+}
+
+export interface TeamCreateWithoutCoahcesInput {
+  id?: Maybe<ID_Input>;
+  teamName: String;
+  headCoach?: Maybe<HeadCoachCreateOneWithoutTeamInput>;
+  athletes?: Maybe<AthleteCreateManyWithoutTeamInput>;
+  subTeams?: Maybe<SubTeamCreateManyInput>;
+  library?: Maybe<WorkoutCreateManyInput>;
+  posts?: Maybe<PostCreateManyInput>;
+  schedule?: Maybe<ScheduleCreateOneWithoutTeamInput>;
+  phase?: Maybe<String>;
   city: String;
   state: String;
   homeGym: String;
-  userClimbingStats?: Maybe<UserClimbingStatsCreateManyWithoutUserInput>;
-  posts?: Maybe<PostCreateManyWithoutUserInput>;
-  userLevel: UserLevel;
-  phase?: Maybe<String>;
-  schedule?: Maybe<WorkoutCreateManyInput>;
+  teamKey?: Maybe<String>;
+  coachKey?: Maybe<String>;
 }
 
-export interface UserClimbingStatsUpsertWithWhereUniqueWithoutUserInput {
-  where: UserClimbingStatsWhereUniqueInput;
-  update: UserClimbingStatsUpdateWithoutUserDataInput;
-  create: UserClimbingStatsCreateWithoutUserInput;
-}
-
-export interface CommentCreateInput {
-  id?: Maybe<ID_Input>;
-  post: PostCreateOneWithoutCommentsInput;
-  user: UserCreateOneInput;
-  content: String;
-}
-
-export interface LogItemCreateInput {
-  user: UserCreateOneWithoutLogBookInput;
-  id?: Maybe<ID_Input>;
-  title: String;
-  description: String;
-  comment?: Maybe<String>;
-}
-
-export interface PostCreateWithoutCommentsInput {
-  id?: Maybe<ID_Input>;
-  user: UserCreateOneWithoutPostsInput;
-  title: String;
-  content: String;
-}
-
-export interface UserClimbingStatsUpdateManyWithWhereNestedInput {
-  where: UserClimbingStatsScalarWhereInput;
-  data: UserClimbingStatsUpdateManyDataInput;
-}
-
-export interface UserCreateWithoutPostsInput {
-  id?: Maybe<ID_Input>;
-  userName: String;
-  fullName: String;
-  name: String;
-  email: String;
-  password: String;
-  city: String;
-  state: String;
-  homeGym: String;
-  logBook?: Maybe<LogItemCreateManyWithoutUserInput>;
-  userClimbingStats?: Maybe<UserClimbingStatsCreateManyWithoutUserInput>;
-  userLevel: UserLevel;
-  phase?: Maybe<String>;
-  schedule?: Maybe<WorkoutCreateManyInput>;
-}
-
-export interface UserClimbingStatsUpdateManyDataInput {
-  apeIndex?: Maybe<Int>;
-  height?: Maybe<Int>;
-  weight?: Maybe<Int>;
-  maxVGrade?: Maybe<Int>;
-  maxSportGrade?: Maybe<String>;
-  maxEdgeLoad?: Maybe<Int>;
-  maxEdgeTestSize?: Maybe<Int>;
-  SWREdge?: Maybe<Float>;
-  maxPullLoad?: Maybe<Int>;
-  SWRBar?: Maybe<Float>;
-  oneArmHangLoadLeft?: Maybe<Int>;
-  oneArmHangLoadRight?: Maybe<Int>;
-  oneArmHangSWR?: Maybe<Float>;
-  goalVGrade?: Maybe<Int>;
-  goalSportGrade?: Maybe<String>;
-}
-
-export interface LogItemCreateWithoutUserInput {
-  id?: Maybe<ID_Input>;
-  title: String;
-  description: String;
-  comment?: Maybe<String>;
-}
-
-export interface WorkoutUpdateManyInput {
-  create?: Maybe<WorkoutCreateInput[] | WorkoutCreateInput>;
-  update?: Maybe<
-    | WorkoutUpdateWithWhereUniqueNestedInput[]
-    | WorkoutUpdateWithWhereUniqueNestedInput
-  >;
-  upsert?: Maybe<
-    | WorkoutUpsertWithWhereUniqueNestedInput[]
-    | WorkoutUpsertWithWhereUniqueNestedInput
-  >;
-  delete?: Maybe<WorkoutWhereUniqueInput[] | WorkoutWhereUniqueInput>;
-  connect?: Maybe<WorkoutWhereUniqueInput[] | WorkoutWhereUniqueInput>;
-  set?: Maybe<WorkoutWhereUniqueInput[] | WorkoutWhereUniqueInput>;
-  disconnect?: Maybe<WorkoutWhereUniqueInput[] | WorkoutWhereUniqueInput>;
-  deleteMany?: Maybe<WorkoutScalarWhereInput[] | WorkoutScalarWhereInput>;
-  updateMany?: Maybe<
-    | WorkoutUpdateManyWithWhereNestedInput[]
-    | WorkoutUpdateManyWithWhereNestedInput
-  >;
-}
-
-export interface UserClimbingStatsCreateWithoutUserInput {
-  id?: Maybe<ID_Input>;
-  apeIndex: Int;
-  height: Int;
-  weight: Int;
-  maxVGrade: Int;
-  maxSportGrade: String;
-  maxEdgeLoad: Int;
-  maxEdgeTestSize: Int;
-  SWREdge?: Maybe<Float>;
-  maxPullLoad: Int;
-  SWRBar?: Maybe<Float>;
-  oneArmHangLoadLeft: Int;
-  oneArmHangLoadRight: Int;
-  oneArmHangSWR: Float;
-  goalVGrade: Int;
-  goalSportGrade: String;
-}
-
-export interface WorkoutUpdateWithWhereUniqueNestedInput {
-  where: WorkoutWhereUniqueInput;
-  data: WorkoutUpdateDataInput;
-}
-
-export interface WorkoutCreateInput {
-  id?: Maybe<ID_Input>;
-  author: String;
-  title: String;
-  description: String;
-}
-
-export interface WorkoutUpdateDataInput {
-  author?: Maybe<String>;
-  title?: Maybe<String>;
-  description?: Maybe<String>;
-}
-
-export interface WorkoutSubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<WorkoutWhereInput>;
-  AND?: Maybe<WorkoutSubscriptionWhereInput[] | WorkoutSubscriptionWhereInput>;
-  OR?: Maybe<WorkoutSubscriptionWhereInput[] | WorkoutSubscriptionWhereInput>;
-  NOT?: Maybe<WorkoutSubscriptionWhereInput[] | WorkoutSubscriptionWhereInput>;
-}
-
-export interface WorkoutUpsertWithWhereUniqueNestedInput {
-  where: WorkoutWhereUniqueInput;
-  update: WorkoutUpdateDataInput;
-  create: WorkoutCreateInput;
-}
-
-export interface UserWhereInput {
+export interface AthleteScalarWhereInput {
   id?: Maybe<ID_Input>;
   id_not?: Maybe<ID_Input>;
   id_in?: Maybe<ID_Input[] | ID_Input>;
@@ -1289,20 +2797,6 @@ export interface UserWhereInput {
   id_not_starts_with?: Maybe<ID_Input>;
   id_ends_with?: Maybe<ID_Input>;
   id_not_ends_with?: Maybe<ID_Input>;
-  userName?: Maybe<String>;
-  userName_not?: Maybe<String>;
-  userName_in?: Maybe<String[] | String>;
-  userName_not_in?: Maybe<String[] | String>;
-  userName_lt?: Maybe<String>;
-  userName_lte?: Maybe<String>;
-  userName_gt?: Maybe<String>;
-  userName_gte?: Maybe<String>;
-  userName_contains?: Maybe<String>;
-  userName_not_contains?: Maybe<String>;
-  userName_starts_with?: Maybe<String>;
-  userName_not_starts_with?: Maybe<String>;
-  userName_ends_with?: Maybe<String>;
-  userName_not_ends_with?: Maybe<String>;
   fullName?: Maybe<String>;
   fullName_not?: Maybe<String>;
   fullName_in?: Maybe<String[] | String>;
@@ -1317,20 +2811,6 @@ export interface UserWhereInput {
   fullName_not_starts_with?: Maybe<String>;
   fullName_ends_with?: Maybe<String>;
   fullName_not_ends_with?: Maybe<String>;
-  name?: Maybe<String>;
-  name_not?: Maybe<String>;
-  name_in?: Maybe<String[] | String>;
-  name_not_in?: Maybe<String[] | String>;
-  name_lt?: Maybe<String>;
-  name_lte?: Maybe<String>;
-  name_gt?: Maybe<String>;
-  name_gte?: Maybe<String>;
-  name_contains?: Maybe<String>;
-  name_not_contains?: Maybe<String>;
-  name_starts_with?: Maybe<String>;
-  name_not_starts_with?: Maybe<String>;
-  name_ends_with?: Maybe<String>;
-  name_not_ends_with?: Maybe<String>;
   email?: Maybe<String>;
   email_not?: Maybe<String>;
   email_in?: Maybe<String[] | String>;
@@ -1359,6 +2839,254 @@ export interface UserWhereInput {
   password_not_starts_with?: Maybe<String>;
   password_ends_with?: Maybe<String>;
   password_not_ends_with?: Maybe<String>;
+  teamKey?: Maybe<String>;
+  teamKey_not?: Maybe<String>;
+  teamKey_in?: Maybe<String[] | String>;
+  teamKey_not_in?: Maybe<String[] | String>;
+  teamKey_lt?: Maybe<String>;
+  teamKey_lte?: Maybe<String>;
+  teamKey_gt?: Maybe<String>;
+  teamKey_gte?: Maybe<String>;
+  teamKey_contains?: Maybe<String>;
+  teamKey_not_contains?: Maybe<String>;
+  teamKey_starts_with?: Maybe<String>;
+  teamKey_not_starts_with?: Maybe<String>;
+  teamKey_ends_with?: Maybe<String>;
+  teamKey_not_ends_with?: Maybe<String>;
+  phase?: Maybe<String>;
+  phase_not?: Maybe<String>;
+  phase_in?: Maybe<String[] | String>;
+  phase_not_in?: Maybe<String[] | String>;
+  phase_lt?: Maybe<String>;
+  phase_lte?: Maybe<String>;
+  phase_gt?: Maybe<String>;
+  phase_gte?: Maybe<String>;
+  phase_contains?: Maybe<String>;
+  phase_not_contains?: Maybe<String>;
+  phase_starts_with?: Maybe<String>;
+  phase_not_starts_with?: Maybe<String>;
+  phase_ends_with?: Maybe<String>;
+  phase_not_ends_with?: Maybe<String>;
+  AND?: Maybe<AthleteScalarWhereInput[] | AthleteScalarWhereInput>;
+  OR?: Maybe<AthleteScalarWhereInput[] | AthleteScalarWhereInput>;
+  NOT?: Maybe<AthleteScalarWhereInput[] | AthleteScalarWhereInput>;
+}
+
+export interface PostCreateInput {
+  id?: Maybe<ID_Input>;
+  coach: CoachCreateOneInput;
+  title: String;
+  content: String;
+  comments?: Maybe<CommentCreateManyWithoutPostInput>;
+}
+
+export interface AthleteUpdateManyWithWhereNestedInput {
+  where: AthleteScalarWhereInput;
+  data: AthleteUpdateManyDataInput;
+}
+
+export interface CoachCreateInput {
+  id?: Maybe<ID_Input>;
+  fullName: String;
+  team?: Maybe<TeamCreateOneWithoutCoahcesInput>;
+  teams?: Maybe<SubTeamCreateManyWithoutCoahcesInput>;
+  email: String;
+  password: String;
+  teamKey: String;
+  coachKey: String;
+}
+
+export interface AthleteUpdateManyDataInput {
+  fullName?: Maybe<String>;
+  email?: Maybe<String>;
+  password?: Maybe<String>;
+  teamKey?: Maybe<String>;
+  phase?: Maybe<String>;
+}
+
+export interface ScheduleWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  createdBy?: Maybe<CoachWhereInput>;
+  createdAt?: Maybe<DateTimeInput>;
+  createdAt_not?: Maybe<DateTimeInput>;
+  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_lt?: Maybe<DateTimeInput>;
+  createdAt_lte?: Maybe<DateTimeInput>;
+  createdAt_gt?: Maybe<DateTimeInput>;
+  createdAt_gte?: Maybe<DateTimeInput>;
+  team?: Maybe<TeamWhereInput>;
+  athletes_every?: Maybe<AthleteWhereInput>;
+  athletes_some?: Maybe<AthleteWhereInput>;
+  athletes_none?: Maybe<AthleteWhereInput>;
+  AND?: Maybe<ScheduleWhereInput[] | ScheduleWhereInput>;
+  OR?: Maybe<ScheduleWhereInput[] | ScheduleWhereInput>;
+  NOT?: Maybe<ScheduleWhereInput[] | ScheduleWhereInput>;
+}
+
+export interface SubTeamUpdateManyInput {
+  create?: Maybe<SubTeamCreateInput[] | SubTeamCreateInput>;
+  update?: Maybe<
+    | SubTeamUpdateWithWhereUniqueNestedInput[]
+    | SubTeamUpdateWithWhereUniqueNestedInput
+  >;
+  upsert?: Maybe<
+    | SubTeamUpsertWithWhereUniqueNestedInput[]
+    | SubTeamUpsertWithWhereUniqueNestedInput
+  >;
+  delete?: Maybe<SubTeamWhereUniqueInput[] | SubTeamWhereUniqueInput>;
+  connect?: Maybe<SubTeamWhereUniqueInput[] | SubTeamWhereUniqueInput>;
+  set?: Maybe<SubTeamWhereUniqueInput[] | SubTeamWhereUniqueInput>;
+  disconnect?: Maybe<SubTeamWhereUniqueInput[] | SubTeamWhereUniqueInput>;
+  deleteMany?: Maybe<SubTeamScalarWhereInput[] | SubTeamScalarWhereInput>;
+}
+
+export interface ResultSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<ResultWhereInput>;
+  AND?: Maybe<ResultSubscriptionWhereInput[] | ResultSubscriptionWhereInput>;
+  OR?: Maybe<ResultSubscriptionWhereInput[] | ResultSubscriptionWhereInput>;
+  NOT?: Maybe<ResultSubscriptionWhereInput[] | ResultSubscriptionWhereInput>;
+}
+
+export interface SubTeamUpdateWithWhereUniqueNestedInput {
+  where: SubTeamWhereUniqueInput;
+  data: SubTeamUpdateDataInput;
+}
+
+export interface ParentSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<ParentWhereInput>;
+  AND?: Maybe<ParentSubscriptionWhereInput[] | ParentSubscriptionWhereInput>;
+  OR?: Maybe<ParentSubscriptionWhereInput[] | ParentSubscriptionWhereInput>;
+  NOT?: Maybe<ParentSubscriptionWhereInput[] | ParentSubscriptionWhereInput>;
+}
+
+export interface SubTeamUpdateDataInput {
+  headCoach?: Maybe<HeadCoachUpdateOneRequiredInput>;
+  ahtletes?: Maybe<AthleteUpdateManyInput>;
+  coahces?: Maybe<CoachUpdateManyWithoutTeamsInput>;
+  library?: Maybe<WorkoutUpdateManyInput>;
+  posts?: Maybe<PostUpdateManyInput>;
+}
+
+export interface HeadCoachSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<HeadCoachWhereInput>;
+  AND?: Maybe<
+    HeadCoachSubscriptionWhereInput[] | HeadCoachSubscriptionWhereInput
+  >;
+  OR?: Maybe<
+    HeadCoachSubscriptionWhereInput[] | HeadCoachSubscriptionWhereInput
+  >;
+  NOT?: Maybe<
+    HeadCoachSubscriptionWhereInput[] | HeadCoachSubscriptionWhereInput
+  >;
+}
+
+export interface AthleteUpdateManyInput {
+  create?: Maybe<AthleteCreateInput[] | AthleteCreateInput>;
+  update?: Maybe<
+    | AthleteUpdateWithWhereUniqueNestedInput[]
+    | AthleteUpdateWithWhereUniqueNestedInput
+  >;
+  upsert?: Maybe<
+    | AthleteUpsertWithWhereUniqueNestedInput[]
+    | AthleteUpsertWithWhereUniqueNestedInput
+  >;
+  delete?: Maybe<AthleteWhereUniqueInput[] | AthleteWhereUniqueInput>;
+  connect?: Maybe<AthleteWhereUniqueInput[] | AthleteWhereUniqueInput>;
+  set?: Maybe<AthleteWhereUniqueInput[] | AthleteWhereUniqueInput>;
+  disconnect?: Maybe<AthleteWhereUniqueInput[] | AthleteWhereUniqueInput>;
+  deleteMany?: Maybe<AthleteScalarWhereInput[] | AthleteScalarWhereInput>;
+  updateMany?: Maybe<
+    | AthleteUpdateManyWithWhereNestedInput[]
+    | AthleteUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface TeamWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  teamName?: Maybe<String>;
+  teamName_not?: Maybe<String>;
+  teamName_in?: Maybe<String[] | String>;
+  teamName_not_in?: Maybe<String[] | String>;
+  teamName_lt?: Maybe<String>;
+  teamName_lte?: Maybe<String>;
+  teamName_gt?: Maybe<String>;
+  teamName_gte?: Maybe<String>;
+  teamName_contains?: Maybe<String>;
+  teamName_not_contains?: Maybe<String>;
+  teamName_starts_with?: Maybe<String>;
+  teamName_not_starts_with?: Maybe<String>;
+  teamName_ends_with?: Maybe<String>;
+  teamName_not_ends_with?: Maybe<String>;
+  headCoach?: Maybe<HeadCoachWhereInput>;
+  athletes_every?: Maybe<AthleteWhereInput>;
+  athletes_some?: Maybe<AthleteWhereInput>;
+  athletes_none?: Maybe<AthleteWhereInput>;
+  coahces_every?: Maybe<CoachWhereInput>;
+  coahces_some?: Maybe<CoachWhereInput>;
+  coahces_none?: Maybe<CoachWhereInput>;
+  subTeams_every?: Maybe<SubTeamWhereInput>;
+  subTeams_some?: Maybe<SubTeamWhereInput>;
+  subTeams_none?: Maybe<SubTeamWhereInput>;
+  library_every?: Maybe<WorkoutWhereInput>;
+  library_some?: Maybe<WorkoutWhereInput>;
+  library_none?: Maybe<WorkoutWhereInput>;
+  posts_every?: Maybe<PostWhereInput>;
+  posts_some?: Maybe<PostWhereInput>;
+  posts_none?: Maybe<PostWhereInput>;
+  schedule?: Maybe<ScheduleWhereInput>;
+  phase?: Maybe<String>;
+  phase_not?: Maybe<String>;
+  phase_in?: Maybe<String[] | String>;
+  phase_not_in?: Maybe<String[] | String>;
+  phase_lt?: Maybe<String>;
+  phase_lte?: Maybe<String>;
+  phase_gt?: Maybe<String>;
+  phase_gte?: Maybe<String>;
+  phase_contains?: Maybe<String>;
+  phase_not_contains?: Maybe<String>;
+  phase_starts_with?: Maybe<String>;
+  phase_not_starts_with?: Maybe<String>;
+  phase_ends_with?: Maybe<String>;
+  phase_not_ends_with?: Maybe<String>;
   city?: Maybe<String>;
   city_not?: Maybe<String>;
   city_in?: Maybe<String[] | String>;
@@ -1401,310 +3129,244 @@ export interface UserWhereInput {
   homeGym_not_starts_with?: Maybe<String>;
   homeGym_ends_with?: Maybe<String>;
   homeGym_not_ends_with?: Maybe<String>;
-  logBook_every?: Maybe<LogItemWhereInput>;
-  logBook_some?: Maybe<LogItemWhereInput>;
-  logBook_none?: Maybe<LogItemWhereInput>;
-  userClimbingStats_every?: Maybe<UserClimbingStatsWhereInput>;
-  userClimbingStats_some?: Maybe<UserClimbingStatsWhereInput>;
-  userClimbingStats_none?: Maybe<UserClimbingStatsWhereInput>;
-  posts_every?: Maybe<PostWhereInput>;
-  posts_some?: Maybe<PostWhereInput>;
-  posts_none?: Maybe<PostWhereInput>;
-  userLevel?: Maybe<UserLevel>;
-  userLevel_not?: Maybe<UserLevel>;
-  userLevel_in?: Maybe<UserLevel[] | UserLevel>;
-  userLevel_not_in?: Maybe<UserLevel[] | UserLevel>;
-  phase?: Maybe<String>;
-  phase_not?: Maybe<String>;
-  phase_in?: Maybe<String[] | String>;
-  phase_not_in?: Maybe<String[] | String>;
-  phase_lt?: Maybe<String>;
-  phase_lte?: Maybe<String>;
-  phase_gt?: Maybe<String>;
-  phase_gte?: Maybe<String>;
-  phase_contains?: Maybe<String>;
-  phase_not_contains?: Maybe<String>;
-  phase_starts_with?: Maybe<String>;
-  phase_not_starts_with?: Maybe<String>;
-  phase_ends_with?: Maybe<String>;
-  phase_not_ends_with?: Maybe<String>;
-  schedule_every?: Maybe<WorkoutWhereInput>;
-  schedule_some?: Maybe<WorkoutWhereInput>;
-  schedule_none?: Maybe<WorkoutWhereInput>;
-  AND?: Maybe<UserWhereInput[] | UserWhereInput>;
-  OR?: Maybe<UserWhereInput[] | UserWhereInput>;
-  NOT?: Maybe<UserWhereInput[] | UserWhereInput>;
+  teamKey?: Maybe<String>;
+  teamKey_not?: Maybe<String>;
+  teamKey_in?: Maybe<String[] | String>;
+  teamKey_not_in?: Maybe<String[] | String>;
+  teamKey_lt?: Maybe<String>;
+  teamKey_lte?: Maybe<String>;
+  teamKey_gt?: Maybe<String>;
+  teamKey_gte?: Maybe<String>;
+  teamKey_contains?: Maybe<String>;
+  teamKey_not_contains?: Maybe<String>;
+  teamKey_starts_with?: Maybe<String>;
+  teamKey_not_starts_with?: Maybe<String>;
+  teamKey_ends_with?: Maybe<String>;
+  teamKey_not_ends_with?: Maybe<String>;
+  coachKey?: Maybe<String>;
+  coachKey_not?: Maybe<String>;
+  coachKey_in?: Maybe<String[] | String>;
+  coachKey_not_in?: Maybe<String[] | String>;
+  coachKey_lt?: Maybe<String>;
+  coachKey_lte?: Maybe<String>;
+  coachKey_gt?: Maybe<String>;
+  coachKey_gte?: Maybe<String>;
+  coachKey_contains?: Maybe<String>;
+  coachKey_not_contains?: Maybe<String>;
+  coachKey_starts_with?: Maybe<String>;
+  coachKey_not_starts_with?: Maybe<String>;
+  coachKey_ends_with?: Maybe<String>;
+  coachKey_not_ends_with?: Maybe<String>;
+  AND?: Maybe<TeamWhereInput[] | TeamWhereInput>;
+  OR?: Maybe<TeamWhereInput[] | TeamWhereInput>;
+  NOT?: Maybe<TeamWhereInput[] | TeamWhereInput>;
 }
 
-export interface WorkoutScalarWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  author?: Maybe<String>;
-  author_not?: Maybe<String>;
-  author_in?: Maybe<String[] | String>;
-  author_not_in?: Maybe<String[] | String>;
-  author_lt?: Maybe<String>;
-  author_lte?: Maybe<String>;
-  author_gt?: Maybe<String>;
-  author_gte?: Maybe<String>;
-  author_contains?: Maybe<String>;
-  author_not_contains?: Maybe<String>;
-  author_starts_with?: Maybe<String>;
-  author_not_starts_with?: Maybe<String>;
-  author_ends_with?: Maybe<String>;
-  author_not_ends_with?: Maybe<String>;
-  title?: Maybe<String>;
-  title_not?: Maybe<String>;
-  title_in?: Maybe<String[] | String>;
-  title_not_in?: Maybe<String[] | String>;
-  title_lt?: Maybe<String>;
-  title_lte?: Maybe<String>;
-  title_gt?: Maybe<String>;
-  title_gte?: Maybe<String>;
-  title_contains?: Maybe<String>;
-  title_not_contains?: Maybe<String>;
-  title_starts_with?: Maybe<String>;
-  title_not_starts_with?: Maybe<String>;
-  title_ends_with?: Maybe<String>;
-  title_not_ends_with?: Maybe<String>;
-  description?: Maybe<String>;
-  description_not?: Maybe<String>;
-  description_in?: Maybe<String[] | String>;
-  description_not_in?: Maybe<String[] | String>;
-  description_lt?: Maybe<String>;
-  description_lte?: Maybe<String>;
-  description_gt?: Maybe<String>;
-  description_gte?: Maybe<String>;
-  description_contains?: Maybe<String>;
-  description_not_contains?: Maybe<String>;
-  description_starts_with?: Maybe<String>;
-  description_not_starts_with?: Maybe<String>;
-  description_ends_with?: Maybe<String>;
-  description_not_ends_with?: Maybe<String>;
-  AND?: Maybe<WorkoutScalarWhereInput[] | WorkoutScalarWhereInput>;
-  OR?: Maybe<WorkoutScalarWhereInput[] | WorkoutScalarWhereInput>;
-  NOT?: Maybe<WorkoutScalarWhereInput[] | WorkoutScalarWhereInput>;
+export interface AthleteUpdateWithWhereUniqueNestedInput {
+  where: AthleteWhereUniqueInput;
+  data: AthleteUpdateDataInput;
 }
 
-export interface LogItemSubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<LogItemWhereInput>;
-  AND?: Maybe<LogItemSubscriptionWhereInput[] | LogItemSubscriptionWhereInput>;
-  OR?: Maybe<LogItemSubscriptionWhereInput[] | LogItemSubscriptionWhereInput>;
-  NOT?: Maybe<LogItemSubscriptionWhereInput[] | LogItemSubscriptionWhereInput>;
-}
-
-export interface WorkoutUpdateManyWithWhereNestedInput {
-  where: WorkoutScalarWhereInput;
-  data: WorkoutUpdateManyDataInput;
-}
-
-export interface UserClimbingStatsUpdateManyMutationInput {
-  apeIndex?: Maybe<Int>;
-  height?: Maybe<Int>;
-  weight?: Maybe<Int>;
-  maxVGrade?: Maybe<Int>;
-  maxSportGrade?: Maybe<String>;
-  maxEdgeLoad?: Maybe<Int>;
-  maxEdgeTestSize?: Maybe<Int>;
-  SWREdge?: Maybe<Float>;
-  maxPullLoad?: Maybe<Int>;
-  SWRBar?: Maybe<Float>;
-  oneArmHangLoadLeft?: Maybe<Int>;
-  oneArmHangLoadRight?: Maybe<Int>;
-  oneArmHangSWR?: Maybe<Float>;
-  goalVGrade?: Maybe<Int>;
-  goalSportGrade?: Maybe<String>;
-}
-
-export interface WorkoutUpdateManyDataInput {
+export interface WorkoutUpdateInput {
   author?: Maybe<String>;
   title?: Maybe<String>;
   description?: Maybe<String>;
 }
 
-export interface UserUpdateOneRequiredWithoutUserClimbingStatsInput {
-  create?: Maybe<UserCreateWithoutUserClimbingStatsInput>;
-  update?: Maybe<UserUpdateWithoutUserClimbingStatsDataInput>;
-  upsert?: Maybe<UserUpsertWithoutUserClimbingStatsInput>;
-  connect?: Maybe<UserWhereUniqueInput>;
+export interface AthleteUpsertWithWhereUniqueNestedInput {
+  where: AthleteWhereUniqueInput;
+  update: AthleteUpdateDataInput;
+  create: AthleteCreateInput;
 }
 
-export interface UserUpsertWithoutPostsInput {
-  update: UserUpdateWithoutPostsDataInput;
-  create: UserCreateWithoutPostsInput;
-}
-
-export interface UserCreateOneWithoutUserClimbingStatsInput {
-  create?: Maybe<UserCreateWithoutUserClimbingStatsInput>;
-  connect?: Maybe<UserWhereUniqueInput>;
-}
-
-export interface PostUpsertWithoutCommentsInput {
-  update: PostUpdateWithoutCommentsDataInput;
-  create: PostCreateWithoutCommentsInput;
-}
-
-export interface UserUpdateInput {
-  userName?: Maybe<String>;
-  fullName?: Maybe<String>;
-  name?: Maybe<String>;
-  email?: Maybe<String>;
-  password?: Maybe<String>;
-  city?: Maybe<String>;
-  state?: Maybe<String>;
-  homeGym?: Maybe<String>;
-  logBook?: Maybe<LogItemUpdateManyWithoutUserInput>;
-  userClimbingStats?: Maybe<UserClimbingStatsUpdateManyWithoutUserInput>;
-  posts?: Maybe<PostUpdateManyWithoutUserInput>;
-  userLevel?: Maybe<UserLevel>;
-  phase?: Maybe<String>;
-  schedule?: Maybe<WorkoutUpdateManyInput>;
-}
-
-export interface UserUpdateOneRequiredInput {
-  create?: Maybe<UserCreateInput>;
-  update?: Maybe<UserUpdateDataInput>;
-  upsert?: Maybe<UserUpsertNestedInput>;
-  connect?: Maybe<UserWhereUniqueInput>;
-}
-
-export type UserClimbingStatsWhereUniqueInput = AtLeastOne<{
+export type AthleteStatsWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
 }>;
 
-export interface UserUpdateDataInput {
-  userName?: Maybe<String>;
-  fullName?: Maybe<String>;
-  name?: Maybe<String>;
-  email?: Maybe<String>;
-  password?: Maybe<String>;
-  city?: Maybe<String>;
-  state?: Maybe<String>;
-  homeGym?: Maybe<String>;
-  logBook?: Maybe<LogItemUpdateManyWithoutUserInput>;
-  userClimbingStats?: Maybe<UserClimbingStatsUpdateManyWithoutUserInput>;
-  posts?: Maybe<PostUpdateManyWithoutUserInput>;
-  userLevel?: Maybe<UserLevel>;
-  phase?: Maybe<String>;
-  schedule?: Maybe<WorkoutUpdateManyInput>;
+export interface CoachUpdateManyWithoutTeamsInput {
+  create?: Maybe<CoachCreateWithoutTeamsInput[] | CoachCreateWithoutTeamsInput>;
+  delete?: Maybe<CoachWhereUniqueInput[] | CoachWhereUniqueInput>;
+  connect?: Maybe<CoachWhereUniqueInput[] | CoachWhereUniqueInput>;
+  set?: Maybe<CoachWhereUniqueInput[] | CoachWhereUniqueInput>;
+  disconnect?: Maybe<CoachWhereUniqueInput[] | CoachWhereUniqueInput>;
+  update?: Maybe<
+    | CoachUpdateWithWhereUniqueWithoutTeamsInput[]
+    | CoachUpdateWithWhereUniqueWithoutTeamsInput
+  >;
+  upsert?: Maybe<
+    | CoachUpsertWithWhereUniqueWithoutTeamsInput[]
+    | CoachUpsertWithWhereUniqueWithoutTeamsInput
+  >;
+  deleteMany?: Maybe<CoachScalarWhereInput[] | CoachScalarWhereInput>;
+  updateMany?: Maybe<
+    CoachUpdateManyWithWhereNestedInput[] | CoachUpdateManyWithWhereNestedInput
+  >;
 }
 
-export type WorkoutWhereUniqueInput = AtLeastOne<{
+export type CoachWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+  email?: Maybe<String>;
+}>;
+
+export interface CoachUpdateWithWhereUniqueWithoutTeamsInput {
+  where: CoachWhereUniqueInput;
+  data: CoachUpdateWithoutTeamsDataInput;
+}
+
+export type CommentWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
 }>;
 
-export interface PostUpdateManyWithoutUserInput {
-  create?: Maybe<PostCreateWithoutUserInput[] | PostCreateWithoutUserInput>;
+export interface CoachUpdateWithoutTeamsDataInput {
+  fullName?: Maybe<String>;
+  team?: Maybe<TeamUpdateOneWithoutCoahcesInput>;
+  email?: Maybe<String>;
+  password?: Maybe<String>;
+  teamKey?: Maybe<String>;
+  coachKey?: Maybe<String>;
+}
+
+export type HeadCoachWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
+
+export interface TeamUpdateOneWithoutCoahcesInput {
+  create?: Maybe<TeamCreateWithoutCoahcesInput>;
+  update?: Maybe<TeamUpdateWithoutCoahcesDataInput>;
+  upsert?: Maybe<TeamUpsertWithoutCoahcesInput>;
+  delete?: Maybe<Boolean>;
+  disconnect?: Maybe<Boolean>;
+  connect?: Maybe<TeamWhereUniqueInput>;
+}
+
+export interface PostUpdateInput {
+  coach?: Maybe<CoachUpdateOneRequiredInput>;
+  title?: Maybe<String>;
+  content?: Maybe<String>;
+  comments?: Maybe<CommentUpdateManyWithoutPostInput>;
+}
+
+export interface TeamUpdateWithoutCoahcesDataInput {
+  teamName?: Maybe<String>;
+  headCoach?: Maybe<HeadCoachUpdateOneWithoutTeamInput>;
+  athletes?: Maybe<AthleteUpdateManyWithoutTeamInput>;
+  subTeams?: Maybe<SubTeamUpdateManyInput>;
+  library?: Maybe<WorkoutUpdateManyInput>;
+  posts?: Maybe<PostUpdateManyInput>;
+  schedule?: Maybe<ScheduleUpdateOneWithoutTeamInput>;
+  phase?: Maybe<String>;
+  city?: Maybe<String>;
+  state?: Maybe<String>;
+  homeGym?: Maybe<String>;
+  teamKey?: Maybe<String>;
+  coachKey?: Maybe<String>;
+}
+
+export interface AthleteUpdateWithoutParentsDataInput {
+  fullName?: Maybe<String>;
+  email?: Maybe<String>;
+  password?: Maybe<String>;
+  stats?: Maybe<AthleteStatsUpdateManyWithoutUserInput>;
+  team?: Maybe<TeamUpdateOneWithoutAthletesInput>;
+  teamKey?: Maybe<String>;
+  library?: Maybe<WorkoutUpdateManyInput>;
+  logBook?: Maybe<LogItemUpdateManyWithoutUserInput>;
+  phase?: Maybe<String>;
+}
+
+export interface PostUpdateManyInput {
+  create?: Maybe<PostCreateInput[] | PostCreateInput>;
+  update?: Maybe<
+    | PostUpdateWithWhereUniqueNestedInput[]
+    | PostUpdateWithWhereUniqueNestedInput
+  >;
+  upsert?: Maybe<
+    | PostUpsertWithWhereUniqueNestedInput[]
+    | PostUpsertWithWhereUniqueNestedInput
+  >;
   delete?: Maybe<PostWhereUniqueInput[] | PostWhereUniqueInput>;
   connect?: Maybe<PostWhereUniqueInput[] | PostWhereUniqueInput>;
   set?: Maybe<PostWhereUniqueInput[] | PostWhereUniqueInput>;
   disconnect?: Maybe<PostWhereUniqueInput[] | PostWhereUniqueInput>;
-  update?: Maybe<
-    | PostUpdateWithWhereUniqueWithoutUserInput[]
-    | PostUpdateWithWhereUniqueWithoutUserInput
-  >;
-  upsert?: Maybe<
-    | PostUpsertWithWhereUniqueWithoutUserInput[]
-    | PostUpsertWithWhereUniqueWithoutUserInput
-  >;
   deleteMany?: Maybe<PostScalarWhereInput[] | PostScalarWhereInput>;
   updateMany?: Maybe<
     PostUpdateManyWithWhereNestedInput[] | PostUpdateManyWithWhereNestedInput
   >;
 }
 
-export interface UserCreateOneWithoutPostsInput {
-  create?: Maybe<UserCreateWithoutPostsInput>;
-  connect?: Maybe<UserWhereUniqueInput>;
+export interface ParentUpdateInput {
+  athlete?: Maybe<AthleteUpdateManyWithoutParentsInput>;
+  email?: Maybe<String>;
+  password?: Maybe<String>;
+  phoneNumber?: Maybe<String>;
 }
 
-export interface PostUpdateWithWhereUniqueWithoutUserInput {
+export interface PostUpdateWithWhereUniqueNestedInput {
   where: PostWhereUniqueInput;
-  data: PostUpdateWithoutUserDataInput;
+  data: PostUpdateDataInput;
 }
 
-export interface UserClimbingStatsCreateManyWithoutUserInput {
-  create?: Maybe<
-    | UserClimbingStatsCreateWithoutUserInput[]
-    | UserClimbingStatsCreateWithoutUserInput
-  >;
-  connect?: Maybe<
-    UserClimbingStatsWhereUniqueInput[] | UserClimbingStatsWhereUniqueInput
-  >;
+export interface ParentCreateInput {
+  id?: Maybe<ID_Input>;
+  athlete?: Maybe<AthleteCreateManyWithoutParentsInput>;
+  email: String;
+  password: String;
+  phoneNumber: String;
 }
 
-export interface PostUpdateWithoutUserDataInput {
+export interface PostUpdateDataInput {
+  coach?: Maybe<CoachUpdateOneRequiredInput>;
   title?: Maybe<String>;
   content?: Maybe<String>;
   comments?: Maybe<CommentUpdateManyWithoutPostInput>;
 }
 
-export interface PostWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  user?: Maybe<UserWhereInput>;
-  title?: Maybe<String>;
-  title_not?: Maybe<String>;
-  title_in?: Maybe<String[] | String>;
-  title_not_in?: Maybe<String[] | String>;
-  title_lt?: Maybe<String>;
-  title_lte?: Maybe<String>;
-  title_gt?: Maybe<String>;
-  title_gte?: Maybe<String>;
-  title_contains?: Maybe<String>;
-  title_not_contains?: Maybe<String>;
-  title_starts_with?: Maybe<String>;
-  title_not_starts_with?: Maybe<String>;
-  title_ends_with?: Maybe<String>;
-  title_not_ends_with?: Maybe<String>;
-  content?: Maybe<String>;
-  content_not?: Maybe<String>;
-  content_in?: Maybe<String[] | String>;
-  content_not_in?: Maybe<String[] | String>;
-  content_lt?: Maybe<String>;
-  content_lte?: Maybe<String>;
-  content_gt?: Maybe<String>;
-  content_gte?: Maybe<String>;
-  content_contains?: Maybe<String>;
-  content_not_contains?: Maybe<String>;
-  content_starts_with?: Maybe<String>;
-  content_not_starts_with?: Maybe<String>;
-  content_ends_with?: Maybe<String>;
-  content_not_ends_with?: Maybe<String>;
-  comments_every?: Maybe<CommentWhereInput>;
-  comments_some?: Maybe<CommentWhereInput>;
-  comments_none?: Maybe<CommentWhereInput>;
-  AND?: Maybe<PostWhereInput[] | PostWhereInput>;
-  OR?: Maybe<PostWhereInput[] | PostWhereInput>;
-  NOT?: Maybe<PostWhereInput[] | PostWhereInput>;
+export interface AthleteUpsertWithoutLogBookInput {
+  update: AthleteUpdateWithoutLogBookDataInput;
+  create: AthleteCreateWithoutLogBookInput;
+}
+
+export interface CoachUpdateOneRequiredInput {
+  create?: Maybe<CoachCreateInput>;
+  update?: Maybe<CoachUpdateDataInput>;
+  upsert?: Maybe<CoachUpsertNestedInput>;
+  connect?: Maybe<CoachWhereUniqueInput>;
+}
+
+export interface AthleteUpdateOneRequiredWithoutLogBookInput {
+  create?: Maybe<AthleteCreateWithoutLogBookInput>;
+  update?: Maybe<AthleteUpdateWithoutLogBookDataInput>;
+  upsert?: Maybe<AthleteUpsertWithoutLogBookInput>;
+  connect?: Maybe<AthleteWhereUniqueInput>;
+}
+
+export interface CoachUpdateDataInput {
+  fullName?: Maybe<String>;
+  team?: Maybe<TeamUpdateOneWithoutCoahcesInput>;
+  teams?: Maybe<SubTeamUpdateManyWithoutCoahcesInput>;
+  email?: Maybe<String>;
+  password?: Maybe<String>;
+  teamKey?: Maybe<String>;
+  coachKey?: Maybe<String>;
+}
+
+export interface AthleteCreateOneWithoutLogBookInput {
+  create?: Maybe<AthleteCreateWithoutLogBookInput>;
+  connect?: Maybe<AthleteWhereUniqueInput>;
+}
+
+export interface CoachUpsertNestedInput {
+  update: CoachUpdateDataInput;
+  create: CoachCreateInput;
+}
+
+export interface HeadCoachUpdateInput {
+  team?: Maybe<TeamUpdateOneWithoutHeadCoachInput>;
+  fullName?: Maybe<String>;
+  email?: Maybe<String>;
+  password?: Maybe<String>;
+  teamKey?: Maybe<String>;
+  coachKey?: Maybe<String>;
 }
 
 export interface CommentUpdateManyWithoutPostInput {
@@ -1730,114 +3392,61 @@ export interface CommentUpdateManyWithoutPostInput {
   >;
 }
 
-export interface LogItemWhereInput {
-  user?: Maybe<UserWhereInput>;
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  createdAt?: Maybe<DateTimeInput>;
-  createdAt_not?: Maybe<DateTimeInput>;
-  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_lt?: Maybe<DateTimeInput>;
-  createdAt_lte?: Maybe<DateTimeInput>;
-  createdAt_gt?: Maybe<DateTimeInput>;
-  createdAt_gte?: Maybe<DateTimeInput>;
-  title?: Maybe<String>;
-  title_not?: Maybe<String>;
-  title_in?: Maybe<String[] | String>;
-  title_not_in?: Maybe<String[] | String>;
-  title_lt?: Maybe<String>;
-  title_lte?: Maybe<String>;
-  title_gt?: Maybe<String>;
-  title_gte?: Maybe<String>;
-  title_contains?: Maybe<String>;
-  title_not_contains?: Maybe<String>;
-  title_starts_with?: Maybe<String>;
-  title_not_starts_with?: Maybe<String>;
-  title_ends_with?: Maybe<String>;
-  title_not_ends_with?: Maybe<String>;
-  description?: Maybe<String>;
-  description_not?: Maybe<String>;
-  description_in?: Maybe<String[] | String>;
-  description_not_in?: Maybe<String[] | String>;
-  description_lt?: Maybe<String>;
-  description_lte?: Maybe<String>;
-  description_gt?: Maybe<String>;
-  description_gte?: Maybe<String>;
-  description_contains?: Maybe<String>;
-  description_not_contains?: Maybe<String>;
-  description_starts_with?: Maybe<String>;
-  description_not_starts_with?: Maybe<String>;
-  description_ends_with?: Maybe<String>;
-  description_not_ends_with?: Maybe<String>;
-  comment?: Maybe<String>;
-  comment_not?: Maybe<String>;
-  comment_in?: Maybe<String[] | String>;
-  comment_not_in?: Maybe<String[] | String>;
-  comment_lt?: Maybe<String>;
-  comment_lte?: Maybe<String>;
-  comment_gt?: Maybe<String>;
-  comment_gte?: Maybe<String>;
-  comment_contains?: Maybe<String>;
-  comment_not_contains?: Maybe<String>;
-  comment_starts_with?: Maybe<String>;
-  comment_not_starts_with?: Maybe<String>;
-  comment_ends_with?: Maybe<String>;
-  comment_not_ends_with?: Maybe<String>;
-  AND?: Maybe<LogItemWhereInput[] | LogItemWhereInput>;
-  OR?: Maybe<LogItemWhereInput[] | LogItemWhereInput>;
-  NOT?: Maybe<LogItemWhereInput[] | LogItemWhereInput>;
-}
+export type WorkoutWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
 
 export interface CommentUpdateWithWhereUniqueWithoutPostInput {
   where: CommentWhereUniqueInput;
   data: CommentUpdateWithoutPostDataInput;
 }
 
-export interface UserUpdateWithoutUserClimbingStatsDataInput {
-  userName?: Maybe<String>;
-  fullName?: Maybe<String>;
-  name?: Maybe<String>;
-  email?: Maybe<String>;
-  password?: Maybe<String>;
-  city?: Maybe<String>;
-  state?: Maybe<String>;
-  homeGym?: Maybe<String>;
-  logBook?: Maybe<LogItemUpdateManyWithoutUserInput>;
-  posts?: Maybe<PostUpdateManyWithoutUserInput>;
-  userLevel?: Maybe<UserLevel>;
-  phase?: Maybe<String>;
-  schedule?: Maybe<WorkoutUpdateManyInput>;
+export interface ParentCreateManyWithoutAthleteInput {
+  create?: Maybe<
+    ParentCreateWithoutAthleteInput[] | ParentCreateWithoutAthleteInput
+  >;
+  connect?: Maybe<ParentWhereUniqueInput[] | ParentWhereUniqueInput>;
 }
 
 export interface CommentUpdateWithoutPostDataInput {
-  user?: Maybe<UserUpdateOneRequiredInput>;
+  coach?: Maybe<CoachUpdateOneInput>;
+  athlete?: Maybe<AthleteUpdateOneInput>;
   content?: Maybe<String>;
 }
 
-export interface UserUpdateManyMutationInput {
-  userName?: Maybe<String>;
-  fullName?: Maybe<String>;
-  name?: Maybe<String>;
-  email?: Maybe<String>;
-  password?: Maybe<String>;
-  city?: Maybe<String>;
-  state?: Maybe<String>;
-  homeGym?: Maybe<String>;
-  userLevel?: Maybe<UserLevel>;
-  phase?: Maybe<String>;
+export interface HeadCoachCreateOneWithoutTeamInput {
+  create?: Maybe<HeadCoachCreateWithoutTeamInput>;
+  connect?: Maybe<HeadCoachWhereUniqueInput>;
+}
+
+export interface CoachUpdateOneInput {
+  create?: Maybe<CoachCreateInput>;
+  update?: Maybe<CoachUpdateDataInput>;
+  upsert?: Maybe<CoachUpsertNestedInput>;
+  delete?: Maybe<Boolean>;
+  disconnect?: Maybe<Boolean>;
+  connect?: Maybe<CoachWhereUniqueInput>;
+}
+
+export interface SubTeamCreateManyWithoutCoahcesInput {
+  create?: Maybe<
+    SubTeamCreateWithoutCoahcesInput[] | SubTeamCreateWithoutCoahcesInput
+  >;
+  connect?: Maybe<SubTeamWhereUniqueInput[] | SubTeamWhereUniqueInput>;
+}
+
+export interface AthleteUpdateOneInput {
+  create?: Maybe<AthleteCreateInput>;
+  update?: Maybe<AthleteUpdateDataInput>;
+  upsert?: Maybe<AthleteUpsertNestedInput>;
+  delete?: Maybe<Boolean>;
+  disconnect?: Maybe<Boolean>;
+  connect?: Maybe<AthleteWhereUniqueInput>;
+}
+
+export interface TeamCreateOneWithoutHeadCoachInput {
+  create?: Maybe<TeamCreateWithoutHeadCoachInput>;
+  connect?: Maybe<TeamWhereUniqueInput>;
 }
 
 export interface CommentUpsertWithWhereUniqueWithoutPostInput {
@@ -1846,9 +3455,9 @@ export interface CommentUpsertWithWhereUniqueWithoutPostInput {
   create: CommentCreateWithoutPostInput;
 }
 
-export interface UserUpsertWithoutLogBookInput {
-  update: UserUpdateWithoutLogBookDataInput;
-  create: UserCreateWithoutLogBookInput;
+export interface WorkoutCreateManyInput {
+  create?: Maybe<WorkoutCreateInput[] | WorkoutCreateInput>;
+  connect?: Maybe<WorkoutWhereUniqueInput[] | WorkoutWhereUniqueInput>;
 }
 
 export interface CommentScalarWhereInput {
@@ -1885,9 +3494,9 @@ export interface CommentScalarWhereInput {
   NOT?: Maybe<CommentScalarWhereInput[] | CommentScalarWhereInput>;
 }
 
-export interface PostCreateOneWithoutCommentsInput {
-  create?: Maybe<PostCreateWithoutCommentsInput>;
-  connect?: Maybe<PostWhereUniqueInput>;
+export interface ResultCreateOneInput {
+  create?: Maybe<ResultCreateInput>;
+  connect?: Maybe<ResultWhereUniqueInput>;
 }
 
 export interface CommentUpdateManyWithWhereNestedInput {
@@ -1895,47 +3504,33 @@ export interface CommentUpdateManyWithWhereNestedInput {
   data: CommentUpdateManyDataInput;
 }
 
-export interface WorkoutCreateManyInput {
-  create?: Maybe<WorkoutCreateInput[] | WorkoutCreateInput>;
-  connect?: Maybe<WorkoutWhereUniqueInput[] | WorkoutWhereUniqueInput>;
+export interface SubTeamCreateInput {
+  id?: Maybe<ID_Input>;
+  headCoach: HeadCoachCreateOneInput;
+  ahtletes?: Maybe<AthleteCreateManyInput>;
+  coahces?: Maybe<CoachCreateManyWithoutTeamsInput>;
+  library?: Maybe<WorkoutCreateManyInput>;
+  posts?: Maybe<PostCreateManyInput>;
 }
 
 export interface CommentUpdateManyDataInput {
   content?: Maybe<String>;
 }
 
-export interface WorkoutUpdateManyMutationInput {
-  author?: Maybe<String>;
-  title?: Maybe<String>;
-  description?: Maybe<String>;
+export interface TeamCreateOneWithoutCoahcesInput {
+  create?: Maybe<TeamCreateWithoutCoahcesInput>;
+  connect?: Maybe<TeamWhereUniqueInput>;
 }
 
-export interface PostUpsertWithWhereUniqueWithoutUserInput {
+export interface PostUpsertWithWhereUniqueNestedInput {
   where: PostWhereUniqueInput;
-  update: PostUpdateWithoutUserDataInput;
-  create: PostCreateWithoutUserInput;
+  update: PostUpdateDataInput;
+  create: PostCreateInput;
 }
 
-export interface PostUpdateInput {
-  user?: Maybe<UserUpdateOneRequiredWithoutPostsInput>;
-  title?: Maybe<String>;
-  content?: Maybe<String>;
-  comments?: Maybe<CommentUpdateManyWithoutPostInput>;
-}
-
-export interface UserUpsertNestedInput {
-  update: UserUpdateDataInput;
-  create: UserCreateInput;
-}
-
-export interface PostUpdateManyDataInput {
-  title?: Maybe<String>;
-  content?: Maybe<String>;
-}
-
-export interface PostUpdateManyWithWhereNestedInput {
-  where: PostScalarWhereInput;
-  data: PostUpdateManyDataInput;
+export interface CoachCreateOneInput {
+  create?: Maybe<CoachCreateInput>;
+  connect?: Maybe<CoachWhereUniqueInput>;
 }
 
 export interface PostScalarWhereInput {
@@ -1986,31 +3581,7 @@ export interface PostScalarWhereInput {
   NOT?: Maybe<PostScalarWhereInput[] | PostScalarWhereInput>;
 }
 
-export interface LogItemUpdateInput {
-  user?: Maybe<UserUpdateOneRequiredWithoutLogBookInput>;
-  title?: Maybe<String>;
-  description?: Maybe<String>;
-  comment?: Maybe<String>;
-}
-
-export interface UserCreateWithoutUserClimbingStatsInput {
-  id?: Maybe<ID_Input>;
-  userName: String;
-  fullName: String;
-  name: String;
-  email: String;
-  password: String;
-  city: String;
-  state: String;
-  homeGym: String;
-  logBook?: Maybe<LogItemCreateManyWithoutUserInput>;
-  posts?: Maybe<PostCreateManyWithoutUserInput>;
-  userLevel: UserLevel;
-  phase?: Maybe<String>;
-  schedule?: Maybe<WorkoutCreateManyInput>;
-}
-
-export interface UserClimbingStatsWhereInput {
+export interface CommentWhereInput {
   id?: Maybe<ID_Input>;
   id_not?: Maybe<ID_Input>;
   id_in?: Maybe<ID_Input[] | ID_Input>;
@@ -2025,150 +3596,277 @@ export interface UserClimbingStatsWhereInput {
   id_not_starts_with?: Maybe<ID_Input>;
   id_ends_with?: Maybe<ID_Input>;
   id_not_ends_with?: Maybe<ID_Input>;
-  user?: Maybe<UserWhereInput>;
-  createdAt?: Maybe<DateTimeInput>;
-  createdAt_not?: Maybe<DateTimeInput>;
-  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_lt?: Maybe<DateTimeInput>;
-  createdAt_lte?: Maybe<DateTimeInput>;
-  createdAt_gt?: Maybe<DateTimeInput>;
-  createdAt_gte?: Maybe<DateTimeInput>;
-  apeIndex?: Maybe<Int>;
-  apeIndex_not?: Maybe<Int>;
-  apeIndex_in?: Maybe<Int[] | Int>;
-  apeIndex_not_in?: Maybe<Int[] | Int>;
-  apeIndex_lt?: Maybe<Int>;
-  apeIndex_lte?: Maybe<Int>;
-  apeIndex_gt?: Maybe<Int>;
-  apeIndex_gte?: Maybe<Int>;
-  height?: Maybe<Int>;
-  height_not?: Maybe<Int>;
-  height_in?: Maybe<Int[] | Int>;
-  height_not_in?: Maybe<Int[] | Int>;
-  height_lt?: Maybe<Int>;
-  height_lte?: Maybe<Int>;
-  height_gt?: Maybe<Int>;
-  height_gte?: Maybe<Int>;
-  weight?: Maybe<Int>;
-  weight_not?: Maybe<Int>;
-  weight_in?: Maybe<Int[] | Int>;
-  weight_not_in?: Maybe<Int[] | Int>;
-  weight_lt?: Maybe<Int>;
-  weight_lte?: Maybe<Int>;
-  weight_gt?: Maybe<Int>;
-  weight_gte?: Maybe<Int>;
-  maxVGrade?: Maybe<Int>;
-  maxVGrade_not?: Maybe<Int>;
-  maxVGrade_in?: Maybe<Int[] | Int>;
-  maxVGrade_not_in?: Maybe<Int[] | Int>;
-  maxVGrade_lt?: Maybe<Int>;
-  maxVGrade_lte?: Maybe<Int>;
-  maxVGrade_gt?: Maybe<Int>;
-  maxVGrade_gte?: Maybe<Int>;
-  maxSportGrade?: Maybe<String>;
-  maxSportGrade_not?: Maybe<String>;
-  maxSportGrade_in?: Maybe<String[] | String>;
-  maxSportGrade_not_in?: Maybe<String[] | String>;
-  maxSportGrade_lt?: Maybe<String>;
-  maxSportGrade_lte?: Maybe<String>;
-  maxSportGrade_gt?: Maybe<String>;
-  maxSportGrade_gte?: Maybe<String>;
-  maxSportGrade_contains?: Maybe<String>;
-  maxSportGrade_not_contains?: Maybe<String>;
-  maxSportGrade_starts_with?: Maybe<String>;
-  maxSportGrade_not_starts_with?: Maybe<String>;
-  maxSportGrade_ends_with?: Maybe<String>;
-  maxSportGrade_not_ends_with?: Maybe<String>;
-  maxEdgeLoad?: Maybe<Int>;
-  maxEdgeLoad_not?: Maybe<Int>;
-  maxEdgeLoad_in?: Maybe<Int[] | Int>;
-  maxEdgeLoad_not_in?: Maybe<Int[] | Int>;
-  maxEdgeLoad_lt?: Maybe<Int>;
-  maxEdgeLoad_lte?: Maybe<Int>;
-  maxEdgeLoad_gt?: Maybe<Int>;
-  maxEdgeLoad_gte?: Maybe<Int>;
-  maxEdgeTestSize?: Maybe<Int>;
-  maxEdgeTestSize_not?: Maybe<Int>;
-  maxEdgeTestSize_in?: Maybe<Int[] | Int>;
-  maxEdgeTestSize_not_in?: Maybe<Int[] | Int>;
-  maxEdgeTestSize_lt?: Maybe<Int>;
-  maxEdgeTestSize_lte?: Maybe<Int>;
-  maxEdgeTestSize_gt?: Maybe<Int>;
-  maxEdgeTestSize_gte?: Maybe<Int>;
-  SWREdge?: Maybe<Float>;
-  SWREdge_not?: Maybe<Float>;
-  SWREdge_in?: Maybe<Float[] | Float>;
-  SWREdge_not_in?: Maybe<Float[] | Float>;
-  SWREdge_lt?: Maybe<Float>;
-  SWREdge_lte?: Maybe<Float>;
-  SWREdge_gt?: Maybe<Float>;
-  SWREdge_gte?: Maybe<Float>;
-  maxPullLoad?: Maybe<Int>;
-  maxPullLoad_not?: Maybe<Int>;
-  maxPullLoad_in?: Maybe<Int[] | Int>;
-  maxPullLoad_not_in?: Maybe<Int[] | Int>;
-  maxPullLoad_lt?: Maybe<Int>;
-  maxPullLoad_lte?: Maybe<Int>;
-  maxPullLoad_gt?: Maybe<Int>;
-  maxPullLoad_gte?: Maybe<Int>;
-  SWRBar?: Maybe<Float>;
-  SWRBar_not?: Maybe<Float>;
-  SWRBar_in?: Maybe<Float[] | Float>;
-  SWRBar_not_in?: Maybe<Float[] | Float>;
-  SWRBar_lt?: Maybe<Float>;
-  SWRBar_lte?: Maybe<Float>;
-  SWRBar_gt?: Maybe<Float>;
-  SWRBar_gte?: Maybe<Float>;
-  oneArmHangLoadLeft?: Maybe<Int>;
-  oneArmHangLoadLeft_not?: Maybe<Int>;
-  oneArmHangLoadLeft_in?: Maybe<Int[] | Int>;
-  oneArmHangLoadLeft_not_in?: Maybe<Int[] | Int>;
-  oneArmHangLoadLeft_lt?: Maybe<Int>;
-  oneArmHangLoadLeft_lte?: Maybe<Int>;
-  oneArmHangLoadLeft_gt?: Maybe<Int>;
-  oneArmHangLoadLeft_gte?: Maybe<Int>;
-  oneArmHangLoadRight?: Maybe<Int>;
-  oneArmHangLoadRight_not?: Maybe<Int>;
-  oneArmHangLoadRight_in?: Maybe<Int[] | Int>;
-  oneArmHangLoadRight_not_in?: Maybe<Int[] | Int>;
-  oneArmHangLoadRight_lt?: Maybe<Int>;
-  oneArmHangLoadRight_lte?: Maybe<Int>;
-  oneArmHangLoadRight_gt?: Maybe<Int>;
-  oneArmHangLoadRight_gte?: Maybe<Int>;
-  oneArmHangSWR?: Maybe<Float>;
-  oneArmHangSWR_not?: Maybe<Float>;
-  oneArmHangSWR_in?: Maybe<Float[] | Float>;
-  oneArmHangSWR_not_in?: Maybe<Float[] | Float>;
-  oneArmHangSWR_lt?: Maybe<Float>;
-  oneArmHangSWR_lte?: Maybe<Float>;
-  oneArmHangSWR_gt?: Maybe<Float>;
-  oneArmHangSWR_gte?: Maybe<Float>;
-  goalVGrade?: Maybe<Int>;
-  goalVGrade_not?: Maybe<Int>;
-  goalVGrade_in?: Maybe<Int[] | Int>;
-  goalVGrade_not_in?: Maybe<Int[] | Int>;
-  goalVGrade_lt?: Maybe<Int>;
-  goalVGrade_lte?: Maybe<Int>;
-  goalVGrade_gt?: Maybe<Int>;
-  goalVGrade_gte?: Maybe<Int>;
-  goalSportGrade?: Maybe<String>;
-  goalSportGrade_not?: Maybe<String>;
-  goalSportGrade_in?: Maybe<String[] | String>;
-  goalSportGrade_not_in?: Maybe<String[] | String>;
-  goalSportGrade_lt?: Maybe<String>;
-  goalSportGrade_lte?: Maybe<String>;
-  goalSportGrade_gt?: Maybe<String>;
-  goalSportGrade_gte?: Maybe<String>;
-  goalSportGrade_contains?: Maybe<String>;
-  goalSportGrade_not_contains?: Maybe<String>;
-  goalSportGrade_starts_with?: Maybe<String>;
-  goalSportGrade_not_starts_with?: Maybe<String>;
-  goalSportGrade_ends_with?: Maybe<String>;
-  goalSportGrade_not_ends_with?: Maybe<String>;
-  AND?: Maybe<UserClimbingStatsWhereInput[] | UserClimbingStatsWhereInput>;
-  OR?: Maybe<UserClimbingStatsWhereInput[] | UserClimbingStatsWhereInput>;
-  NOT?: Maybe<UserClimbingStatsWhereInput[] | UserClimbingStatsWhereInput>;
+  post?: Maybe<PostWhereInput>;
+  coach?: Maybe<CoachWhereInput>;
+  athlete?: Maybe<AthleteWhereInput>;
+  content?: Maybe<String>;
+  content_not?: Maybe<String>;
+  content_in?: Maybe<String[] | String>;
+  content_not_in?: Maybe<String[] | String>;
+  content_lt?: Maybe<String>;
+  content_lte?: Maybe<String>;
+  content_gt?: Maybe<String>;
+  content_gte?: Maybe<String>;
+  content_contains?: Maybe<String>;
+  content_not_contains?: Maybe<String>;
+  content_starts_with?: Maybe<String>;
+  content_not_starts_with?: Maybe<String>;
+  content_ends_with?: Maybe<String>;
+  content_not_ends_with?: Maybe<String>;
+  AND?: Maybe<CommentWhereInput[] | CommentWhereInput>;
+  OR?: Maybe<CommentWhereInput[] | CommentWhereInput>;
+  NOT?: Maybe<CommentWhereInput[] | CommentWhereInput>;
+}
+
+export interface PostUpdateManyWithWhereNestedInput {
+  where: PostScalarWhereInput;
+  data: PostUpdateManyDataInput;
+}
+
+export interface LogItemSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<LogItemWhereInput>;
+  AND?: Maybe<LogItemSubscriptionWhereInput[] | LogItemSubscriptionWhereInput>;
+  OR?: Maybe<LogItemSubscriptionWhereInput[] | LogItemSubscriptionWhereInput>;
+  NOT?: Maybe<LogItemSubscriptionWhereInput[] | LogItemSubscriptionWhereInput>;
+}
+
+export interface PostUpdateManyDataInput {
+  title?: Maybe<String>;
+  content?: Maybe<String>;
+}
+
+export interface AthleteSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<AthleteWhereInput>;
+  AND?: Maybe<AthleteSubscriptionWhereInput[] | AthleteSubscriptionWhereInput>;
+  OR?: Maybe<AthleteSubscriptionWhereInput[] | AthleteSubscriptionWhereInput>;
+  NOT?: Maybe<AthleteSubscriptionWhereInput[] | AthleteSubscriptionWhereInput>;
+}
+
+export interface ScheduleUpdateOneWithoutTeamInput {
+  create?: Maybe<ScheduleCreateWithoutTeamInput>;
+  update?: Maybe<ScheduleUpdateWithoutTeamDataInput>;
+  upsert?: Maybe<ScheduleUpsertWithoutTeamInput>;
+  delete?: Maybe<Boolean>;
+  disconnect?: Maybe<Boolean>;
+  connect?: Maybe<ScheduleWhereUniqueInput>;
+}
+
+export interface TeamUpsertWithoutScheduleInput {
+  update: TeamUpdateWithoutScheduleDataInput;
+  create: TeamCreateWithoutScheduleInput;
+}
+
+export interface ScheduleUpdateWithoutTeamDataInput {
+  createdBy?: Maybe<CoachUpdateOneInput>;
+  athletes?: Maybe<AthleteUpdateManyInput>;
+}
+
+export interface ScheduleCreateInput {
+  id?: Maybe<ID_Input>;
+  createdBy?: Maybe<CoachCreateOneInput>;
+  team?: Maybe<TeamCreateOneWithoutScheduleInput>;
+  athletes?: Maybe<AthleteCreateManyInput>;
+}
+
+export interface ScheduleUpsertWithoutTeamInput {
+  update: ScheduleUpdateWithoutTeamDataInput;
+  create: ScheduleCreateWithoutTeamInput;
+}
+
+export interface ParentUpdateManyMutationInput {
+  email?: Maybe<String>;
+  password?: Maybe<String>;
+  phoneNumber?: Maybe<String>;
+}
+
+export interface TeamUpsertWithoutCoahcesInput {
+  update: TeamUpdateWithoutCoahcesDataInput;
+  create: TeamCreateWithoutCoahcesInput;
+}
+
+export interface AthleteCreateWithoutParentsInput {
+  id?: Maybe<ID_Input>;
+  fullName: String;
+  email: String;
+  password: String;
+  stats?: Maybe<AthleteStatsCreateManyWithoutUserInput>;
+  team?: Maybe<TeamCreateOneWithoutAthletesInput>;
+  teamKey: String;
+  library?: Maybe<WorkoutCreateManyInput>;
+  logBook?: Maybe<LogItemCreateManyWithoutUserInput>;
+  phase?: Maybe<String>;
+}
+
+export interface CoachUpsertWithWhereUniqueWithoutTeamsInput {
+  where: CoachWhereUniqueInput;
+  update: CoachUpdateWithoutTeamsDataInput;
+  create: CoachCreateWithoutTeamsInput;
+}
+
+export type ScheduleWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
+
+export interface CoachScalarWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  fullName?: Maybe<String>;
+  fullName_not?: Maybe<String>;
+  fullName_in?: Maybe<String[] | String>;
+  fullName_not_in?: Maybe<String[] | String>;
+  fullName_lt?: Maybe<String>;
+  fullName_lte?: Maybe<String>;
+  fullName_gt?: Maybe<String>;
+  fullName_gte?: Maybe<String>;
+  fullName_contains?: Maybe<String>;
+  fullName_not_contains?: Maybe<String>;
+  fullName_starts_with?: Maybe<String>;
+  fullName_not_starts_with?: Maybe<String>;
+  fullName_ends_with?: Maybe<String>;
+  fullName_not_ends_with?: Maybe<String>;
+  email?: Maybe<String>;
+  email_not?: Maybe<String>;
+  email_in?: Maybe<String[] | String>;
+  email_not_in?: Maybe<String[] | String>;
+  email_lt?: Maybe<String>;
+  email_lte?: Maybe<String>;
+  email_gt?: Maybe<String>;
+  email_gte?: Maybe<String>;
+  email_contains?: Maybe<String>;
+  email_not_contains?: Maybe<String>;
+  email_starts_with?: Maybe<String>;
+  email_not_starts_with?: Maybe<String>;
+  email_ends_with?: Maybe<String>;
+  email_not_ends_with?: Maybe<String>;
+  password?: Maybe<String>;
+  password_not?: Maybe<String>;
+  password_in?: Maybe<String[] | String>;
+  password_not_in?: Maybe<String[] | String>;
+  password_lt?: Maybe<String>;
+  password_lte?: Maybe<String>;
+  password_gt?: Maybe<String>;
+  password_gte?: Maybe<String>;
+  password_contains?: Maybe<String>;
+  password_not_contains?: Maybe<String>;
+  password_starts_with?: Maybe<String>;
+  password_not_starts_with?: Maybe<String>;
+  password_ends_with?: Maybe<String>;
+  password_not_ends_with?: Maybe<String>;
+  teamKey?: Maybe<String>;
+  teamKey_not?: Maybe<String>;
+  teamKey_in?: Maybe<String[] | String>;
+  teamKey_not_in?: Maybe<String[] | String>;
+  teamKey_lt?: Maybe<String>;
+  teamKey_lte?: Maybe<String>;
+  teamKey_gt?: Maybe<String>;
+  teamKey_gte?: Maybe<String>;
+  teamKey_contains?: Maybe<String>;
+  teamKey_not_contains?: Maybe<String>;
+  teamKey_starts_with?: Maybe<String>;
+  teamKey_not_starts_with?: Maybe<String>;
+  teamKey_ends_with?: Maybe<String>;
+  teamKey_not_ends_with?: Maybe<String>;
+  coachKey?: Maybe<String>;
+  coachKey_not?: Maybe<String>;
+  coachKey_in?: Maybe<String[] | String>;
+  coachKey_not_in?: Maybe<String[] | String>;
+  coachKey_lt?: Maybe<String>;
+  coachKey_lte?: Maybe<String>;
+  coachKey_gt?: Maybe<String>;
+  coachKey_gte?: Maybe<String>;
+  coachKey_contains?: Maybe<String>;
+  coachKey_not_contains?: Maybe<String>;
+  coachKey_starts_with?: Maybe<String>;
+  coachKey_not_starts_with?: Maybe<String>;
+  coachKey_ends_with?: Maybe<String>;
+  coachKey_not_ends_with?: Maybe<String>;
+  AND?: Maybe<CoachScalarWhereInput[] | CoachScalarWhereInput>;
+  OR?: Maybe<CoachScalarWhereInput[] | CoachScalarWhereInput>;
+  NOT?: Maybe<CoachScalarWhereInput[] | CoachScalarWhereInput>;
+}
+
+export interface HeadCoachUpdateManyMutationInput {
+  fullName?: Maybe<String>;
+  email?: Maybe<String>;
+  password?: Maybe<String>;
+  teamKey?: Maybe<String>;
+  coachKey?: Maybe<String>;
+}
+
+export interface CoachUpdateManyWithWhereNestedInput {
+  where: CoachScalarWhereInput;
+  data: CoachUpdateManyDataInput;
+}
+
+export interface CommentUpdateInput {
+  post?: Maybe<PostUpdateOneRequiredWithoutCommentsInput>;
+  coach?: Maybe<CoachUpdateOneInput>;
+  athlete?: Maybe<AthleteUpdateOneInput>;
+  content?: Maybe<String>;
+}
+
+export interface CoachUpdateManyDataInput {
+  fullName?: Maybe<String>;
+  email?: Maybe<String>;
+  password?: Maybe<String>;
+  teamKey?: Maybe<String>;
+  coachKey?: Maybe<String>;
+}
+
+export interface TeamCreateOneWithoutAthletesInput {
+  create?: Maybe<TeamCreateWithoutAthletesInput>;
+  connect?: Maybe<TeamWhereUniqueInput>;
+}
+
+export interface SubTeamUpsertWithWhereUniqueNestedInput {
+  where: SubTeamWhereUniqueInput;
+  update: SubTeamUpdateDataInput;
+  create: SubTeamCreateInput;
+}
+
+export interface HeadCoachCreateOneInput {
+  create?: Maybe<HeadCoachCreateInput>;
+  connect?: Maybe<HeadCoachWhereUniqueInput>;
+}
+
+export interface SubTeamScalarWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  AND?: Maybe<SubTeamScalarWhereInput[] | SubTeamScalarWhereInput>;
+  OR?: Maybe<SubTeamScalarWhereInput[] | SubTeamScalarWhereInput>;
+  NOT?: Maybe<SubTeamScalarWhereInput[] | SubTeamScalarWhereInput>;
 }
 
 export interface LogItemCreateManyWithoutUserInput {
@@ -2176,6 +3874,365 @@ export interface LogItemCreateManyWithoutUserInput {
     LogItemCreateWithoutUserInput[] | LogItemCreateWithoutUserInput
   >;
   connect?: Maybe<LogItemWhereUniqueInput[] | LogItemWhereUniqueInput>;
+}
+
+export interface TeamUpsertWithoutHeadCoachInput {
+  update: TeamUpdateWithoutHeadCoachDataInput;
+  create: TeamCreateWithoutHeadCoachInput;
+}
+
+export interface CoachCreateManyWithoutTeamsInput {
+  create?: Maybe<CoachCreateWithoutTeamsInput[] | CoachCreateWithoutTeamsInput>;
+  connect?: Maybe<CoachWhereUniqueInput[] | CoachWhereUniqueInput>;
+}
+
+export interface HeadCoachUpsertNestedInput {
+  update: HeadCoachUpdateDataInput;
+  create: HeadCoachCreateInput;
+}
+
+export interface WorkoutSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<WorkoutWhereInput>;
+  AND?: Maybe<WorkoutSubscriptionWhereInput[] | WorkoutSubscriptionWhereInput>;
+  OR?: Maybe<WorkoutSubscriptionWhereInput[] | WorkoutSubscriptionWhereInput>;
+  NOT?: Maybe<WorkoutSubscriptionWhereInput[] | WorkoutSubscriptionWhereInput>;
+}
+
+export interface SubTeamUpsertWithWhereUniqueWithoutCoahcesInput {
+  where: SubTeamWhereUniqueInput;
+  update: SubTeamUpdateWithoutCoahcesDataInput;
+  create: SubTeamCreateWithoutCoahcesInput;
+}
+
+export interface CommentSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<CommentWhereInput>;
+  AND?: Maybe<CommentSubscriptionWhereInput[] | CommentSubscriptionWhereInput>;
+  OR?: Maybe<CommentSubscriptionWhereInput[] | CommentSubscriptionWhereInput>;
+  NOT?: Maybe<CommentSubscriptionWhereInput[] | CommentSubscriptionWhereInput>;
+}
+
+export interface CoachUpsertWithWhereUniqueWithoutTeamInput {
+  where: CoachWhereUniqueInput;
+  update: CoachUpdateWithoutTeamDataInput;
+  create: CoachCreateWithoutTeamInput;
+}
+
+export interface ScheduleUpdateInput {
+  createdBy?: Maybe<CoachUpdateOneInput>;
+  team?: Maybe<TeamUpdateOneWithoutScheduleInput>;
+  athletes?: Maybe<AthleteUpdateManyInput>;
+}
+
+export interface TeamUpsertWithoutAthletesInput {
+  update: TeamUpdateWithoutAthletesDataInput;
+  create: TeamCreateWithoutAthletesInput;
+}
+
+export interface AthleteUpdateWithWhereUniqueWithoutParentsInput {
+  where: AthleteWhereUniqueInput;
+  data: AthleteUpdateWithoutParentsDataInput;
+}
+
+export interface AthleteUpdateManyMutationInput {
+  fullName?: Maybe<String>;
+  email?: Maybe<String>;
+  password?: Maybe<String>;
+  teamKey?: Maybe<String>;
+  phase?: Maybe<String>;
+}
+
+export interface AthleteCreateWithoutLogBookInput {
+  id?: Maybe<ID_Input>;
+  fullName: String;
+  email: String;
+  password: String;
+  stats?: Maybe<AthleteStatsCreateManyWithoutUserInput>;
+  parents?: Maybe<ParentCreateManyWithoutAthleteInput>;
+  team?: Maybe<TeamCreateOneWithoutAthletesInput>;
+  teamKey: String;
+  library?: Maybe<WorkoutCreateManyInput>;
+  phase?: Maybe<String>;
+}
+
+export interface CoachUpdateManyMutationInput {
+  fullName?: Maybe<String>;
+  email?: Maybe<String>;
+  password?: Maybe<String>;
+  teamKey?: Maybe<String>;
+  coachKey?: Maybe<String>;
+}
+
+export interface AthleteStatsCreateManyWithoutUserInput {
+  create?: Maybe<
+    AthleteStatsCreateWithoutUserInput[] | AthleteStatsCreateWithoutUserInput
+  >;
+  connect?: Maybe<
+    AthleteStatsWhereUniqueInput[] | AthleteStatsWhereUniqueInput
+  >;
+}
+
+export interface CoachUpdateInput {
+  fullName?: Maybe<String>;
+  team?: Maybe<TeamUpdateOneWithoutCoahcesInput>;
+  teams?: Maybe<SubTeamUpdateManyWithoutCoahcesInput>;
+  email?: Maybe<String>;
+  password?: Maybe<String>;
+  teamKey?: Maybe<String>;
+  coachKey?: Maybe<String>;
+}
+
+export interface AthleteCreateManyWithoutTeamInput {
+  create?: Maybe<
+    AthleteCreateWithoutTeamInput[] | AthleteCreateWithoutTeamInput
+  >;
+  connect?: Maybe<AthleteWhereUniqueInput[] | AthleteWhereUniqueInput>;
+}
+
+export interface AthleteStatsCreateInput {
+  id?: Maybe<ID_Input>;
+  user: AthleteCreateOneWithoutStatsInput;
+  apeIndex: Int;
+  height: Int;
+  weight: Int;
+  maxVGrade: Int;
+  maxSportGrade: String;
+  maxEdgeLoad: Int;
+  maxEdgeTestSize: Int;
+  SWREdge?: Maybe<Float>;
+  maxPullLoad: Int;
+  SWRBar?: Maybe<Float>;
+  oneArmHangLoadLeft: Int;
+  oneArmHangLoadRight: Int;
+  oneArmHangSWR: Float;
+  goalVGrade: Int;
+  goalSportGrade: String;
+}
+
+export interface PostCreateManyInput {
+  create?: Maybe<PostCreateInput[] | PostCreateInput>;
+  connect?: Maybe<PostWhereUniqueInput[] | PostWhereUniqueInput>;
+}
+
+export interface AthleteCreateOneWithoutStatsInput {
+  create?: Maybe<AthleteCreateWithoutStatsInput>;
+  connect?: Maybe<AthleteWhereUniqueInput>;
+}
+
+export interface TeamUpdateInput {
+  teamName?: Maybe<String>;
+  headCoach?: Maybe<HeadCoachUpdateOneWithoutTeamInput>;
+  athletes?: Maybe<AthleteUpdateManyWithoutTeamInput>;
+  coahces?: Maybe<CoachUpdateManyWithoutTeamInput>;
+  subTeams?: Maybe<SubTeamUpdateManyInput>;
+  library?: Maybe<WorkoutUpdateManyInput>;
+  posts?: Maybe<PostUpdateManyInput>;
+  schedule?: Maybe<ScheduleUpdateOneWithoutTeamInput>;
+  phase?: Maybe<String>;
+  city?: Maybe<String>;
+  state?: Maybe<String>;
+  homeGym?: Maybe<String>;
+  teamKey?: Maybe<String>;
+  coachKey?: Maybe<String>;
+}
+
+export interface AthleteCreateWithoutStatsInput {
+  id?: Maybe<ID_Input>;
+  fullName: String;
+  email: String;
+  password: String;
+  parents?: Maybe<ParentCreateManyWithoutAthleteInput>;
+  team?: Maybe<TeamCreateOneWithoutAthletesInput>;
+  teamKey: String;
+  library?: Maybe<WorkoutCreateManyInput>;
+  logBook?: Maybe<LogItemCreateManyWithoutUserInput>;
+  phase?: Maybe<String>;
+}
+
+export interface AthleteWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  fullName?: Maybe<String>;
+  fullName_not?: Maybe<String>;
+  fullName_in?: Maybe<String[] | String>;
+  fullName_not_in?: Maybe<String[] | String>;
+  fullName_lt?: Maybe<String>;
+  fullName_lte?: Maybe<String>;
+  fullName_gt?: Maybe<String>;
+  fullName_gte?: Maybe<String>;
+  fullName_contains?: Maybe<String>;
+  fullName_not_contains?: Maybe<String>;
+  fullName_starts_with?: Maybe<String>;
+  fullName_not_starts_with?: Maybe<String>;
+  fullName_ends_with?: Maybe<String>;
+  fullName_not_ends_with?: Maybe<String>;
+  email?: Maybe<String>;
+  email_not?: Maybe<String>;
+  email_in?: Maybe<String[] | String>;
+  email_not_in?: Maybe<String[] | String>;
+  email_lt?: Maybe<String>;
+  email_lte?: Maybe<String>;
+  email_gt?: Maybe<String>;
+  email_gte?: Maybe<String>;
+  email_contains?: Maybe<String>;
+  email_not_contains?: Maybe<String>;
+  email_starts_with?: Maybe<String>;
+  email_not_starts_with?: Maybe<String>;
+  email_ends_with?: Maybe<String>;
+  email_not_ends_with?: Maybe<String>;
+  password?: Maybe<String>;
+  password_not?: Maybe<String>;
+  password_in?: Maybe<String[] | String>;
+  password_not_in?: Maybe<String[] | String>;
+  password_lt?: Maybe<String>;
+  password_lte?: Maybe<String>;
+  password_gt?: Maybe<String>;
+  password_gte?: Maybe<String>;
+  password_contains?: Maybe<String>;
+  password_not_contains?: Maybe<String>;
+  password_starts_with?: Maybe<String>;
+  password_not_starts_with?: Maybe<String>;
+  password_ends_with?: Maybe<String>;
+  password_not_ends_with?: Maybe<String>;
+  stats_every?: Maybe<AthleteStatsWhereInput>;
+  stats_some?: Maybe<AthleteStatsWhereInput>;
+  stats_none?: Maybe<AthleteStatsWhereInput>;
+  parents_every?: Maybe<ParentWhereInput>;
+  parents_some?: Maybe<ParentWhereInput>;
+  parents_none?: Maybe<ParentWhereInput>;
+  team?: Maybe<TeamWhereInput>;
+  teamKey?: Maybe<String>;
+  teamKey_not?: Maybe<String>;
+  teamKey_in?: Maybe<String[] | String>;
+  teamKey_not_in?: Maybe<String[] | String>;
+  teamKey_lt?: Maybe<String>;
+  teamKey_lte?: Maybe<String>;
+  teamKey_gt?: Maybe<String>;
+  teamKey_gte?: Maybe<String>;
+  teamKey_contains?: Maybe<String>;
+  teamKey_not_contains?: Maybe<String>;
+  teamKey_starts_with?: Maybe<String>;
+  teamKey_not_starts_with?: Maybe<String>;
+  teamKey_ends_with?: Maybe<String>;
+  teamKey_not_ends_with?: Maybe<String>;
+  library_every?: Maybe<WorkoutWhereInput>;
+  library_some?: Maybe<WorkoutWhereInput>;
+  library_none?: Maybe<WorkoutWhereInput>;
+  logBook_every?: Maybe<LogItemWhereInput>;
+  logBook_some?: Maybe<LogItemWhereInput>;
+  logBook_none?: Maybe<LogItemWhereInput>;
+  phase?: Maybe<String>;
+  phase_not?: Maybe<String>;
+  phase_in?: Maybe<String[] | String>;
+  phase_not_in?: Maybe<String[] | String>;
+  phase_lt?: Maybe<String>;
+  phase_lte?: Maybe<String>;
+  phase_gt?: Maybe<String>;
+  phase_gte?: Maybe<String>;
+  phase_contains?: Maybe<String>;
+  phase_not_contains?: Maybe<String>;
+  phase_starts_with?: Maybe<String>;
+  phase_not_starts_with?: Maybe<String>;
+  phase_ends_with?: Maybe<String>;
+  phase_not_ends_with?: Maybe<String>;
+  AND?: Maybe<AthleteWhereInput[] | AthleteWhereInput>;
+  OR?: Maybe<AthleteWhereInput[] | AthleteWhereInput>;
+  NOT?: Maybe<AthleteWhereInput[] | AthleteWhereInput>;
+}
+
+export interface AthleteUpsertWithoutStatsInput {
+  update: AthleteUpdateWithoutStatsDataInput;
+  create: AthleteCreateWithoutStatsInput;
+}
+
+export interface AthleteUpdateWithoutStatsDataInput {
+  fullName?: Maybe<String>;
+  email?: Maybe<String>;
+  password?: Maybe<String>;
+  parents?: Maybe<ParentUpdateManyWithoutAthleteInput>;
+  team?: Maybe<TeamUpdateOneWithoutAthletesInput>;
+  teamKey?: Maybe<String>;
+  library?: Maybe<WorkoutUpdateManyInput>;
+  logBook?: Maybe<LogItemUpdateManyWithoutUserInput>;
+  phase?: Maybe<String>;
+}
+
+export interface AthleteUpdateOneRequiredWithoutStatsInput {
+  create?: Maybe<AthleteCreateWithoutStatsInput>;
+  update?: Maybe<AthleteUpdateWithoutStatsDataInput>;
+  upsert?: Maybe<AthleteUpsertWithoutStatsInput>;
+  connect?: Maybe<AthleteWhereUniqueInput>;
+}
+
+export interface AthleteStatsUpdateInput {
+  user?: Maybe<AthleteUpdateOneRequiredWithoutStatsInput>;
+  apeIndex?: Maybe<Int>;
+  height?: Maybe<Int>;
+  weight?: Maybe<Int>;
+  maxVGrade?: Maybe<Int>;
+  maxSportGrade?: Maybe<String>;
+  maxEdgeLoad?: Maybe<Int>;
+  maxEdgeTestSize?: Maybe<Int>;
+  SWREdge?: Maybe<Float>;
+  maxPullLoad?: Maybe<Int>;
+  SWRBar?: Maybe<Float>;
+  oneArmHangLoadLeft?: Maybe<Int>;
+  oneArmHangLoadRight?: Maybe<Int>;
+  oneArmHangSWR?: Maybe<Float>;
+  goalVGrade?: Maybe<Int>;
+  goalSportGrade?: Maybe<String>;
+}
+
+export interface PostUpsertWithoutCommentsInput {
+  update: PostUpdateWithoutCommentsDataInput;
+  create: PostCreateWithoutCommentsInput;
+}
+
+export interface ResultUpdateInput {
+  rpe?: Maybe<Int>;
+  compResult?: Maybe<Int>;
+  sessionResult?: Maybe<String>;
+  athlete?: Maybe<AthleteUpdateOneRequiredInput>;
+}
+
+export interface PostSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<PostWhereInput>;
+  AND?: Maybe<PostSubscriptionWhereInput[] | PostSubscriptionWhereInput>;
+  OR?: Maybe<PostSubscriptionWhereInput[] | PostSubscriptionWhereInput>;
+  NOT?: Maybe<PostSubscriptionWhereInput[] | PostSubscriptionWhereInput>;
+}
+
+export interface AthleteCreateOneInput {
+  create?: Maybe<AthleteCreateInput>;
+  connect?: Maybe<AthleteWhereUniqueInput>;
+}
+
+export interface CoachCreateManyWithoutTeamInput {
+  create?: Maybe<CoachCreateWithoutTeamInput[] | CoachCreateWithoutTeamInput>;
+  connect?: Maybe<CoachWhereUniqueInput[] | CoachWhereUniqueInput>;
 }
 
 export interface NodeNode {
@@ -2207,123 +4264,23 @@ export interface WorkoutPreviousValuesSubscription
   description: () => Promise<AsyncIterator<String>>;
 }
 
-export interface LogItemConnection {
-  pageInfo: PageInfo;
-  edges: LogItemEdge[];
-}
-
-export interface LogItemConnectionPromise
-  extends Promise<LogItemConnection>,
-    Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<LogItemEdge>>() => T;
-  aggregate: <T = AggregateLogItemPromise>() => T;
-}
-
-export interface LogItemConnectionSubscription
-  extends Promise<AsyncIterator<LogItemConnection>>,
-    Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<LogItemEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateLogItemSubscription>() => T;
-}
-
-export interface UserPreviousValues {
-  id: ID_Output;
-  userName: String;
-  fullName: String;
-  name: String;
-  email: String;
-  password: String;
-  city: String;
-  state: String;
-  homeGym: String;
-  userLevel: UserLevel;
-  phase?: String;
-}
-
-export interface UserPreviousValuesPromise
-  extends Promise<UserPreviousValues>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  userName: () => Promise<String>;
-  fullName: () => Promise<String>;
-  name: () => Promise<String>;
-  email: () => Promise<String>;
-  password: () => Promise<String>;
-  city: () => Promise<String>;
-  state: () => Promise<String>;
-  homeGym: () => Promise<String>;
-  userLevel: () => Promise<UserLevel>;
-  phase: () => Promise<String>;
-}
-
-export interface UserPreviousValuesSubscription
-  extends Promise<AsyncIterator<UserPreviousValues>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  userName: () => Promise<AsyncIterator<String>>;
-  fullName: () => Promise<AsyncIterator<String>>;
-  name: () => Promise<AsyncIterator<String>>;
-  email: () => Promise<AsyncIterator<String>>;
-  password: () => Promise<AsyncIterator<String>>;
-  city: () => Promise<AsyncIterator<String>>;
-  state: () => Promise<AsyncIterator<String>>;
-  homeGym: () => Promise<AsyncIterator<String>>;
-  userLevel: () => Promise<AsyncIterator<UserLevel>>;
-  phase: () => Promise<AsyncIterator<String>>;
-}
-
-export interface AggregateComment {
+export interface AggregateAthlete {
   count: Int;
 }
 
-export interface AggregateCommentPromise
-  extends Promise<AggregateComment>,
+export interface AggregateAthletePromise
+  extends Promise<AggregateAthlete>,
     Fragmentable {
   count: () => Promise<Int>;
 }
 
-export interface AggregateCommentSubscription
-  extends Promise<AsyncIterator<AggregateComment>>,
+export interface AggregateAthleteSubscription
+  extends Promise<AsyncIterator<AggregateAthlete>>,
     Fragmentable {
   count: () => Promise<AsyncIterator<Int>>;
 }
 
-export interface BatchPayload {
-  count: Long;
-}
-
-export interface BatchPayloadPromise
-  extends Promise<BatchPayload>,
-    Fragmentable {
-  count: () => Promise<Long>;
-}
-
-export interface BatchPayloadSubscription
-  extends Promise<AsyncIterator<BatchPayload>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Long>>;
-}
-
-export interface CommentEdge {
-  node: Comment;
-  cursor: String;
-}
-
-export interface CommentEdgePromise extends Promise<CommentEdge>, Fragmentable {
-  node: <T = CommentPromise>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface CommentEdgeSubscription
-  extends Promise<AsyncIterator<CommentEdge>>,
-    Fragmentable {
-  node: <T = CommentSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface UserClimbingStatsPreviousValues {
+export interface AthleteStats {
   id: ID_Output;
   createdAt: DateTimeOutput;
   apeIndex: Int;
@@ -2343,10 +4300,11 @@ export interface UserClimbingStatsPreviousValues {
   goalSportGrade: String;
 }
 
-export interface UserClimbingStatsPreviousValuesPromise
-  extends Promise<UserClimbingStatsPreviousValues>,
+export interface AthleteStatsPromise
+  extends Promise<AthleteStats>,
     Fragmentable {
   id: () => Promise<ID_Output>;
+  user: <T = AthletePromise>() => T;
   createdAt: () => Promise<DateTimeOutput>;
   apeIndex: () => Promise<Int>;
   height: () => Promise<Int>;
@@ -2365,10 +4323,11 @@ export interface UserClimbingStatsPreviousValuesPromise
   goalSportGrade: () => Promise<String>;
 }
 
-export interface UserClimbingStatsPreviousValuesSubscription
-  extends Promise<AsyncIterator<UserClimbingStatsPreviousValues>>,
+export interface AthleteStatsSubscription
+  extends Promise<AsyncIterator<AthleteStats>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
+  user: <T = AthleteSubscription>() => T;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   apeIndex: () => Promise<AsyncIterator<Int>>;
   height: () => Promise<AsyncIterator<Int>>;
@@ -2387,29 +4346,97 @@ export interface UserClimbingStatsPreviousValuesSubscription
   goalSportGrade: () => Promise<AsyncIterator<String>>;
 }
 
-export interface UserClimbingStatsSubscriptionPayload {
-  mutation: MutationType;
-  node: UserClimbingStats;
-  updatedFields: String[];
-  previousValues: UserClimbingStatsPreviousValues;
+export interface AthleteStatsNullablePromise
+  extends Promise<AthleteStats | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  user: <T = AthletePromise>() => T;
+  createdAt: () => Promise<DateTimeOutput>;
+  apeIndex: () => Promise<Int>;
+  height: () => Promise<Int>;
+  weight: () => Promise<Int>;
+  maxVGrade: () => Promise<Int>;
+  maxSportGrade: () => Promise<String>;
+  maxEdgeLoad: () => Promise<Int>;
+  maxEdgeTestSize: () => Promise<Int>;
+  SWREdge: () => Promise<Float>;
+  maxPullLoad: () => Promise<Int>;
+  SWRBar: () => Promise<Float>;
+  oneArmHangLoadLeft: () => Promise<Int>;
+  oneArmHangLoadRight: () => Promise<Int>;
+  oneArmHangSWR: () => Promise<Float>;
+  goalVGrade: () => Promise<Int>;
+  goalSportGrade: () => Promise<String>;
 }
 
-export interface UserClimbingStatsSubscriptionPayloadPromise
-  extends Promise<UserClimbingStatsSubscriptionPayload>,
-    Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = UserClimbingStatsPromise>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = UserClimbingStatsPreviousValuesPromise>() => T;
+export interface AthleteEdge {
+  node: Athlete;
+  cursor: String;
 }
 
-export interface UserClimbingStatsSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<UserClimbingStatsSubscriptionPayload>>,
+export interface AthleteEdgePromise extends Promise<AthleteEdge>, Fragmentable {
+  node: <T = AthletePromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface AthleteEdgeSubscription
+  extends Promise<AsyncIterator<AthleteEdge>>,
     Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = UserClimbingStatsSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = UserClimbingStatsPreviousValuesSubscription>() => T;
+  node: <T = AthleteSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface TeamPreviousValues {
+  id: ID_Output;
+  teamName: String;
+  phase?: String;
+  city: String;
+  state: String;
+  homeGym: String;
+  teamKey?: String;
+  coachKey?: String;
+}
+
+export interface TeamPreviousValuesPromise
+  extends Promise<TeamPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  teamName: () => Promise<String>;
+  phase: () => Promise<String>;
+  city: () => Promise<String>;
+  state: () => Promise<String>;
+  homeGym: () => Promise<String>;
+  teamKey: () => Promise<String>;
+  coachKey: () => Promise<String>;
+}
+
+export interface TeamPreviousValuesSubscription
+  extends Promise<AsyncIterator<TeamPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  teamName: () => Promise<AsyncIterator<String>>;
+  phase: () => Promise<AsyncIterator<String>>;
+  city: () => Promise<AsyncIterator<String>>;
+  state: () => Promise<AsyncIterator<String>>;
+  homeGym: () => Promise<AsyncIterator<String>>;
+  teamKey: () => Promise<AsyncIterator<String>>;
+  coachKey: () => Promise<AsyncIterator<String>>;
+}
+
+export interface BatchPayload {
+  count: Long;
+}
+
+export interface BatchPayloadPromise
+  extends Promise<BatchPayload>,
+    Fragmentable {
+  count: () => Promise<Long>;
+}
+
+export interface BatchPayloadSubscription
+  extends Promise<AsyncIterator<BatchPayload>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Long>>;
 }
 
 export interface WorkoutEdge {
@@ -2452,249 +4479,602 @@ export interface PageInfoSubscription
   endCursor: () => Promise<AsyncIterator<String>>;
 }
 
-export interface AggregateUserClimbingStats {
+export interface AggregateTeam {
   count: Int;
 }
 
-export interface AggregateUserClimbingStatsPromise
-  extends Promise<AggregateUserClimbingStats>,
+export interface AggregateTeamPromise
+  extends Promise<AggregateTeam>,
     Fragmentable {
   count: () => Promise<Int>;
 }
 
-export interface AggregateUserClimbingStatsSubscription
-  extends Promise<AsyncIterator<AggregateUserClimbingStats>>,
+export interface AggregateTeamSubscription
+  extends Promise<AsyncIterator<AggregateTeam>>,
     Fragmentable {
   count: () => Promise<AsyncIterator<Int>>;
 }
 
-export interface CommentConnection {
+export interface AthleteConnection {
   pageInfo: PageInfo;
-  edges: CommentEdge[];
+  edges: AthleteEdge[];
 }
 
-export interface CommentConnectionPromise
-  extends Promise<CommentConnection>,
+export interface AthleteConnectionPromise
+  extends Promise<AthleteConnection>,
     Fragmentable {
   pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<CommentEdge>>() => T;
-  aggregate: <T = AggregateCommentPromise>() => T;
+  edges: <T = FragmentableArray<AthleteEdge>>() => T;
+  aggregate: <T = AggregateAthletePromise>() => T;
 }
 
-export interface CommentConnectionSubscription
-  extends Promise<AsyncIterator<CommentConnection>>,
+export interface AthleteConnectionSubscription
+  extends Promise<AsyncIterator<AthleteConnection>>,
     Fragmentable {
   pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<CommentEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateCommentSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<AthleteEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateAthleteSubscription>() => T;
 }
 
-export interface UserClimbingStatsConnection {
+export interface TeamConnection {
   pageInfo: PageInfo;
-  edges: UserClimbingStatsEdge[];
+  edges: TeamEdge[];
 }
 
-export interface UserClimbingStatsConnectionPromise
-  extends Promise<UserClimbingStatsConnection>,
+export interface TeamConnectionPromise
+  extends Promise<TeamConnection>,
     Fragmentable {
   pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<UserClimbingStatsEdge>>() => T;
-  aggregate: <T = AggregateUserClimbingStatsPromise>() => T;
+  edges: <T = FragmentableArray<TeamEdge>>() => T;
+  aggregate: <T = AggregateTeamPromise>() => T;
 }
 
-export interface UserClimbingStatsConnectionSubscription
-  extends Promise<AsyncIterator<UserClimbingStatsConnection>>,
+export interface TeamConnectionSubscription
+  extends Promise<AsyncIterator<TeamConnection>>,
     Fragmentable {
   pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<UserClimbingStatsEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateUserClimbingStatsSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<TeamEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateTeamSubscription>() => T;
 }
 
-export interface User {
+export interface Result {
   id: ID_Output;
-  userName: String;
-  fullName: String;
-  name: String;
-  email: String;
-  password: String;
-  city: String;
-  state: String;
-  homeGym: String;
-  userLevel: UserLevel;
-  phase?: String;
+  rpe?: Int;
+  compResult?: Int;
+  sessionResult?: String;
 }
 
-export interface UserPromise extends Promise<User>, Fragmentable {
+export interface ResultPromise extends Promise<Result>, Fragmentable {
   id: () => Promise<ID_Output>;
-  userName: () => Promise<String>;
-  fullName: () => Promise<String>;
-  name: () => Promise<String>;
-  email: () => Promise<String>;
-  password: () => Promise<String>;
-  city: () => Promise<String>;
-  state: () => Promise<String>;
-  homeGym: () => Promise<String>;
-  logBook: <T = FragmentableArray<LogItem>>(args?: {
-    where?: LogItemWhereInput;
-    orderBy?: LogItemOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  userClimbingStats: <T = FragmentableArray<UserClimbingStats>>(args?: {
-    where?: UserClimbingStatsWhereInput;
-    orderBy?: UserClimbingStatsOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  posts: <T = FragmentableArray<Post>>(args?: {
-    where?: PostWhereInput;
-    orderBy?: PostOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  userLevel: () => Promise<UserLevel>;
-  phase: () => Promise<String>;
-  schedule: <T = FragmentableArray<Workout>>(args?: {
-    where?: WorkoutWhereInput;
-    orderBy?: WorkoutOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
+  rpe: () => Promise<Int>;
+  compResult: () => Promise<Int>;
+  sessionResult: () => Promise<String>;
+  athlete: <T = AthletePromise>() => T;
 }
 
-export interface UserSubscription
-  extends Promise<AsyncIterator<User>>,
+export interface ResultSubscription
+  extends Promise<AsyncIterator<Result>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
-  userName: () => Promise<AsyncIterator<String>>;
-  fullName: () => Promise<AsyncIterator<String>>;
-  name: () => Promise<AsyncIterator<String>>;
-  email: () => Promise<AsyncIterator<String>>;
-  password: () => Promise<AsyncIterator<String>>;
-  city: () => Promise<AsyncIterator<String>>;
-  state: () => Promise<AsyncIterator<String>>;
-  homeGym: () => Promise<AsyncIterator<String>>;
-  logBook: <T = Promise<AsyncIterator<LogItemSubscription>>>(args?: {
-    where?: LogItemWhereInput;
-    orderBy?: LogItemOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  userClimbingStats: <
-    T = Promise<AsyncIterator<UserClimbingStatsSubscription>>
-  >(args?: {
-    where?: UserClimbingStatsWhereInput;
-    orderBy?: UserClimbingStatsOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  posts: <T = Promise<AsyncIterator<PostSubscription>>>(args?: {
-    where?: PostWhereInput;
-    orderBy?: PostOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  userLevel: () => Promise<AsyncIterator<UserLevel>>;
-  phase: () => Promise<AsyncIterator<String>>;
-  schedule: <T = Promise<AsyncIterator<WorkoutSubscription>>>(args?: {
-    where?: WorkoutWhereInput;
-    orderBy?: WorkoutOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
+  rpe: () => Promise<AsyncIterator<Int>>;
+  compResult: () => Promise<AsyncIterator<Int>>;
+  sessionResult: () => Promise<AsyncIterator<String>>;
+  athlete: <T = AthleteSubscription>() => T;
 }
 
-export interface UserNullablePromise
-  extends Promise<User | null>,
+export interface ResultNullablePromise
+  extends Promise<Result | null>,
     Fragmentable {
   id: () => Promise<ID_Output>;
-  userName: () => Promise<String>;
-  fullName: () => Promise<String>;
-  name: () => Promise<String>;
-  email: () => Promise<String>;
-  password: () => Promise<String>;
-  city: () => Promise<String>;
-  state: () => Promise<String>;
-  homeGym: () => Promise<String>;
-  logBook: <T = FragmentableArray<LogItem>>(args?: {
-    where?: LogItemWhereInput;
-    orderBy?: LogItemOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  userClimbingStats: <T = FragmentableArray<UserClimbingStats>>(args?: {
-    where?: UserClimbingStatsWhereInput;
-    orderBy?: UserClimbingStatsOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  posts: <T = FragmentableArray<Post>>(args?: {
-    where?: PostWhereInput;
-    orderBy?: PostOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  userLevel: () => Promise<UserLevel>;
-  phase: () => Promise<String>;
-  schedule: <T = FragmentableArray<Workout>>(args?: {
-    where?: WorkoutWhereInput;
-    orderBy?: WorkoutOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
+  rpe: () => Promise<Int>;
+  compResult: () => Promise<Int>;
+  sessionResult: () => Promise<String>;
+  athlete: <T = AthletePromise>() => T;
 }
 
-export interface UserEdge {
-  node: User;
+export interface AggregateSubTeam {
+  count: Int;
+}
+
+export interface AggregateSubTeamPromise
+  extends Promise<AggregateSubTeam>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateSubTeamSubscription
+  extends Promise<AsyncIterator<AggregateSubTeam>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface TeamSubscriptionPayload {
+  mutation: MutationType;
+  node: Team;
+  updatedFields: String[];
+  previousValues: TeamPreviousValues;
+}
+
+export interface TeamSubscriptionPayloadPromise
+  extends Promise<TeamSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = TeamPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = TeamPreviousValuesPromise>() => T;
+}
+
+export interface TeamSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<TeamSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = TeamSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = TeamPreviousValuesSubscription>() => T;
+}
+
+export interface SubTeamConnection {
+  pageInfo: PageInfo;
+  edges: SubTeamEdge[];
+}
+
+export interface SubTeamConnectionPromise
+  extends Promise<SubTeamConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<SubTeamEdge>>() => T;
+  aggregate: <T = AggregateSubTeamPromise>() => T;
+}
+
+export interface SubTeamConnectionSubscription
+  extends Promise<AsyncIterator<SubTeamConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<SubTeamEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateSubTeamSubscription>() => T;
+}
+
+export interface AthleteSubscriptionPayload {
+  mutation: MutationType;
+  node: Athlete;
+  updatedFields: String[];
+  previousValues: AthletePreviousValues;
+}
+
+export interface AthleteSubscriptionPayloadPromise
+  extends Promise<AthleteSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = AthletePromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = AthletePreviousValuesPromise>() => T;
+}
+
+export interface AthleteSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<AthleteSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = AthleteSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = AthletePreviousValuesSubscription>() => T;
+}
+
+export interface ScheduleEdge {
+  node: Schedule;
   cursor: String;
 }
 
-export interface UserEdgePromise extends Promise<UserEdge>, Fragmentable {
-  node: <T = UserPromise>() => T;
+export interface ScheduleEdgePromise
+  extends Promise<ScheduleEdge>,
+    Fragmentable {
+  node: <T = SchedulePromise>() => T;
   cursor: () => Promise<String>;
 }
 
-export interface UserEdgeSubscription
-  extends Promise<AsyncIterator<UserEdge>>,
+export interface ScheduleEdgeSubscription
+  extends Promise<AsyncIterator<ScheduleEdge>>,
     Fragmentable {
-  node: <T = UserSubscription>() => T;
+  node: <T = ScheduleSubscription>() => T;
   cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AthletePreviousValues {
+  id: ID_Output;
+  fullName: String;
+  email: String;
+  password: String;
+  teamKey: String;
+  phase?: String;
+}
+
+export interface AthletePreviousValuesPromise
+  extends Promise<AthletePreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  fullName: () => Promise<String>;
+  email: () => Promise<String>;
+  password: () => Promise<String>;
+  teamKey: () => Promise<String>;
+  phase: () => Promise<String>;
+}
+
+export interface AthletePreviousValuesSubscription
+  extends Promise<AsyncIterator<AthletePreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  fullName: () => Promise<AsyncIterator<String>>;
+  email: () => Promise<AsyncIterator<String>>;
+  password: () => Promise<AsyncIterator<String>>;
+  teamKey: () => Promise<AsyncIterator<String>>;
+  phase: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AggregateResult {
+  count: Int;
+}
+
+export interface AggregateResultPromise
+  extends Promise<AggregateResult>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateResultSubscription
+  extends Promise<AsyncIterator<AggregateResult>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface LogItem {
+  id: ID_Output;
+  createdAt: DateTimeOutput;
+  title: String;
+  description: String;
+  comment?: String;
+}
+
+export interface LogItemPromise extends Promise<LogItem>, Fragmentable {
+  user: <T = AthletePromise>() => T;
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  title: () => Promise<String>;
+  description: () => Promise<String>;
+  results: <T = ResultPromise>() => T;
+  comment: () => Promise<String>;
+}
+
+export interface LogItemSubscription
+  extends Promise<AsyncIterator<LogItem>>,
+    Fragmentable {
+  user: <T = AthleteSubscription>() => T;
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  title: () => Promise<AsyncIterator<String>>;
+  description: () => Promise<AsyncIterator<String>>;
+  results: <T = ResultSubscription>() => T;
+  comment: () => Promise<AsyncIterator<String>>;
+}
+
+export interface LogItemNullablePromise
+  extends Promise<LogItem | null>,
+    Fragmentable {
+  user: <T = AthletePromise>() => T;
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  title: () => Promise<String>;
+  description: () => Promise<String>;
+  results: <T = ResultPromise>() => T;
+  comment: () => Promise<String>;
+}
+
+export interface ResultConnection {
+  pageInfo: PageInfo;
+  edges: ResultEdge[];
+}
+
+export interface ResultConnectionPromise
+  extends Promise<ResultConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<ResultEdge>>() => T;
+  aggregate: <T = AggregateResultPromise>() => T;
+}
+
+export interface ResultConnectionSubscription
+  extends Promise<AsyncIterator<ResultConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<ResultEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateResultSubscription>() => T;
+}
+
+export interface AthleteStatsSubscriptionPayload {
+  mutation: MutationType;
+  node: AthleteStats;
+  updatedFields: String[];
+  previousValues: AthleteStatsPreviousValues;
+}
+
+export interface AthleteStatsSubscriptionPayloadPromise
+  extends Promise<AthleteStatsSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = AthleteStatsPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = AthleteStatsPreviousValuesPromise>() => T;
+}
+
+export interface AthleteStatsSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<AthleteStatsSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = AthleteStatsSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = AthleteStatsPreviousValuesSubscription>() => T;
+}
+
+export interface PostEdge {
+  node: Post;
+  cursor: String;
+}
+
+export interface PostEdgePromise extends Promise<PostEdge>, Fragmentable {
+  node: <T = PostPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface PostEdgeSubscription
+  extends Promise<AsyncIterator<PostEdge>>,
+    Fragmentable {
+  node: <T = PostSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AthleteStatsPreviousValues {
+  id: ID_Output;
+  createdAt: DateTimeOutput;
+  apeIndex: Int;
+  height: Int;
+  weight: Int;
+  maxVGrade: Int;
+  maxSportGrade: String;
+  maxEdgeLoad: Int;
+  maxEdgeTestSize: Int;
+  SWREdge?: Float;
+  maxPullLoad: Int;
+  SWRBar?: Float;
+  oneArmHangLoadLeft: Int;
+  oneArmHangLoadRight: Int;
+  oneArmHangSWR: Float;
+  goalVGrade: Int;
+  goalSportGrade: String;
+}
+
+export interface AthleteStatsPreviousValuesPromise
+  extends Promise<AthleteStatsPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  apeIndex: () => Promise<Int>;
+  height: () => Promise<Int>;
+  weight: () => Promise<Int>;
+  maxVGrade: () => Promise<Int>;
+  maxSportGrade: () => Promise<String>;
+  maxEdgeLoad: () => Promise<Int>;
+  maxEdgeTestSize: () => Promise<Int>;
+  SWREdge: () => Promise<Float>;
+  maxPullLoad: () => Promise<Int>;
+  SWRBar: () => Promise<Float>;
+  oneArmHangLoadLeft: () => Promise<Int>;
+  oneArmHangLoadRight: () => Promise<Int>;
+  oneArmHangSWR: () => Promise<Float>;
+  goalVGrade: () => Promise<Int>;
+  goalSportGrade: () => Promise<String>;
+}
+
+export interface AthleteStatsPreviousValuesSubscription
+  extends Promise<AsyncIterator<AthleteStatsPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  apeIndex: () => Promise<AsyncIterator<Int>>;
+  height: () => Promise<AsyncIterator<Int>>;
+  weight: () => Promise<AsyncIterator<Int>>;
+  maxVGrade: () => Promise<AsyncIterator<Int>>;
+  maxSportGrade: () => Promise<AsyncIterator<String>>;
+  maxEdgeLoad: () => Promise<AsyncIterator<Int>>;
+  maxEdgeTestSize: () => Promise<AsyncIterator<Int>>;
+  SWREdge: () => Promise<AsyncIterator<Float>>;
+  maxPullLoad: () => Promise<AsyncIterator<Int>>;
+  SWRBar: () => Promise<AsyncIterator<Float>>;
+  oneArmHangLoadLeft: () => Promise<AsyncIterator<Int>>;
+  oneArmHangLoadRight: () => Promise<AsyncIterator<Int>>;
+  oneArmHangSWR: () => Promise<AsyncIterator<Float>>;
+  goalVGrade: () => Promise<AsyncIterator<Int>>;
+  goalSportGrade: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AggregateParent {
+  count: Int;
+}
+
+export interface AggregateParentPromise
+  extends Promise<AggregateParent>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateParentSubscription
+  extends Promise<AsyncIterator<AggregateParent>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface Schedule {
+  id: ID_Output;
+  createdAt: DateTimeOutput;
+}
+
+export interface SchedulePromise extends Promise<Schedule>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  createdBy: <T = CoachPromise>() => T;
+  createdAt: () => Promise<DateTimeOutput>;
+  team: <T = TeamPromise>() => T;
+  athletes: <T = FragmentableArray<Athlete>>(args?: {
+    where?: AthleteWhereInput;
+    orderBy?: AthleteOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+}
+
+export interface ScheduleSubscription
+  extends Promise<AsyncIterator<Schedule>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  createdBy: <T = CoachSubscription>() => T;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  team: <T = TeamSubscription>() => T;
+  athletes: <T = Promise<AsyncIterator<AthleteSubscription>>>(args?: {
+    where?: AthleteWhereInput;
+    orderBy?: AthleteOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+}
+
+export interface ScheduleNullablePromise
+  extends Promise<Schedule | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  createdBy: <T = CoachPromise>() => T;
+  createdAt: () => Promise<DateTimeOutput>;
+  team: <T = TeamPromise>() => T;
+  athletes: <T = FragmentableArray<Athlete>>(args?: {
+    where?: AthleteWhereInput;
+    orderBy?: AthleteOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+}
+
+export interface ParentConnection {
+  pageInfo: PageInfo;
+  edges: ParentEdge[];
+}
+
+export interface ParentConnectionPromise
+  extends Promise<ParentConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<ParentEdge>>() => T;
+  aggregate: <T = AggregateParentPromise>() => T;
+}
+
+export interface ParentConnectionSubscription
+  extends Promise<AsyncIterator<ParentConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<ParentEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateParentSubscription>() => T;
+}
+
+export interface CoachSubscriptionPayload {
+  mutation: MutationType;
+  node: Coach;
+  updatedFields: String[];
+  previousValues: CoachPreviousValues;
+}
+
+export interface CoachSubscriptionPayloadPromise
+  extends Promise<CoachSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = CoachPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = CoachPreviousValuesPromise>() => T;
+}
+
+export interface CoachSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<CoachSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = CoachSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = CoachPreviousValuesSubscription>() => T;
+}
+
+export interface LogItemEdge {
+  node: LogItem;
+  cursor: String;
+}
+
+export interface LogItemEdgePromise extends Promise<LogItemEdge>, Fragmentable {
+  node: <T = LogItemPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface LogItemEdgeSubscription
+  extends Promise<AsyncIterator<LogItemEdge>>,
+    Fragmentable {
+  node: <T = LogItemSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface CoachPreviousValues {
+  id: ID_Output;
+  fullName: String;
+  email: String;
+  password: String;
+  teamKey: String;
+  coachKey: String;
+}
+
+export interface CoachPreviousValuesPromise
+  extends Promise<CoachPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  fullName: () => Promise<String>;
+  email: () => Promise<String>;
+  password: () => Promise<String>;
+  teamKey: () => Promise<String>;
+  coachKey: () => Promise<String>;
+}
+
+export interface CoachPreviousValuesSubscription
+  extends Promise<AsyncIterator<CoachPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  fullName: () => Promise<AsyncIterator<String>>;
+  email: () => Promise<AsyncIterator<String>>;
+  password: () => Promise<AsyncIterator<String>>;
+  teamKey: () => Promise<AsyncIterator<String>>;
+  coachKey: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AggregateHeadCoach {
+  count: Int;
+}
+
+export interface AggregateHeadCoachPromise
+  extends Promise<AggregateHeadCoach>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateHeadCoachSubscription
+  extends Promise<AsyncIterator<AggregateHeadCoach>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
 }
 
 export interface Comment {
@@ -2705,7 +5085,8 @@ export interface Comment {
 export interface CommentPromise extends Promise<Comment>, Fragmentable {
   id: () => Promise<ID_Output>;
   post: <T = PostPromise>() => T;
-  user: <T = UserPromise>() => T;
+  coach: <T = CoachPromise>() => T;
+  athlete: <T = AthletePromise>() => T;
   content: () => Promise<String>;
 }
 
@@ -2714,7 +5095,8 @@ export interface CommentSubscription
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
   post: <T = PostSubscription>() => T;
-  user: <T = UserSubscription>() => T;
+  coach: <T = CoachSubscription>() => T;
+  athlete: <T = AthleteSubscription>() => T;
   content: () => Promise<AsyncIterator<String>>;
 }
 
@@ -2723,66 +5105,30 @@ export interface CommentNullablePromise
     Fragmentable {
   id: () => Promise<ID_Output>;
   post: <T = PostPromise>() => T;
-  user: <T = UserPromise>() => T;
+  coach: <T = CoachPromise>() => T;
+  athlete: <T = AthletePromise>() => T;
   content: () => Promise<String>;
 }
 
-export interface Post {
-  id: ID_Output;
-  title: String;
-  content: String;
+export interface HeadCoachConnection {
+  pageInfo: PageInfo;
+  edges: HeadCoachEdge[];
 }
 
-export interface PostPromise extends Promise<Post>, Fragmentable {
-  id: () => Promise<ID_Output>;
-  user: <T = UserPromise>() => T;
-  title: () => Promise<String>;
-  content: () => Promise<String>;
-  comments: <T = FragmentableArray<Comment>>(args?: {
-    where?: CommentWhereInput;
-    orderBy?: CommentOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-}
-
-export interface PostSubscription
-  extends Promise<AsyncIterator<Post>>,
+export interface HeadCoachConnectionPromise
+  extends Promise<HeadCoachConnection>,
     Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  user: <T = UserSubscription>() => T;
-  title: () => Promise<AsyncIterator<String>>;
-  content: () => Promise<AsyncIterator<String>>;
-  comments: <T = Promise<AsyncIterator<CommentSubscription>>>(args?: {
-    where?: CommentWhereInput;
-    orderBy?: CommentOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<HeadCoachEdge>>() => T;
+  aggregate: <T = AggregateHeadCoachPromise>() => T;
 }
 
-export interface PostNullablePromise
-  extends Promise<Post | null>,
+export interface HeadCoachConnectionSubscription
+  extends Promise<AsyncIterator<HeadCoachConnection>>,
     Fragmentable {
-  id: () => Promise<ID_Output>;
-  user: <T = UserPromise>() => T;
-  title: () => Promise<String>;
-  content: () => Promise<String>;
-  comments: <T = FragmentableArray<Comment>>(args?: {
-    where?: CommentWhereInput;
-    orderBy?: CommentOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<HeadCoachEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateHeadCoachSubscription>() => T;
 }
 
 export interface CommentSubscriptionPayload {
@@ -2810,20 +5156,20 @@ export interface CommentSubscriptionPayloadSubscription
   previousValues: <T = CommentPreviousValuesSubscription>() => T;
 }
 
-export interface PostEdge {
-  node: Post;
+export interface CommentEdge {
+  node: Comment;
   cursor: String;
 }
 
-export interface PostEdgePromise extends Promise<PostEdge>, Fragmentable {
-  node: <T = PostPromise>() => T;
+export interface CommentEdgePromise extends Promise<CommentEdge>, Fragmentable {
+  node: <T = CommentPromise>() => T;
   cursor: () => Promise<String>;
 }
 
-export interface PostEdgeSubscription
-  extends Promise<AsyncIterator<PostEdge>>,
+export interface CommentEdgeSubscription
+  extends Promise<AsyncIterator<CommentEdge>>,
     Fragmentable {
-  node: <T = PostSubscription>() => T;
+  node: <T = CommentSubscription>() => T;
   cursor: () => Promise<AsyncIterator<String>>;
 }
 
@@ -2846,20 +5192,199 @@ export interface CommentPreviousValuesSubscription
   content: () => Promise<AsyncIterator<String>>;
 }
 
-export interface AggregateLogItem {
+export interface AggregateCoach {
   count: Int;
 }
 
-export interface AggregateLogItemPromise
-  extends Promise<AggregateLogItem>,
+export interface AggregateCoachPromise
+  extends Promise<AggregateCoach>,
     Fragmentable {
   count: () => Promise<Int>;
 }
 
-export interface AggregateLogItemSubscription
-  extends Promise<AsyncIterator<AggregateLogItem>>,
+export interface AggregateCoachSubscription
+  extends Promise<AsyncIterator<AggregateCoach>>,
     Fragmentable {
   count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface Post {
+  id: ID_Output;
+  title: String;
+  content: String;
+}
+
+export interface PostPromise extends Promise<Post>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  coach: <T = CoachPromise>() => T;
+  title: () => Promise<String>;
+  content: () => Promise<String>;
+  comments: <T = FragmentableArray<Comment>>(args?: {
+    where?: CommentWhereInput;
+    orderBy?: CommentOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+}
+
+export interface PostSubscription
+  extends Promise<AsyncIterator<Post>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  coach: <T = CoachSubscription>() => T;
+  title: () => Promise<AsyncIterator<String>>;
+  content: () => Promise<AsyncIterator<String>>;
+  comments: <T = Promise<AsyncIterator<CommentSubscription>>>(args?: {
+    where?: CommentWhereInput;
+    orderBy?: CommentOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+}
+
+export interface PostNullablePromise
+  extends Promise<Post | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  coach: <T = CoachPromise>() => T;
+  title: () => Promise<String>;
+  content: () => Promise<String>;
+  comments: <T = FragmentableArray<Comment>>(args?: {
+    where?: CommentWhereInput;
+    orderBy?: CommentOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+}
+
+export interface CoachConnection {
+  pageInfo: PageInfo;
+  edges: CoachEdge[];
+}
+
+export interface CoachConnectionPromise
+  extends Promise<CoachConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<CoachEdge>>() => T;
+  aggregate: <T = AggregateCoachPromise>() => T;
+}
+
+export interface CoachConnectionSubscription
+  extends Promise<AsyncIterator<CoachConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<CoachEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateCoachSubscription>() => T;
+}
+
+export interface HeadCoachSubscriptionPayload {
+  mutation: MutationType;
+  node: HeadCoach;
+  updatedFields: String[];
+  previousValues: HeadCoachPreviousValues;
+}
+
+export interface HeadCoachSubscriptionPayloadPromise
+  extends Promise<HeadCoachSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = HeadCoachPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = HeadCoachPreviousValuesPromise>() => T;
+}
+
+export interface HeadCoachSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<HeadCoachSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = HeadCoachSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = HeadCoachPreviousValuesSubscription>() => T;
+}
+
+export interface AthleteStatsEdge {
+  node: AthleteStats;
+  cursor: String;
+}
+
+export interface AthleteStatsEdgePromise
+  extends Promise<AthleteStatsEdge>,
+    Fragmentable {
+  node: <T = AthleteStatsPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface AthleteStatsEdgeSubscription
+  extends Promise<AsyncIterator<AthleteStatsEdge>>,
+    Fragmentable {
+  node: <T = AthleteStatsSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface HeadCoachPreviousValues {
+  id: ID_Output;
+  fullName: String;
+  email: String;
+  password: String;
+  teamKey: String;
+  coachKey: String;
+}
+
+export interface HeadCoachPreviousValuesPromise
+  extends Promise<HeadCoachPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  fullName: () => Promise<String>;
+  email: () => Promise<String>;
+  password: () => Promise<String>;
+  teamKey: () => Promise<String>;
+  coachKey: () => Promise<String>;
+}
+
+export interface HeadCoachPreviousValuesSubscription
+  extends Promise<AsyncIterator<HeadCoachPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  fullName: () => Promise<AsyncIterator<String>>;
+  email: () => Promise<AsyncIterator<String>>;
+  password: () => Promise<AsyncIterator<String>>;
+  teamKey: () => Promise<AsyncIterator<String>>;
+  coachKey: () => Promise<AsyncIterator<String>>;
+}
+
+export interface WorkoutSubscriptionPayload {
+  mutation: MutationType;
+  node: Workout;
+  updatedFields: String[];
+  previousValues: WorkoutPreviousValues;
+}
+
+export interface WorkoutSubscriptionPayloadPromise
+  extends Promise<WorkoutSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = WorkoutPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = WorkoutPreviousValuesPromise>() => T;
+}
+
+export interface WorkoutSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<WorkoutSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = WorkoutSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = WorkoutPreviousValuesSubscription>() => T;
 }
 
 export interface Workout {
@@ -2894,29 +5419,25 @@ export interface WorkoutNullablePromise
   description: () => Promise<String>;
 }
 
-export interface WorkoutSubscriptionPayload {
-  mutation: MutationType;
-  node: Workout;
-  updatedFields: String[];
-  previousValues: WorkoutPreviousValues;
+export interface WorkoutConnection {
+  pageInfo: PageInfo;
+  edges: WorkoutEdge[];
 }
 
-export interface WorkoutSubscriptionPayloadPromise
-  extends Promise<WorkoutSubscriptionPayload>,
+export interface WorkoutConnectionPromise
+  extends Promise<WorkoutConnection>,
     Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = WorkoutPromise>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = WorkoutPreviousValuesPromise>() => T;
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<WorkoutEdge>>() => T;
+  aggregate: <T = AggregateWorkoutPromise>() => T;
 }
 
-export interface WorkoutSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<WorkoutSubscriptionPayload>>,
+export interface WorkoutConnectionSubscription
+  extends Promise<AsyncIterator<WorkoutConnection>>,
     Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = WorkoutSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = WorkoutPreviousValuesSubscription>() => T;
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<WorkoutEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateWorkoutSubscription>() => T;
 }
 
 export interface LogItemSubscriptionPayload {
@@ -2944,25 +5465,155 @@ export interface LogItemSubscriptionPayloadSubscription
   previousValues: <T = LogItemPreviousValuesSubscription>() => T;
 }
 
-export interface WorkoutConnection {
-  pageInfo: PageInfo;
-  edges: WorkoutEdge[];
+export interface Athlete {
+  id: ID_Output;
+  fullName: String;
+  email: String;
+  password: String;
+  teamKey: String;
+  phase?: String;
 }
 
-export interface WorkoutConnectionPromise
-  extends Promise<WorkoutConnection>,
-    Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<WorkoutEdge>>() => T;
-  aggregate: <T = AggregateWorkoutPromise>() => T;
+export interface AthletePromise extends Promise<Athlete>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  fullName: () => Promise<String>;
+  email: () => Promise<String>;
+  password: () => Promise<String>;
+  stats: <T = FragmentableArray<AthleteStats>>(args?: {
+    where?: AthleteStatsWhereInput;
+    orderBy?: AthleteStatsOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  parents: <T = FragmentableArray<Parent>>(args?: {
+    where?: ParentWhereInput;
+    orderBy?: ParentOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  team: <T = TeamPromise>() => T;
+  teamKey: () => Promise<String>;
+  library: <T = FragmentableArray<Workout>>(args?: {
+    where?: WorkoutWhereInput;
+    orderBy?: WorkoutOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  logBook: <T = FragmentableArray<LogItem>>(args?: {
+    where?: LogItemWhereInput;
+    orderBy?: LogItemOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  phase: () => Promise<String>;
 }
 
-export interface WorkoutConnectionSubscription
-  extends Promise<AsyncIterator<WorkoutConnection>>,
+export interface AthleteSubscription
+  extends Promise<AsyncIterator<Athlete>>,
     Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<WorkoutEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateWorkoutSubscription>() => T;
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  fullName: () => Promise<AsyncIterator<String>>;
+  email: () => Promise<AsyncIterator<String>>;
+  password: () => Promise<AsyncIterator<String>>;
+  stats: <T = Promise<AsyncIterator<AthleteStatsSubscription>>>(args?: {
+    where?: AthleteStatsWhereInput;
+    orderBy?: AthleteStatsOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  parents: <T = Promise<AsyncIterator<ParentSubscription>>>(args?: {
+    where?: ParentWhereInput;
+    orderBy?: ParentOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  team: <T = TeamSubscription>() => T;
+  teamKey: () => Promise<AsyncIterator<String>>;
+  library: <T = Promise<AsyncIterator<WorkoutSubscription>>>(args?: {
+    where?: WorkoutWhereInput;
+    orderBy?: WorkoutOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  logBook: <T = Promise<AsyncIterator<LogItemSubscription>>>(args?: {
+    where?: LogItemWhereInput;
+    orderBy?: LogItemOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  phase: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AthleteNullablePromise
+  extends Promise<Athlete | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  fullName: () => Promise<String>;
+  email: () => Promise<String>;
+  password: () => Promise<String>;
+  stats: <T = FragmentableArray<AthleteStats>>(args?: {
+    where?: AthleteStatsWhereInput;
+    orderBy?: AthleteStatsOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  parents: <T = FragmentableArray<Parent>>(args?: {
+    where?: ParentWhereInput;
+    orderBy?: ParentOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  team: <T = TeamPromise>() => T;
+  teamKey: () => Promise<String>;
+  library: <T = FragmentableArray<Workout>>(args?: {
+    where?: WorkoutWhereInput;
+    orderBy?: WorkoutOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  logBook: <T = FragmentableArray<LogItem>>(args?: {
+    where?: LogItemWhereInput;
+    orderBy?: LogItemOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  phase: () => Promise<String>;
 }
 
 export interface LogItemPreviousValues {
@@ -2993,228 +5644,344 @@ export interface LogItemPreviousValuesSubscription
   comment: () => Promise<AsyncIterator<String>>;
 }
 
-export interface AggregateUser {
+export interface AggregateSchedule {
   count: Int;
 }
 
-export interface AggregateUserPromise
-  extends Promise<AggregateUser>,
+export interface AggregateSchedulePromise
+  extends Promise<AggregateSchedule>,
     Fragmentable {
   count: () => Promise<Int>;
 }
 
-export interface AggregateUserSubscription
-  extends Promise<AsyncIterator<AggregateUser>>,
+export interface AggregateScheduleSubscription
+  extends Promise<AsyncIterator<AggregateSchedule>>,
     Fragmentable {
   count: () => Promise<AsyncIterator<Int>>;
 }
 
-export interface LogItem {
+export interface SubTeam {
   id: ID_Output;
-  createdAt: DateTimeOutput;
-  title: String;
-  description: String;
-  comment?: String;
 }
 
-export interface LogItemPromise extends Promise<LogItem>, Fragmentable {
-  user: <T = UserPromise>() => T;
+export interface SubTeamPromise extends Promise<SubTeam>, Fragmentable {
   id: () => Promise<ID_Output>;
-  createdAt: () => Promise<DateTimeOutput>;
-  title: () => Promise<String>;
-  description: () => Promise<String>;
-  comment: () => Promise<String>;
+  headCoach: <T = HeadCoachPromise>() => T;
+  ahtletes: <T = FragmentableArray<Athlete>>(args?: {
+    where?: AthleteWhereInput;
+    orderBy?: AthleteOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  coahces: <T = FragmentableArray<Coach>>(args?: {
+    where?: CoachWhereInput;
+    orderBy?: CoachOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  library: <T = FragmentableArray<Workout>>(args?: {
+    where?: WorkoutWhereInput;
+    orderBy?: WorkoutOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  posts: <T = FragmentableArray<Post>>(args?: {
+    where?: PostWhereInput;
+    orderBy?: PostOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
 }
 
-export interface LogItemSubscription
-  extends Promise<AsyncIterator<LogItem>>,
+export interface SubTeamSubscription
+  extends Promise<AsyncIterator<SubTeam>>,
     Fragmentable {
-  user: <T = UserSubscription>() => T;
   id: () => Promise<AsyncIterator<ID_Output>>;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  title: () => Promise<AsyncIterator<String>>;
-  description: () => Promise<AsyncIterator<String>>;
-  comment: () => Promise<AsyncIterator<String>>;
+  headCoach: <T = HeadCoachSubscription>() => T;
+  ahtletes: <T = Promise<AsyncIterator<AthleteSubscription>>>(args?: {
+    where?: AthleteWhereInput;
+    orderBy?: AthleteOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  coahces: <T = Promise<AsyncIterator<CoachSubscription>>>(args?: {
+    where?: CoachWhereInput;
+    orderBy?: CoachOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  library: <T = Promise<AsyncIterator<WorkoutSubscription>>>(args?: {
+    where?: WorkoutWhereInput;
+    orderBy?: WorkoutOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  posts: <T = Promise<AsyncIterator<PostSubscription>>>(args?: {
+    where?: PostWhereInput;
+    orderBy?: PostOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
 }
 
-export interface LogItemNullablePromise
-  extends Promise<LogItem | null>,
+export interface SubTeamNullablePromise
+  extends Promise<SubTeam | null>,
     Fragmentable {
-  user: <T = UserPromise>() => T;
   id: () => Promise<ID_Output>;
-  createdAt: () => Promise<DateTimeOutput>;
-  title: () => Promise<String>;
-  description: () => Promise<String>;
-  comment: () => Promise<String>;
+  headCoach: <T = HeadCoachPromise>() => T;
+  ahtletes: <T = FragmentableArray<Athlete>>(args?: {
+    where?: AthleteWhereInput;
+    orderBy?: AthleteOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  coahces: <T = FragmentableArray<Coach>>(args?: {
+    where?: CoachWhereInput;
+    orderBy?: CoachOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  library: <T = FragmentableArray<Workout>>(args?: {
+    where?: WorkoutWhereInput;
+    orderBy?: WorkoutOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  posts: <T = FragmentableArray<Post>>(args?: {
+    where?: PostWhereInput;
+    orderBy?: PostOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
 }
 
-export interface AggregatePost {
-  count: Int;
-}
-
-export interface AggregatePostPromise
-  extends Promise<AggregatePost>,
-    Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregatePostSubscription
-  extends Promise<AsyncIterator<AggregatePost>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface LogItemEdge {
-  node: LogItem;
+export interface ResultEdge {
+  node: Result;
   cursor: String;
 }
 
-export interface LogItemEdgePromise extends Promise<LogItemEdge>, Fragmentable {
-  node: <T = LogItemPromise>() => T;
+export interface ResultEdgePromise extends Promise<ResultEdge>, Fragmentable {
+  node: <T = ResultPromise>() => T;
   cursor: () => Promise<String>;
 }
 
-export interface LogItemEdgeSubscription
-  extends Promise<AsyncIterator<LogItemEdge>>,
+export interface ResultEdgeSubscription
+  extends Promise<AsyncIterator<ResultEdge>>,
     Fragmentable {
-  node: <T = LogItemSubscription>() => T;
+  node: <T = ResultSubscription>() => T;
   cursor: () => Promise<AsyncIterator<String>>;
 }
 
-export interface UserSubscriptionPayload {
+export interface ParentSubscriptionPayload {
   mutation: MutationType;
-  node: User;
+  node: Parent;
   updatedFields: String[];
-  previousValues: UserPreviousValues;
+  previousValues: ParentPreviousValues;
 }
 
-export interface UserSubscriptionPayloadPromise
-  extends Promise<UserSubscriptionPayload>,
+export interface ParentSubscriptionPayloadPromise
+  extends Promise<ParentSubscriptionPayload>,
     Fragmentable {
   mutation: () => Promise<MutationType>;
-  node: <T = UserPromise>() => T;
+  node: <T = ParentPromise>() => T;
   updatedFields: () => Promise<String[]>;
-  previousValues: <T = UserPreviousValuesPromise>() => T;
+  previousValues: <T = ParentPreviousValuesPromise>() => T;
 }
 
-export interface UserSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<UserSubscriptionPayload>>,
+export interface ParentSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<ParentSubscriptionPayload>>,
     Fragmentable {
   mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = UserSubscription>() => T;
+  node: <T = ParentSubscription>() => T;
   updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = UserPreviousValuesSubscription>() => T;
+  previousValues: <T = ParentPreviousValuesSubscription>() => T;
 }
 
-export interface UserClimbingStats {
+export interface PostConnection {
+  pageInfo: PageInfo;
+  edges: PostEdge[];
+}
+
+export interface PostConnectionPromise
+  extends Promise<PostConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<PostEdge>>() => T;
+  aggregate: <T = AggregatePostPromise>() => T;
+}
+
+export interface PostConnectionSubscription
+  extends Promise<AsyncIterator<PostConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<PostEdgeSubscription>>>() => T;
+  aggregate: <T = AggregatePostSubscription>() => T;
+}
+
+export interface ParentPreviousValues {
   id: ID_Output;
-  createdAt: DateTimeOutput;
-  apeIndex: Int;
-  height: Int;
-  weight: Int;
-  maxVGrade: Int;
-  maxSportGrade: String;
-  maxEdgeLoad: Int;
-  maxEdgeTestSize: Int;
-  SWREdge?: Float;
-  maxPullLoad: Int;
-  SWRBar?: Float;
-  oneArmHangLoadLeft: Int;
-  oneArmHangLoadRight: Int;
-  oneArmHangSWR: Float;
-  goalVGrade: Int;
-  goalSportGrade: String;
+  email: String;
+  password: String;
+  phoneNumber: String;
 }
 
-export interface UserClimbingStatsPromise
-  extends Promise<UserClimbingStats>,
+export interface ParentPreviousValuesPromise
+  extends Promise<ParentPreviousValues>,
     Fragmentable {
   id: () => Promise<ID_Output>;
-  user: <T = UserPromise>() => T;
-  createdAt: () => Promise<DateTimeOutput>;
-  apeIndex: () => Promise<Int>;
-  height: () => Promise<Int>;
-  weight: () => Promise<Int>;
-  maxVGrade: () => Promise<Int>;
-  maxSportGrade: () => Promise<String>;
-  maxEdgeLoad: () => Promise<Int>;
-  maxEdgeTestSize: () => Promise<Int>;
-  SWREdge: () => Promise<Float>;
-  maxPullLoad: () => Promise<Int>;
-  SWRBar: () => Promise<Float>;
-  oneArmHangLoadLeft: () => Promise<Int>;
-  oneArmHangLoadRight: () => Promise<Int>;
-  oneArmHangSWR: () => Promise<Float>;
-  goalVGrade: () => Promise<Int>;
-  goalSportGrade: () => Promise<String>;
+  email: () => Promise<String>;
+  password: () => Promise<String>;
+  phoneNumber: () => Promise<String>;
 }
 
-export interface UserClimbingStatsSubscription
-  extends Promise<AsyncIterator<UserClimbingStats>>,
+export interface ParentPreviousValuesSubscription
+  extends Promise<AsyncIterator<ParentPreviousValues>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
-  user: <T = UserSubscription>() => T;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  apeIndex: () => Promise<AsyncIterator<Int>>;
-  height: () => Promise<AsyncIterator<Int>>;
-  weight: () => Promise<AsyncIterator<Int>>;
-  maxVGrade: () => Promise<AsyncIterator<Int>>;
-  maxSportGrade: () => Promise<AsyncIterator<String>>;
-  maxEdgeLoad: () => Promise<AsyncIterator<Int>>;
-  maxEdgeTestSize: () => Promise<AsyncIterator<Int>>;
-  SWREdge: () => Promise<AsyncIterator<Float>>;
-  maxPullLoad: () => Promise<AsyncIterator<Int>>;
-  SWRBar: () => Promise<AsyncIterator<Float>>;
-  oneArmHangLoadLeft: () => Promise<AsyncIterator<Int>>;
-  oneArmHangLoadRight: () => Promise<AsyncIterator<Int>>;
-  oneArmHangSWR: () => Promise<AsyncIterator<Float>>;
-  goalVGrade: () => Promise<AsyncIterator<Int>>;
-  goalSportGrade: () => Promise<AsyncIterator<String>>;
+  email: () => Promise<AsyncIterator<String>>;
+  password: () => Promise<AsyncIterator<String>>;
+  phoneNumber: () => Promise<AsyncIterator<String>>;
 }
 
-export interface UserClimbingStatsNullablePromise
-  extends Promise<UserClimbingStats | null>,
+export interface AggregateLogItem {
+  count: Int;
+}
+
+export interface AggregateLogItemPromise
+  extends Promise<AggregateLogItem>,
     Fragmentable {
-  id: () => Promise<ID_Output>;
-  user: <T = UserPromise>() => T;
-  createdAt: () => Promise<DateTimeOutput>;
-  apeIndex: () => Promise<Int>;
-  height: () => Promise<Int>;
-  weight: () => Promise<Int>;
-  maxVGrade: () => Promise<Int>;
-  maxSportGrade: () => Promise<String>;
-  maxEdgeLoad: () => Promise<Int>;
-  maxEdgeTestSize: () => Promise<Int>;
-  SWREdge: () => Promise<Float>;
-  maxPullLoad: () => Promise<Int>;
-  SWRBar: () => Promise<Float>;
-  oneArmHangLoadLeft: () => Promise<Int>;
-  oneArmHangLoadRight: () => Promise<Int>;
-  oneArmHangSWR: () => Promise<Float>;
-  goalVGrade: () => Promise<Int>;
-  goalSportGrade: () => Promise<String>;
+  count: () => Promise<Int>;
 }
 
-export interface PostPreviousValues {
+export interface AggregateLogItemSubscription
+  extends Promise<AsyncIterator<AggregateLogItem>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface Coach {
   id: ID_Output;
-  title: String;
-  content: String;
+  fullName: String;
+  email: String;
+  password: String;
+  teamKey: String;
+  coachKey: String;
 }
 
-export interface PostPreviousValuesPromise
-  extends Promise<PostPreviousValues>,
-    Fragmentable {
+export interface CoachPromise extends Promise<Coach>, Fragmentable {
   id: () => Promise<ID_Output>;
-  title: () => Promise<String>;
-  content: () => Promise<String>;
+  fullName: () => Promise<String>;
+  team: <T = TeamPromise>() => T;
+  teams: <T = FragmentableArray<SubTeam>>(args?: {
+    where?: SubTeamWhereInput;
+    orderBy?: SubTeamOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  email: () => Promise<String>;
+  password: () => Promise<String>;
+  teamKey: () => Promise<String>;
+  coachKey: () => Promise<String>;
 }
 
-export interface PostPreviousValuesSubscription
-  extends Promise<AsyncIterator<PostPreviousValues>>,
+export interface CoachSubscription
+  extends Promise<AsyncIterator<Coach>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
-  title: () => Promise<AsyncIterator<String>>;
-  content: () => Promise<AsyncIterator<String>>;
+  fullName: () => Promise<AsyncIterator<String>>;
+  team: <T = TeamSubscription>() => T;
+  teams: <T = Promise<AsyncIterator<SubTeamSubscription>>>(args?: {
+    where?: SubTeamWhereInput;
+    orderBy?: SubTeamOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  email: () => Promise<AsyncIterator<String>>;
+  password: () => Promise<AsyncIterator<String>>;
+  teamKey: () => Promise<AsyncIterator<String>>;
+  coachKey: () => Promise<AsyncIterator<String>>;
+}
+
+export interface CoachNullablePromise
+  extends Promise<Coach | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  fullName: () => Promise<String>;
+  team: <T = TeamPromise>() => T;
+  teams: <T = FragmentableArray<SubTeam>>(args?: {
+    where?: SubTeamWhereInput;
+    orderBy?: SubTeamOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  email: () => Promise<String>;
+  password: () => Promise<String>;
+  teamKey: () => Promise<String>;
+  coachKey: () => Promise<String>;
+}
+
+export interface HeadCoachEdge {
+  node: HeadCoach;
+  cursor: String;
+}
+
+export interface HeadCoachEdgePromise
+  extends Promise<HeadCoachEdge>,
+    Fragmentable {
+  node: <T = HeadCoachPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface HeadCoachEdgeSubscription
+  extends Promise<AsyncIterator<HeadCoachEdge>>,
+    Fragmentable {
+  node: <T = HeadCoachSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
 }
 
 export interface PostSubscriptionPayload {
@@ -3242,6 +6009,108 @@ export interface PostSubscriptionPayloadSubscription
   previousValues: <T = PostPreviousValuesSubscription>() => T;
 }
 
+export interface CommentConnection {
+  pageInfo: PageInfo;
+  edges: CommentEdge[];
+}
+
+export interface CommentConnectionPromise
+  extends Promise<CommentConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<CommentEdge>>() => T;
+  aggregate: <T = AggregateCommentPromise>() => T;
+}
+
+export interface CommentConnectionSubscription
+  extends Promise<AsyncIterator<CommentConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<CommentEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateCommentSubscription>() => T;
+}
+
+export interface PostPreviousValues {
+  id: ID_Output;
+  title: String;
+  content: String;
+}
+
+export interface PostPreviousValuesPromise
+  extends Promise<PostPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  title: () => Promise<String>;
+  content: () => Promise<String>;
+}
+
+export interface PostPreviousValuesSubscription
+  extends Promise<AsyncIterator<PostPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  title: () => Promise<AsyncIterator<String>>;
+  content: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AggregateAthleteStats {
+  count: Int;
+}
+
+export interface AggregateAthleteStatsPromise
+  extends Promise<AggregateAthleteStats>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateAthleteStatsSubscription
+  extends Promise<AsyncIterator<AggregateAthleteStats>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface HeadCoach {
+  id: ID_Output;
+  fullName: String;
+  email: String;
+  password: String;
+  teamKey: String;
+  coachKey: String;
+}
+
+export interface HeadCoachPromise extends Promise<HeadCoach>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  team: <T = TeamPromise>() => T;
+  fullName: () => Promise<String>;
+  email: () => Promise<String>;
+  password: () => Promise<String>;
+  teamKey: () => Promise<String>;
+  coachKey: () => Promise<String>;
+}
+
+export interface HeadCoachSubscription
+  extends Promise<AsyncIterator<HeadCoach>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  team: <T = TeamSubscription>() => T;
+  fullName: () => Promise<AsyncIterator<String>>;
+  email: () => Promise<AsyncIterator<String>>;
+  password: () => Promise<AsyncIterator<String>>;
+  teamKey: () => Promise<AsyncIterator<String>>;
+  coachKey: () => Promise<AsyncIterator<String>>;
+}
+
+export interface HeadCoachNullablePromise
+  extends Promise<HeadCoach | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  team: <T = TeamPromise>() => T;
+  fullName: () => Promise<String>;
+  email: () => Promise<String>;
+  password: () => Promise<String>;
+  teamKey: () => Promise<String>;
+  coachKey: () => Promise<String>;
+}
+
 export interface AggregateWorkout {
   count: Int;
 }
@@ -3258,64 +6127,549 @@ export interface AggregateWorkoutSubscription
   count: () => Promise<AsyncIterator<Int>>;
 }
 
-export interface PostConnection {
-  pageInfo: PageInfo;
-  edges: PostEdge[];
+export interface ResultSubscriptionPayload {
+  mutation: MutationType;
+  node: Result;
+  updatedFields: String[];
+  previousValues: ResultPreviousValues;
 }
 
-export interface PostConnectionPromise
-  extends Promise<PostConnection>,
+export interface ResultSubscriptionPayloadPromise
+  extends Promise<ResultSubscriptionPayload>,
     Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<PostEdge>>() => T;
-  aggregate: <T = AggregatePostPromise>() => T;
+  mutation: () => Promise<MutationType>;
+  node: <T = ResultPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = ResultPreviousValuesPromise>() => T;
 }
 
-export interface PostConnectionSubscription
-  extends Promise<AsyncIterator<PostConnection>>,
+export interface ResultSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<ResultSubscriptionPayload>>,
     Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<PostEdgeSubscription>>>() => T;
-  aggregate: <T = AggregatePostSubscription>() => T;
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = ResultSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = ResultPreviousValuesSubscription>() => T;
 }
 
-export interface UserConnection {
-  pageInfo: PageInfo;
-  edges: UserEdge[];
-}
-
-export interface UserConnectionPromise
-  extends Promise<UserConnection>,
-    Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<UserEdge>>() => T;
-  aggregate: <T = AggregateUserPromise>() => T;
-}
-
-export interface UserConnectionSubscription
-  extends Promise<AsyncIterator<UserConnection>>,
-    Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<UserEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateUserSubscription>() => T;
-}
-
-export interface UserClimbingStatsEdge {
-  node: UserClimbingStats;
+export interface SubTeamEdge {
+  node: SubTeam;
   cursor: String;
 }
 
-export interface UserClimbingStatsEdgePromise
-  extends Promise<UserClimbingStatsEdge>,
-    Fragmentable {
-  node: <T = UserClimbingStatsPromise>() => T;
+export interface SubTeamEdgePromise extends Promise<SubTeamEdge>, Fragmentable {
+  node: <T = SubTeamPromise>() => T;
   cursor: () => Promise<String>;
 }
 
-export interface UserClimbingStatsEdgeSubscription
-  extends Promise<AsyncIterator<UserClimbingStatsEdge>>,
+export interface SubTeamEdgeSubscription
+  extends Promise<AsyncIterator<SubTeamEdge>>,
     Fragmentable {
-  node: <T = UserClimbingStatsSubscription>() => T;
+  node: <T = SubTeamSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface ResultPreviousValues {
+  id: ID_Output;
+  rpe?: Int;
+  compResult?: Int;
+  sessionResult?: String;
+}
+
+export interface ResultPreviousValuesPromise
+  extends Promise<ResultPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  rpe: () => Promise<Int>;
+  compResult: () => Promise<Int>;
+  sessionResult: () => Promise<String>;
+}
+
+export interface ResultPreviousValuesSubscription
+  extends Promise<AsyncIterator<ResultPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  rpe: () => Promise<AsyncIterator<Int>>;
+  compResult: () => Promise<AsyncIterator<Int>>;
+  sessionResult: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AggregatePost {
+  count: Int;
+}
+
+export interface AggregatePostPromise
+  extends Promise<AggregatePost>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregatePostSubscription
+  extends Promise<AsyncIterator<AggregatePost>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface Team {
+  id: ID_Output;
+  teamName: String;
+  phase?: String;
+  city: String;
+  state: String;
+  homeGym: String;
+  teamKey?: String;
+  coachKey?: String;
+}
+
+export interface TeamPromise extends Promise<Team>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  teamName: () => Promise<String>;
+  headCoach: <T = HeadCoachPromise>() => T;
+  athletes: <T = FragmentableArray<Athlete>>(args?: {
+    where?: AthleteWhereInput;
+    orderBy?: AthleteOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  coahces: <T = FragmentableArray<Coach>>(args?: {
+    where?: CoachWhereInput;
+    orderBy?: CoachOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  subTeams: <T = FragmentableArray<SubTeam>>(args?: {
+    where?: SubTeamWhereInput;
+    orderBy?: SubTeamOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  library: <T = FragmentableArray<Workout>>(args?: {
+    where?: WorkoutWhereInput;
+    orderBy?: WorkoutOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  posts: <T = FragmentableArray<Post>>(args?: {
+    where?: PostWhereInput;
+    orderBy?: PostOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  schedule: <T = SchedulePromise>() => T;
+  phase: () => Promise<String>;
+  city: () => Promise<String>;
+  state: () => Promise<String>;
+  homeGym: () => Promise<String>;
+  teamKey: () => Promise<String>;
+  coachKey: () => Promise<String>;
+}
+
+export interface TeamSubscription
+  extends Promise<AsyncIterator<Team>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  teamName: () => Promise<AsyncIterator<String>>;
+  headCoach: <T = HeadCoachSubscription>() => T;
+  athletes: <T = Promise<AsyncIterator<AthleteSubscription>>>(args?: {
+    where?: AthleteWhereInput;
+    orderBy?: AthleteOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  coahces: <T = Promise<AsyncIterator<CoachSubscription>>>(args?: {
+    where?: CoachWhereInput;
+    orderBy?: CoachOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  subTeams: <T = Promise<AsyncIterator<SubTeamSubscription>>>(args?: {
+    where?: SubTeamWhereInput;
+    orderBy?: SubTeamOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  library: <T = Promise<AsyncIterator<WorkoutSubscription>>>(args?: {
+    where?: WorkoutWhereInput;
+    orderBy?: WorkoutOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  posts: <T = Promise<AsyncIterator<PostSubscription>>>(args?: {
+    where?: PostWhereInput;
+    orderBy?: PostOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  schedule: <T = ScheduleSubscription>() => T;
+  phase: () => Promise<AsyncIterator<String>>;
+  city: () => Promise<AsyncIterator<String>>;
+  state: () => Promise<AsyncIterator<String>>;
+  homeGym: () => Promise<AsyncIterator<String>>;
+  teamKey: () => Promise<AsyncIterator<String>>;
+  coachKey: () => Promise<AsyncIterator<String>>;
+}
+
+export interface TeamNullablePromise
+  extends Promise<Team | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  teamName: () => Promise<String>;
+  headCoach: <T = HeadCoachPromise>() => T;
+  athletes: <T = FragmentableArray<Athlete>>(args?: {
+    where?: AthleteWhereInput;
+    orderBy?: AthleteOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  coahces: <T = FragmentableArray<Coach>>(args?: {
+    where?: CoachWhereInput;
+    orderBy?: CoachOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  subTeams: <T = FragmentableArray<SubTeam>>(args?: {
+    where?: SubTeamWhereInput;
+    orderBy?: SubTeamOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  library: <T = FragmentableArray<Workout>>(args?: {
+    where?: WorkoutWhereInput;
+    orderBy?: WorkoutOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  posts: <T = FragmentableArray<Post>>(args?: {
+    where?: PostWhereInput;
+    orderBy?: PostOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  schedule: <T = SchedulePromise>() => T;
+  phase: () => Promise<String>;
+  city: () => Promise<String>;
+  state: () => Promise<String>;
+  homeGym: () => Promise<String>;
+  teamKey: () => Promise<String>;
+  coachKey: () => Promise<String>;
+}
+
+export interface LogItemConnection {
+  pageInfo: PageInfo;
+  edges: LogItemEdge[];
+}
+
+export interface LogItemConnectionPromise
+  extends Promise<LogItemConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<LogItemEdge>>() => T;
+  aggregate: <T = AggregateLogItemPromise>() => T;
+}
+
+export interface LogItemConnectionSubscription
+  extends Promise<AsyncIterator<LogItemConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<LogItemEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateLogItemSubscription>() => T;
+}
+
+export interface ScheduleSubscriptionPayload {
+  mutation: MutationType;
+  node: Schedule;
+  updatedFields: String[];
+  previousValues: SchedulePreviousValues;
+}
+
+export interface ScheduleSubscriptionPayloadPromise
+  extends Promise<ScheduleSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = SchedulePromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = SchedulePreviousValuesPromise>() => T;
+}
+
+export interface ScheduleSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<ScheduleSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = ScheduleSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = SchedulePreviousValuesSubscription>() => T;
+}
+
+export interface CoachEdge {
+  node: Coach;
+  cursor: String;
+}
+
+export interface CoachEdgePromise extends Promise<CoachEdge>, Fragmentable {
+  node: <T = CoachPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface CoachEdgeSubscription
+  extends Promise<AsyncIterator<CoachEdge>>,
+    Fragmentable {
+  node: <T = CoachSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface SubTeamPreviousValues {
+  id: ID_Output;
+}
+
+export interface SubTeamPreviousValuesPromise
+  extends Promise<SubTeamPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+}
+
+export interface SubTeamPreviousValuesSubscription
+  extends Promise<AsyncIterator<SubTeamPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+}
+
+export interface SubTeamSubscriptionPayload {
+  mutation: MutationType;
+  node: SubTeam;
+  updatedFields: String[];
+  previousValues: SubTeamPreviousValues;
+}
+
+export interface SubTeamSubscriptionPayloadPromise
+  extends Promise<SubTeamSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = SubTeamPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = SubTeamPreviousValuesPromise>() => T;
+}
+
+export interface SubTeamSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<SubTeamSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = SubTeamSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = SubTeamPreviousValuesSubscription>() => T;
+}
+
+export interface Parent {
+  id: ID_Output;
+  email: String;
+  password: String;
+  phoneNumber: String;
+}
+
+export interface ParentPromise extends Promise<Parent>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  athlete: <T = FragmentableArray<Athlete>>(args?: {
+    where?: AthleteWhereInput;
+    orderBy?: AthleteOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  email: () => Promise<String>;
+  password: () => Promise<String>;
+  phoneNumber: () => Promise<String>;
+}
+
+export interface ParentSubscription
+  extends Promise<AsyncIterator<Parent>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  athlete: <T = Promise<AsyncIterator<AthleteSubscription>>>(args?: {
+    where?: AthleteWhereInput;
+    orderBy?: AthleteOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  email: () => Promise<AsyncIterator<String>>;
+  password: () => Promise<AsyncIterator<String>>;
+  phoneNumber: () => Promise<AsyncIterator<String>>;
+}
+
+export interface ParentNullablePromise
+  extends Promise<Parent | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  athlete: <T = FragmentableArray<Athlete>>(args?: {
+    where?: AthleteWhereInput;
+    orderBy?: AthleteOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  email: () => Promise<String>;
+  password: () => Promise<String>;
+  phoneNumber: () => Promise<String>;
+}
+
+export interface SchedulePreviousValues {
+  id: ID_Output;
+  createdAt: DateTimeOutput;
+}
+
+export interface SchedulePreviousValuesPromise
+  extends Promise<SchedulePreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+}
+
+export interface SchedulePreviousValuesSubscription
+  extends Promise<AsyncIterator<SchedulePreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+}
+
+export interface AthleteStatsConnection {
+  pageInfo: PageInfo;
+  edges: AthleteStatsEdge[];
+}
+
+export interface AthleteStatsConnectionPromise
+  extends Promise<AthleteStatsConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<AthleteStatsEdge>>() => T;
+  aggregate: <T = AggregateAthleteStatsPromise>() => T;
+}
+
+export interface AthleteStatsConnectionSubscription
+  extends Promise<AsyncIterator<AthleteStatsConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<AthleteStatsEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateAthleteStatsSubscription>() => T;
+}
+
+export interface AggregateComment {
+  count: Int;
+}
+
+export interface AggregateCommentPromise
+  extends Promise<AggregateComment>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateCommentSubscription
+  extends Promise<AsyncIterator<AggregateComment>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface ParentEdge {
+  node: Parent;
+  cursor: String;
+}
+
+export interface ParentEdgePromise extends Promise<ParentEdge>, Fragmentable {
+  node: <T = ParentPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface ParentEdgeSubscription
+  extends Promise<AsyncIterator<ParentEdge>>,
+    Fragmentable {
+  node: <T = ParentSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface ScheduleConnection {
+  pageInfo: PageInfo;
+  edges: ScheduleEdge[];
+}
+
+export interface ScheduleConnectionPromise
+  extends Promise<ScheduleConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<ScheduleEdge>>() => T;
+  aggregate: <T = AggregateSchedulePromise>() => T;
+}
+
+export interface ScheduleConnectionSubscription
+  extends Promise<AsyncIterator<ScheduleConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<ScheduleEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateScheduleSubscription>() => T;
+}
+
+export interface TeamEdge {
+  node: Team;
+  cursor: String;
+}
+
+export interface TeamEdgePromise extends Promise<TeamEdge>, Fragmentable {
+  node: <T = TeamPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface TeamEdgeSubscription
+  extends Promise<AsyncIterator<TeamEdge>>,
+    Fragmentable {
+  node: <T = TeamSubscription>() => T;
   cursor: () => Promise<AsyncIterator<String>>;
 }
 
@@ -3328,6 +6682,8 @@ export type Boolean = boolean;
 The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1. 
 */
 export type Int = number;
+
+export type Long = string;
 
 /*
 The `Float` scalar type represents signed double-precision fractional values as specified by [IEEE 754](https://en.wikipedia.org/wiki/IEEE_floating_point). 
@@ -3350,8 +6706,6 @@ The `ID` scalar type represents a unique identifier, often used to refetch an ob
 export type ID_Input = string | number;
 export type ID_Output = string;
 
-export type Long = string;
-
 /*
 The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.
 */
@@ -3363,11 +6717,31 @@ export type String = string;
 
 export const models: Model[] = [
   {
-    name: "UserLevel",
+    name: "Team",
     embedded: false
   },
   {
-    name: "User",
+    name: "Schedule",
+    embedded: false
+  },
+  {
+    name: "SubTeam",
+    embedded: false
+  },
+  {
+    name: "HeadCoach",
+    embedded: false
+  },
+  {
+    name: "Coach",
+    embedded: false
+  },
+  {
+    name: "Athlete",
+    embedded: false
+  },
+  {
+    name: "Parent",
     embedded: false
   },
   {
@@ -3375,7 +6749,11 @@ export const models: Model[] = [
     embedded: false
   },
   {
-    name: "UserClimbingStats",
+    name: "Result",
+    embedded: false
+  },
+  {
+    name: "AthleteStats",
     embedded: false
   },
   {

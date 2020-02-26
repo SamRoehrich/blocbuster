@@ -1,17 +1,22 @@
-freeclimbingtraining.com
+climbing team manager
+
+passwords:
+    jons head coach account 
+        fullName: "Jon Mavko",
+        email: "jon@rocksandropes.com",
+        password: "jon",
+        teamKey: "rocksandropes",
+        coachKey: "fuckTeamTexas"
+
 
 purpose:
-online tool to offer free climbing trainig programs for anyone. 
+This app is designed to help large youth climbing programs cordinate training across the entire program. 
 
 functionality:
-custom 5 week programs for either base phase or peak phase
-accept and process current metrics as well as future goals
-establish timeframes to reach goals 
-allow for custom workouts
-message board/forum for teams 
-
-an app that provides tailored training plans for 10$/month as well as free options. Can integrate with team programs to allow a hub
-for coaches to program team calendars and ciriculum. 
+Store individual climbing stats for athletes and track progression
+Allow coaches to cordindate training across multiple teams
+Allow coaches to customize training protocols for individual athletes
+Give athletes access to this personal training through a native app
 
 core: 
 workout library
@@ -20,7 +25,36 @@ timer (native)
 native
 stats mutations
 footage archive
+resources tab(basically a blog)
 
+signup page
+    -3 buttons
+        -athlete
+        -coach
+        -team manager
+
+    -Athlete signup page
+        -team name
+        -head coach
+        -fullName
+        -team key code
+        email
+        ...
+
+    -coach signup page
+        -team name
+        -head coach
+        -team key code
+        ...
+
+    -team manager(head coach)
+        -team name
+        -location
+        -coach account signup 
+        2 pages
+            -1 make coach account
+            -2 assign team
+    
 types:
 query:(
     getUser

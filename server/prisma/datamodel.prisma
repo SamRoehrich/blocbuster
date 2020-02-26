@@ -1,41 +1,102 @@
-enum UserLevel {
-    FREE
-    ADMIN
-    COACH
-    PAID
-    ATHLETE
-}
-
-type User {
+type Team {
     id: ID! @id
-    userName: String!
-    fullName: String!
-    name: String!
-    email: String! @unique
-    password: String!
+    teamName: String!
+    headCoach: HeadCoach @relation (link: TABLE)
+    athletes: [Athlete!]
+    coahces: [Coach!] 
+    subTeams: [SubTeam!]
+    library: [Workout!]
+    posts: [Post!]
+    schedule: Schedule @relation(link: TABLE)
+    phase: String
     city: String!
     state: String!
     homeGym: String!
+    teamKey: String
+    coachKey: String
+}
+
+type Schedule {
+    id: ID! @id
+    createdBy: Coach
+    createdAt: DateTime! @createdAt
+    team: Team
+    athletes: [Athlete!]
+}
+
+type SubTeam {
+    id: ID! @id
+    headCoach: HeadCoach! 
+    ahtletes: [Athlete!]
+    coahces: [Coach!]
+    library: [Workout!]
+    posts: [Post!]
+}
+
+type HeadCoach {
+    id: ID! @id
+    team: Team 
+    fullName: String!
+    email: String!
+    password: String!
+    teamKey: String!
+    coachKey: String!
+}
+
+type Coach {
+    id: ID! @id
+    fullName: String!
+    team: Team 
+    teams: [SubTeam!]
+    email: String! @unique
+    password: String!
+    teamKey: String!
+    coachKey: String!
+}
+
+type Athlete {
+    id: ID! @id
+    fullName: String!
+    email: String! @unique
+    password: String!
+    stats: [AthleteStats!]
+    parents: [Parent!]!
+    team: Team
+    teamKey: String!
+    library: [Workout!]
     logBook: [LogItem!]
-    userClimbingStats: [UserClimbingStats!]
-    posts: [Post]
-    userLevel: UserLevel!
     phase: String
-    schedule: [Workout!]
+}
+
+type Parent {
+    id: ID! @id
+    athlete: [Athlete!] 
+    email: String!
+    password: String!
+    phoneNumber: String!
 }
 
 type LogItem {
-    user: User!
+    user: Athlete!
     id: ID! @id
     createdAt: DateTime! @createdAt
     title: String!
     description: String!
+    results: Result!
     comment: String
 }
 
-type UserClimbingStats {
+type Result {
     id: ID! @id
-    user: User! @relation(link: INLINE)
+    rpe: Int
+    compResult: Int
+    sessionResult: String
+    athlete: Athlete!
+}
+
+type AthleteStats {
+    id: ID! @id
+    user: Athlete!
     createdAt: DateTime! @createdAt
     apeIndex: Int!
     height: Int!
@@ -56,7 +117,7 @@ type UserClimbingStats {
 
 type Post {
     id: ID! @id
-    user: User!
+    coach: Coach!
     title: String!
     content: String!
     comments: [Comment!]
@@ -65,7 +126,8 @@ type Post {
 type Comment {
     id: ID! @id
     post: Post!
-    user: User!
+    coach: Coach
+    athlete: Athlete
     content: String!
 }
 

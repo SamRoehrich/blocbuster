@@ -5,11 +5,31 @@ var typeDefs = require("./prisma-schema").typeDefs;
 
 var models = [
   {
-    name: "UserLevel",
+    name: "Team",
     embedded: false
   },
   {
-    name: "User",
+    name: "Schedule",
+    embedded: false
+  },
+  {
+    name: "SubTeam",
+    embedded: false
+  },
+  {
+    name: "HeadCoach",
+    embedded: false
+  },
+  {
+    name: "Coach",
+    embedded: false
+  },
+  {
+    name: "Athlete",
+    embedded: false
+  },
+  {
+    name: "Parent",
     embedded: false
   },
   {
@@ -17,7 +37,11 @@ var models = [
     embedded: false
   },
   {
-    name: "UserClimbingStats",
+    name: "Result",
+    embedded: false
+  },
+  {
+    name: "AthleteStats",
     embedded: false
   },
   {
@@ -36,6 +60,6 @@ var models = [
 exports.Prisma = prisma_lib_1.makePrismaClientClass({
   typeDefs,
   models,
-  endpoint: `https://us1.prisma.sh/sam_roehrich-ec0459/server/dev`
+  endpoint: `http://localhost:4466`
 });
 exports.prisma = new exports.Prisma();

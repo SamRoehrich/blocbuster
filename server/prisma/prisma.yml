@@ -1,7 +1,7 @@
   
 # The HTTP endpoint for your Prisma API
 #endpoint: ''
-endpoint: https://us1.prisma.sh/sam_roehrich-ec0459/server/dev
+endpoint: http://localhost:4466
 
 # Points to the file that contains your datamodel
 datamodel: datamodel.prisma

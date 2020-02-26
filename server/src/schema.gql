@@ -1,59 +1,138 @@
-enum UserLevel {
-    FREE
-    PAID
-    COACH
-    ATHLETE
-    ADMIN
-}
-
 type Query {
-    getUsers: [User]!
+    getAthletes: [Athlete!]!
+    getCoaches: QueryPayload
 }
 
 type Mutation {
-    signUp(
-        id: Int!, 
-        userName: String!,
+    createHeadCoach(
         fullName: String!,
-        name: String!,
         email: String!,
         password: String!,
+        teamKey: String!,
+        coachKey: String!
+    ): AuthPayload
+
+    signUpAthlete(
+        fullName: String!,
+        email: String!,
+        password: String!,
+        teamKey: String!
+    ): AuthPayload
+
+    signUpCoach(
+        fullName: String!,
+        email: String!,
+        password: String!,
+        teamKey: String!,
+        coachKey: String!
+    ): AuthPayload
+
+    createTeam(
+        teamName: String!,
         city: String!,
         state: String!,
         homeGym: String!,
-        userLevel: UserLevel!,
-    ): AuthPayload
+    ): TeamPayload
 
-    login(email: String, password: String!, userName: String): AuthPayload
+    loginAthlete(email: String!, password: String!): AuthPayload
 
-    post(userName: String!, title: String!, content: String!): Post
+    loginCoach(email: String!, password: String!): AuthPayload
+}
+
+type QueryPayload {
+    coach: [Coach!]
+    athlete: Athlete
 }
 
 type AuthPayload {
     token: String!
-    user: User!
+    coach: Coach
+    athlete: Athlete
 }
 
-type User {
-    id: ID! 
-    userName: String!
-    fullName: String!
-    name: String!
-    email: String! 
-    password: String!
+type TeamPayload {
+    token: String!
+    team: Team
+}
+
+type Team {
+    id: ID!
+    teamName: String!
+    headCoach: HeadCoach
+    athletes: [Athlete!]
+    coahces: [Coach!] 
+    subTeams: [SubTeam!]
+    library: [Workout!]
+    posts: [Post!]
+    schedule: Schedule
+    phase: String
     city: String!
     state: String!
     homeGym: String!
+}
+
+type Schedule {
+    id: ID!
+    createdBy: Coach
+    createdAt: String!
+    team: Team
+    athletes: [Athlete!]
+}
+
+type SubTeam {
+    id: ID!
+    headCoach: HeadCoach! 
+    ahtletes: [Athlete!]
+    coahces: [Coach!]
+    library: [Workout!]
+    posts: [Post!]
+}
+
+type HeadCoach {
+    id: ID!
+    team: Team 
+    fullName: String!
+    email: String!
+    password: String!
+    teamKey: String!
+    coachKey: String!
+}
+
+type Coach {
+    id: ID!
+    fullName: String!
+    team: Team 
+    teams: [SubTeam!]
+    email: String!
+    password: String!
+    teamKey: String!
+    coachKey: String!
+}
+
+type Athlete {
+    id: ID!
+    fullName: String!
+    email: String!
+    password: String!
+    stats: [AthleteStats!]
+    parents: [Parent!]!
+    team: Team
+    teamKey: String!
+    library: [Workout!]
     logBook: [LogItem!]
-    userClimbingStats: [UserClimbingStats!]
-    posts: [Post]
-    userLevel: UserLevel!
     phase: String
-    schedule: [Workout!]
+}
+
+type Parent {
+    id: ID!
+    athlete: [Athlete!] 
+    email: String!
+    password: String!
+    phoneNumber: String!
 }
 
 type LogItem {
-    user: User!
+    athlete: Athlete!
     id: ID!
     createdAt: String!
     title: String!
@@ -61,9 +140,9 @@ type LogItem {
     comment: String
 }
 
-type UserClimbingStats {
+type AthleteStats {
     id: ID! 
-    user: User!
+    athlete: Athlete!
     createdAt: String!
     apeIndex: Int!
     height: Int!
@@ -84,7 +163,7 @@ type UserClimbingStats {
 
 type Post {
     id: ID
-    user: User!
+    coach: Coach!
     title: String!
     content: String!
     comments: [Comment!]
@@ -92,7 +171,8 @@ type Post {
 
 type Comment {
     post: Post!
-    user: User!
+    coach: Coach
+    athlete: Athlete
     content: String!
 }
 

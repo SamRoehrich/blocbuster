@@ -1,11 +1,13 @@
-function getUsers(args, context) {
-    return context.prisma.Users()
+async function getAthletes(args, context) {
+    return await context.prisma.Athletes()
 }
 
-async function getUser(parent, args, context) {
-    return 
+async function getCoaches(args, context) {
+    return await context.prisma.Coaches()
 }
 
 module.exports = {
-    getUsers,
+    getAthletes,
+    getCoaches
 }
+
