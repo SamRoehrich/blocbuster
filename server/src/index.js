@@ -11,7 +11,17 @@ const typeDefs = gql`${fs.readFileSync(__dirname.concat('/schema.gql'), 'utf8')}
 
 const resolvers = {
     Query,
-    Mutation
+    Mutation,
+    User: {
+        posts(parent) {
+            return prisma.user({ id: parent.id }).posts()
+        }
+    },
+    Post: {
+        postedBy(parent) {
+            return prisma.post({ id: parent.id }).postedBy()
+        }
+    }, 
 }
 
 const getUser = token => {
@@ -27,7 +37,7 @@ const getUser = token => {
 
 const server = new ApolloServer({
     cors: {
-        origin: '*',
+        origin: 'http://localhost:3000',
         credentials: true
     },
     typeDefs,

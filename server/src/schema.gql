@@ -64,6 +64,7 @@ type User {
     coach: Coach
     headCoach: HeadCoach
     parent: Parent
+    posts: [Post!]
 }
 
 type Team {
@@ -178,7 +179,7 @@ type AthleteStats {
 
 type Post {
     id: ID
-    posteBy: User!
+    postedBy: User!
     title: String!
     content: String!
     comments: [Comment!]
