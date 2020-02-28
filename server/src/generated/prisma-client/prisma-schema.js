@@ -7,6 +7,10 @@ module.exports = {
   count: Int!
 }
 
+type AggregateAthleteSchedule {
+  count: Int!
+}
+
 type AggregateAthleteStats {
   count: Int!
 }
@@ -39,15 +43,19 @@ type AggregateResult {
   count: Int!
 }
 
-type AggregateSchedule {
-  count: Int!
-}
-
 type AggregateSubTeam {
   count: Int!
 }
 
 type AggregateTeam {
+  count: Int!
+}
+
+type AggregateTeamSchedule {
+  count: Int!
+}
+
+type AggregateUser {
   count: Int!
 }
 
@@ -57,14 +65,10 @@ type AggregateWorkout {
 
 type Athlete {
   id: ID!
-  fullName: String!
-  email: String!
-  password: String!
-  stats(where: AthleteStatsWhereInput, orderBy: AthleteStatsOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [AthleteStats!]
-  parents(where: ParentWhereInput, orderBy: ParentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Parent!]
-  team: Team
-  teamKey: String!
-  library(where: WorkoutWhereInput, orderBy: WorkoutOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Workout!]
+  user: User
+  athleteStats: AthleteStats
+  athleteSchedule: AthleteSchedule
+  teamSchedule: TeamSchedule
   logBook(where: LogItemWhereInput, orderBy: LogItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [LogItem!]
   phase: String
 }
@@ -77,15 +81,11 @@ type AthleteConnection {
 
 input AthleteCreateInput {
   id: ID
-  fullName: String!
-  email: String!
-  password: String!
-  stats: AthleteStatsCreateManyWithoutUserInput
-  parents: ParentCreateManyWithoutAthleteInput
-  team: TeamCreateOneWithoutAthletesInput
-  teamKey: String!
-  library: WorkoutCreateManyInput
-  logBook: LogItemCreateManyWithoutUserInput
+  user: UserCreateOneWithoutAthleteInput
+  athleteStats: AthleteStatsCreateOneWithoutAthleteInput
+  athleteSchedule: AthleteScheduleCreateOneWithoutAthleteInput
+  teamSchedule: TeamScheduleCreateOneWithoutAthletesInput
+  logBook: LogItemCreateManyInput
   phase: String
 }
 
@@ -94,13 +94,8 @@ input AthleteCreateManyInput {
   connect: [AthleteWhereUniqueInput!]
 }
 
-input AthleteCreateManyWithoutParentsInput {
-  create: [AthleteCreateWithoutParentsInput!]
-  connect: [AthleteWhereUniqueInput!]
-}
-
-input AthleteCreateManyWithoutTeamInput {
-  create: [AthleteCreateWithoutTeamInput!]
+input AthleteCreateManyWithoutTeamScheduleInput {
+  create: [AthleteCreateWithoutTeamScheduleInput!]
   connect: [AthleteWhereUniqueInput!]
 }
 
@@ -109,65 +104,54 @@ input AthleteCreateOneInput {
   connect: AthleteWhereUniqueInput
 }
 
-input AthleteCreateOneWithoutLogBookInput {
-  create: AthleteCreateWithoutLogBookInput
+input AthleteCreateOneWithoutAthleteScheduleInput {
+  create: AthleteCreateWithoutAthleteScheduleInput
   connect: AthleteWhereUniqueInput
 }
 
-input AthleteCreateOneWithoutStatsInput {
-  create: AthleteCreateWithoutStatsInput
+input AthleteCreateOneWithoutAthleteStatsInput {
+  create: AthleteCreateWithoutAthleteStatsInput
   connect: AthleteWhereUniqueInput
 }
 
-input AthleteCreateWithoutLogBookInput {
+input AthleteCreateOneWithoutUserInput {
+  create: AthleteCreateWithoutUserInput
+  connect: AthleteWhereUniqueInput
+}
+
+input AthleteCreateWithoutAthleteScheduleInput {
   id: ID
-  fullName: String!
-  email: String!
-  password: String!
-  stats: AthleteStatsCreateManyWithoutUserInput
-  parents: ParentCreateManyWithoutAthleteInput
-  team: TeamCreateOneWithoutAthletesInput
-  teamKey: String!
-  library: WorkoutCreateManyInput
+  user: UserCreateOneWithoutAthleteInput
+  athleteStats: AthleteStatsCreateOneWithoutAthleteInput
+  teamSchedule: TeamScheduleCreateOneWithoutAthletesInput
+  logBook: LogItemCreateManyInput
   phase: String
 }
 
-input AthleteCreateWithoutParentsInput {
+input AthleteCreateWithoutAthleteStatsInput {
   id: ID
-  fullName: String!
-  email: String!
-  password: String!
-  stats: AthleteStatsCreateManyWithoutUserInput
-  team: TeamCreateOneWithoutAthletesInput
-  teamKey: String!
-  library: WorkoutCreateManyInput
-  logBook: LogItemCreateManyWithoutUserInput
+  user: UserCreateOneWithoutAthleteInput
+  athleteSchedule: AthleteScheduleCreateOneWithoutAthleteInput
+  teamSchedule: TeamScheduleCreateOneWithoutAthletesInput
+  logBook: LogItemCreateManyInput
   phase: String
 }
 
-input AthleteCreateWithoutStatsInput {
+input AthleteCreateWithoutTeamScheduleInput {
   id: ID
-  fullName: String!
-  email: String!
-  password: String!
-  parents: ParentCreateManyWithoutAthleteInput
-  team: TeamCreateOneWithoutAthletesInput
-  teamKey: String!
-  library: WorkoutCreateManyInput
-  logBook: LogItemCreateManyWithoutUserInput
+  user: UserCreateOneWithoutAthleteInput
+  athleteStats: AthleteStatsCreateOneWithoutAthleteInput
+  athleteSchedule: AthleteScheduleCreateOneWithoutAthleteInput
+  logBook: LogItemCreateManyInput
   phase: String
 }
 
-input AthleteCreateWithoutTeamInput {
+input AthleteCreateWithoutUserInput {
   id: ID
-  fullName: String!
-  email: String!
-  password: String!
-  stats: AthleteStatsCreateManyWithoutUserInput
-  parents: ParentCreateManyWithoutAthleteInput
-  teamKey: String!
-  library: WorkoutCreateManyInput
-  logBook: LogItemCreateManyWithoutUserInput
+  athleteStats: AthleteStatsCreateOneWithoutAthleteInput
+  athleteSchedule: AthleteScheduleCreateOneWithoutAthleteInput
+  teamSchedule: TeamScheduleCreateOneWithoutAthletesInput
+  logBook: LogItemCreateManyInput
   phase: String
 }
 
@@ -179,24 +163,12 @@ type AthleteEdge {
 enum AthleteOrderByInput {
   id_ASC
   id_DESC
-  fullName_ASC
-  fullName_DESC
-  email_ASC
-  email_DESC
-  password_ASC
-  password_DESC
-  teamKey_ASC
-  teamKey_DESC
   phase_ASC
   phase_DESC
 }
 
 type AthletePreviousValues {
   id: ID!
-  fullName: String!
-  email: String!
-  password: String!
-  teamKey: String!
   phase: String
 }
 
@@ -215,62 +187,6 @@ input AthleteScalarWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
-  fullName: String
-  fullName_not: String
-  fullName_in: [String!]
-  fullName_not_in: [String!]
-  fullName_lt: String
-  fullName_lte: String
-  fullName_gt: String
-  fullName_gte: String
-  fullName_contains: String
-  fullName_not_contains: String
-  fullName_starts_with: String
-  fullName_not_starts_with: String
-  fullName_ends_with: String
-  fullName_not_ends_with: String
-  email: String
-  email_not: String
-  email_in: [String!]
-  email_not_in: [String!]
-  email_lt: String
-  email_lte: String
-  email_gt: String
-  email_gte: String
-  email_contains: String
-  email_not_contains: String
-  email_starts_with: String
-  email_not_starts_with: String
-  email_ends_with: String
-  email_not_ends_with: String
-  password: String
-  password_not: String
-  password_in: [String!]
-  password_not_in: [String!]
-  password_lt: String
-  password_lte: String
-  password_gt: String
-  password_gte: String
-  password_contains: String
-  password_not_contains: String
-  password_starts_with: String
-  password_not_starts_with: String
-  password_ends_with: String
-  password_not_ends_with: String
-  teamKey: String
-  teamKey_not: String
-  teamKey_in: [String!]
-  teamKey_not_in: [String!]
-  teamKey_lt: String
-  teamKey_lte: String
-  teamKey_gt: String
-  teamKey_gte: String
-  teamKey_contains: String
-  teamKey_not_contains: String
-  teamKey_starts_with: String
-  teamKey_not_starts_with: String
-  teamKey_ends_with: String
-  teamKey_not_ends_with: String
   phase: String
   phase_not: String
   phase_in: [String!]
@@ -290,9 +206,138 @@ input AthleteScalarWhereInput {
   NOT: [AthleteScalarWhereInput!]
 }
 
+type AthleteSchedule {
+  id: ID!
+  createdBy: User!
+  createdAt: DateTime!
+  library(where: WorkoutWhereInput, orderBy: WorkoutOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Workout!]
+  athlete: Athlete!
+}
+
+type AthleteScheduleConnection {
+  pageInfo: PageInfo!
+  edges: [AthleteScheduleEdge]!
+  aggregate: AggregateAthleteSchedule!
+}
+
+input AthleteScheduleCreateInput {
+  id: ID
+  createdBy: UserCreateOneInput!
+  library: WorkoutCreateManyInput
+  athlete: AthleteCreateOneWithoutAthleteScheduleInput!
+}
+
+input AthleteScheduleCreateOneWithoutAthleteInput {
+  create: AthleteScheduleCreateWithoutAthleteInput
+  connect: AthleteScheduleWhereUniqueInput
+}
+
+input AthleteScheduleCreateWithoutAthleteInput {
+  id: ID
+  createdBy: UserCreateOneInput!
+  library: WorkoutCreateManyInput
+}
+
+type AthleteScheduleEdge {
+  node: AthleteSchedule!
+  cursor: String!
+}
+
+enum AthleteScheduleOrderByInput {
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type AthleteSchedulePreviousValues {
+  id: ID!
+  createdAt: DateTime!
+}
+
+type AthleteScheduleSubscriptionPayload {
+  mutation: MutationType!
+  node: AthleteSchedule
+  updatedFields: [String!]
+  previousValues: AthleteSchedulePreviousValues
+}
+
+input AthleteScheduleSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: AthleteScheduleWhereInput
+  AND: [AthleteScheduleSubscriptionWhereInput!]
+  OR: [AthleteScheduleSubscriptionWhereInput!]
+  NOT: [AthleteScheduleSubscriptionWhereInput!]
+}
+
+input AthleteScheduleUpdateInput {
+  createdBy: UserUpdateOneRequiredInput
+  library: WorkoutUpdateManyInput
+  athlete: AthleteUpdateOneRequiredWithoutAthleteScheduleInput
+}
+
+input AthleteScheduleUpdateOneWithoutAthleteInput {
+  create: AthleteScheduleCreateWithoutAthleteInput
+  update: AthleteScheduleUpdateWithoutAthleteDataInput
+  upsert: AthleteScheduleUpsertWithoutAthleteInput
+  delete: Boolean
+  disconnect: Boolean
+  connect: AthleteScheduleWhereUniqueInput
+}
+
+input AthleteScheduleUpdateWithoutAthleteDataInput {
+  createdBy: UserUpdateOneRequiredInput
+  library: WorkoutUpdateManyInput
+}
+
+input AthleteScheduleUpsertWithoutAthleteInput {
+  update: AthleteScheduleUpdateWithoutAthleteDataInput!
+  create: AthleteScheduleCreateWithoutAthleteInput!
+}
+
+input AthleteScheduleWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  createdBy: UserWhereInput
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  library_every: WorkoutWhereInput
+  library_some: WorkoutWhereInput
+  library_none: WorkoutWhereInput
+  athlete: AthleteWhereInput
+  AND: [AthleteScheduleWhereInput!]
+  OR: [AthleteScheduleWhereInput!]
+  NOT: [AthleteScheduleWhereInput!]
+}
+
+input AthleteScheduleWhereUniqueInput {
+  id: ID
+}
+
 type AthleteStats {
   id: ID!
-  user: Athlete!
+  athlete: Athlete!
   createdAt: DateTime!
   apeIndex: Int!
   height: Int!
@@ -319,7 +364,7 @@ type AthleteStatsConnection {
 
 input AthleteStatsCreateInput {
   id: ID
-  user: AthleteCreateOneWithoutStatsInput!
+  athlete: AthleteCreateOneWithoutAthleteStatsInput!
   apeIndex: Int!
   height: Int!
   weight: Int!
@@ -337,12 +382,12 @@ input AthleteStatsCreateInput {
   goalSportGrade: String!
 }
 
-input AthleteStatsCreateManyWithoutUserInput {
-  create: [AthleteStatsCreateWithoutUserInput!]
-  connect: [AthleteStatsWhereUniqueInput!]
+input AthleteStatsCreateOneWithoutAthleteInput {
+  create: AthleteStatsCreateWithoutAthleteInput
+  connect: AthleteStatsWhereUniqueInput
 }
 
-input AthleteStatsCreateWithoutUserInput {
+input AthleteStatsCreateWithoutAthleteInput {
   id: ID
   apeIndex: Int!
   height: Int!
@@ -423,166 +468,6 @@ type AthleteStatsPreviousValues {
   goalSportGrade: String!
 }
 
-input AthleteStatsScalarWhereInput {
-  id: ID
-  id_not: ID
-  id_in: [ID!]
-  id_not_in: [ID!]
-  id_lt: ID
-  id_lte: ID
-  id_gt: ID
-  id_gte: ID
-  id_contains: ID
-  id_not_contains: ID
-  id_starts_with: ID
-  id_not_starts_with: ID
-  id_ends_with: ID
-  id_not_ends_with: ID
-  createdAt: DateTime
-  createdAt_not: DateTime
-  createdAt_in: [DateTime!]
-  createdAt_not_in: [DateTime!]
-  createdAt_lt: DateTime
-  createdAt_lte: DateTime
-  createdAt_gt: DateTime
-  createdAt_gte: DateTime
-  apeIndex: Int
-  apeIndex_not: Int
-  apeIndex_in: [Int!]
-  apeIndex_not_in: [Int!]
-  apeIndex_lt: Int
-  apeIndex_lte: Int
-  apeIndex_gt: Int
-  apeIndex_gte: Int
-  height: Int
-  height_not: Int
-  height_in: [Int!]
-  height_not_in: [Int!]
-  height_lt: Int
-  height_lte: Int
-  height_gt: Int
-  height_gte: Int
-  weight: Int
-  weight_not: Int
-  weight_in: [Int!]
-  weight_not_in: [Int!]
-  weight_lt: Int
-  weight_lte: Int
-  weight_gt: Int
-  weight_gte: Int
-  maxVGrade: Int
-  maxVGrade_not: Int
-  maxVGrade_in: [Int!]
-  maxVGrade_not_in: [Int!]
-  maxVGrade_lt: Int
-  maxVGrade_lte: Int
-  maxVGrade_gt: Int
-  maxVGrade_gte: Int
-  maxSportGrade: String
-  maxSportGrade_not: String
-  maxSportGrade_in: [String!]
-  maxSportGrade_not_in: [String!]
-  maxSportGrade_lt: String
-  maxSportGrade_lte: String
-  maxSportGrade_gt: String
-  maxSportGrade_gte: String
-  maxSportGrade_contains: String
-  maxSportGrade_not_contains: String
-  maxSportGrade_starts_with: String
-  maxSportGrade_not_starts_with: String
-  maxSportGrade_ends_with: String
-  maxSportGrade_not_ends_with: String
-  maxEdgeLoad: Int
-  maxEdgeLoad_not: Int
-  maxEdgeLoad_in: [Int!]
-  maxEdgeLoad_not_in: [Int!]
-  maxEdgeLoad_lt: Int
-  maxEdgeLoad_lte: Int
-  maxEdgeLoad_gt: Int
-  maxEdgeLoad_gte: Int
-  maxEdgeTestSize: Int
-  maxEdgeTestSize_not: Int
-  maxEdgeTestSize_in: [Int!]
-  maxEdgeTestSize_not_in: [Int!]
-  maxEdgeTestSize_lt: Int
-  maxEdgeTestSize_lte: Int
-  maxEdgeTestSize_gt: Int
-  maxEdgeTestSize_gte: Int
-  SWREdge: Float
-  SWREdge_not: Float
-  SWREdge_in: [Float!]
-  SWREdge_not_in: [Float!]
-  SWREdge_lt: Float
-  SWREdge_lte: Float
-  SWREdge_gt: Float
-  SWREdge_gte: Float
-  maxPullLoad: Int
-  maxPullLoad_not: Int
-  maxPullLoad_in: [Int!]
-  maxPullLoad_not_in: [Int!]
-  maxPullLoad_lt: Int
-  maxPullLoad_lte: Int
-  maxPullLoad_gt: Int
-  maxPullLoad_gte: Int
-  SWRBar: Float
-  SWRBar_not: Float
-  SWRBar_in: [Float!]
-  SWRBar_not_in: [Float!]
-  SWRBar_lt: Float
-  SWRBar_lte: Float
-  SWRBar_gt: Float
-  SWRBar_gte: Float
-  oneArmHangLoadLeft: Int
-  oneArmHangLoadLeft_not: Int
-  oneArmHangLoadLeft_in: [Int!]
-  oneArmHangLoadLeft_not_in: [Int!]
-  oneArmHangLoadLeft_lt: Int
-  oneArmHangLoadLeft_lte: Int
-  oneArmHangLoadLeft_gt: Int
-  oneArmHangLoadLeft_gte: Int
-  oneArmHangLoadRight: Int
-  oneArmHangLoadRight_not: Int
-  oneArmHangLoadRight_in: [Int!]
-  oneArmHangLoadRight_not_in: [Int!]
-  oneArmHangLoadRight_lt: Int
-  oneArmHangLoadRight_lte: Int
-  oneArmHangLoadRight_gt: Int
-  oneArmHangLoadRight_gte: Int
-  oneArmHangSWR: Float
-  oneArmHangSWR_not: Float
-  oneArmHangSWR_in: [Float!]
-  oneArmHangSWR_not_in: [Float!]
-  oneArmHangSWR_lt: Float
-  oneArmHangSWR_lte: Float
-  oneArmHangSWR_gt: Float
-  oneArmHangSWR_gte: Float
-  goalVGrade: Int
-  goalVGrade_not: Int
-  goalVGrade_in: [Int!]
-  goalVGrade_not_in: [Int!]
-  goalVGrade_lt: Int
-  goalVGrade_lte: Int
-  goalVGrade_gt: Int
-  goalVGrade_gte: Int
-  goalSportGrade: String
-  goalSportGrade_not: String
-  goalSportGrade_in: [String!]
-  goalSportGrade_not_in: [String!]
-  goalSportGrade_lt: String
-  goalSportGrade_lte: String
-  goalSportGrade_gt: String
-  goalSportGrade_gte: String
-  goalSportGrade_contains: String
-  goalSportGrade_not_contains: String
-  goalSportGrade_starts_with: String
-  goalSportGrade_not_starts_with: String
-  goalSportGrade_ends_with: String
-  goalSportGrade_not_ends_with: String
-  AND: [AthleteStatsScalarWhereInput!]
-  OR: [AthleteStatsScalarWhereInput!]
-  NOT: [AthleteStatsScalarWhereInput!]
-}
-
 type AthleteStatsSubscriptionPayload {
   mutation: MutationType!
   node: AthleteStats
@@ -602,25 +487,7 @@ input AthleteStatsSubscriptionWhereInput {
 }
 
 input AthleteStatsUpdateInput {
-  user: AthleteUpdateOneRequiredWithoutStatsInput
-  apeIndex: Int
-  height: Int
-  weight: Int
-  maxVGrade: Int
-  maxSportGrade: String
-  maxEdgeLoad: Int
-  maxEdgeTestSize: Int
-  SWREdge: Float
-  maxPullLoad: Int
-  SWRBar: Float
-  oneArmHangLoadLeft: Int
-  oneArmHangLoadRight: Int
-  oneArmHangSWR: Float
-  goalVGrade: Int
-  goalSportGrade: String
-}
-
-input AthleteStatsUpdateManyDataInput {
+  athlete: AthleteUpdateOneRequiredWithoutAthleteStatsInput
   apeIndex: Int
   height: Int
   weight: Int
@@ -656,24 +523,16 @@ input AthleteStatsUpdateManyMutationInput {
   goalSportGrade: String
 }
 
-input AthleteStatsUpdateManyWithoutUserInput {
-  create: [AthleteStatsCreateWithoutUserInput!]
-  delete: [AthleteStatsWhereUniqueInput!]
-  connect: [AthleteStatsWhereUniqueInput!]
-  set: [AthleteStatsWhereUniqueInput!]
-  disconnect: [AthleteStatsWhereUniqueInput!]
-  update: [AthleteStatsUpdateWithWhereUniqueWithoutUserInput!]
-  upsert: [AthleteStatsUpsertWithWhereUniqueWithoutUserInput!]
-  deleteMany: [AthleteStatsScalarWhereInput!]
-  updateMany: [AthleteStatsUpdateManyWithWhereNestedInput!]
+input AthleteStatsUpdateOneWithoutAthleteInput {
+  create: AthleteStatsCreateWithoutAthleteInput
+  update: AthleteStatsUpdateWithoutAthleteDataInput
+  upsert: AthleteStatsUpsertWithoutAthleteInput
+  delete: Boolean
+  disconnect: Boolean
+  connect: AthleteStatsWhereUniqueInput
 }
 
-input AthleteStatsUpdateManyWithWhereNestedInput {
-  where: AthleteStatsScalarWhereInput!
-  data: AthleteStatsUpdateManyDataInput!
-}
-
-input AthleteStatsUpdateWithoutUserDataInput {
+input AthleteStatsUpdateWithoutAthleteDataInput {
   apeIndex: Int
   height: Int
   weight: Int
@@ -691,15 +550,9 @@ input AthleteStatsUpdateWithoutUserDataInput {
   goalSportGrade: String
 }
 
-input AthleteStatsUpdateWithWhereUniqueWithoutUserInput {
-  where: AthleteStatsWhereUniqueInput!
-  data: AthleteStatsUpdateWithoutUserDataInput!
-}
-
-input AthleteStatsUpsertWithWhereUniqueWithoutUserInput {
-  where: AthleteStatsWhereUniqueInput!
-  update: AthleteStatsUpdateWithoutUserDataInput!
-  create: AthleteStatsCreateWithoutUserInput!
+input AthleteStatsUpsertWithoutAthleteInput {
+  update: AthleteStatsUpdateWithoutAthleteDataInput!
+  create: AthleteStatsCreateWithoutAthleteInput!
 }
 
 input AthleteStatsWhereInput {
@@ -717,7 +570,7 @@ input AthleteStatsWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
-  user: AthleteWhereInput
+  athlete: AthleteWhereInput
   createdAt: DateTime
   createdAt_not: DateTime
   createdAt_in: [DateTime!]
@@ -886,36 +739,24 @@ input AthleteSubscriptionWhereInput {
 }
 
 input AthleteUpdateDataInput {
-  fullName: String
-  email: String
-  password: String
-  stats: AthleteStatsUpdateManyWithoutUserInput
-  parents: ParentUpdateManyWithoutAthleteInput
-  team: TeamUpdateOneWithoutAthletesInput
-  teamKey: String
-  library: WorkoutUpdateManyInput
-  logBook: LogItemUpdateManyWithoutUserInput
+  user: UserUpdateOneWithoutAthleteInput
+  athleteStats: AthleteStatsUpdateOneWithoutAthleteInput
+  athleteSchedule: AthleteScheduleUpdateOneWithoutAthleteInput
+  teamSchedule: TeamScheduleUpdateOneWithoutAthletesInput
+  logBook: LogItemUpdateManyInput
   phase: String
 }
 
 input AthleteUpdateInput {
-  fullName: String
-  email: String
-  password: String
-  stats: AthleteStatsUpdateManyWithoutUserInput
-  parents: ParentUpdateManyWithoutAthleteInput
-  team: TeamUpdateOneWithoutAthletesInput
-  teamKey: String
-  library: WorkoutUpdateManyInput
-  logBook: LogItemUpdateManyWithoutUserInput
+  user: UserUpdateOneWithoutAthleteInput
+  athleteStats: AthleteStatsUpdateOneWithoutAthleteInput
+  athleteSchedule: AthleteScheduleUpdateOneWithoutAthleteInput
+  teamSchedule: TeamScheduleUpdateOneWithoutAthletesInput
+  logBook: LogItemUpdateManyInput
   phase: String
 }
 
 input AthleteUpdateManyDataInput {
-  fullName: String
-  email: String
-  password: String
-  teamKey: String
   phase: String
 }
 
@@ -932,33 +773,17 @@ input AthleteUpdateManyInput {
 }
 
 input AthleteUpdateManyMutationInput {
-  fullName: String
-  email: String
-  password: String
-  teamKey: String
   phase: String
 }
 
-input AthleteUpdateManyWithoutParentsInput {
-  create: [AthleteCreateWithoutParentsInput!]
+input AthleteUpdateManyWithoutTeamScheduleInput {
+  create: [AthleteCreateWithoutTeamScheduleInput!]
   delete: [AthleteWhereUniqueInput!]
   connect: [AthleteWhereUniqueInput!]
   set: [AthleteWhereUniqueInput!]
   disconnect: [AthleteWhereUniqueInput!]
-  update: [AthleteUpdateWithWhereUniqueWithoutParentsInput!]
-  upsert: [AthleteUpsertWithWhereUniqueWithoutParentsInput!]
-  deleteMany: [AthleteScalarWhereInput!]
-  updateMany: [AthleteUpdateManyWithWhereNestedInput!]
-}
-
-input AthleteUpdateManyWithoutTeamInput {
-  create: [AthleteCreateWithoutTeamInput!]
-  delete: [AthleteWhereUniqueInput!]
-  connect: [AthleteWhereUniqueInput!]
-  set: [AthleteWhereUniqueInput!]
-  disconnect: [AthleteWhereUniqueInput!]
-  update: [AthleteUpdateWithWhereUniqueWithoutTeamInput!]
-  upsert: [AthleteUpsertWithWhereUniqueWithoutTeamInput!]
+  update: [AthleteUpdateWithWhereUniqueWithoutTeamScheduleInput!]
+  upsert: [AthleteUpsertWithWhereUniqueWithoutTeamScheduleInput!]
   deleteMany: [AthleteScalarWhereInput!]
   updateMany: [AthleteUpdateManyWithWhereNestedInput!]
 }
@@ -984,65 +809,58 @@ input AthleteUpdateOneRequiredInput {
   connect: AthleteWhereUniqueInput
 }
 
-input AthleteUpdateOneRequiredWithoutLogBookInput {
-  create: AthleteCreateWithoutLogBookInput
-  update: AthleteUpdateWithoutLogBookDataInput
-  upsert: AthleteUpsertWithoutLogBookInput
+input AthleteUpdateOneRequiredWithoutAthleteScheduleInput {
+  create: AthleteCreateWithoutAthleteScheduleInput
+  update: AthleteUpdateWithoutAthleteScheduleDataInput
+  upsert: AthleteUpsertWithoutAthleteScheduleInput
   connect: AthleteWhereUniqueInput
 }
 
-input AthleteUpdateOneRequiredWithoutStatsInput {
-  create: AthleteCreateWithoutStatsInput
-  update: AthleteUpdateWithoutStatsDataInput
-  upsert: AthleteUpsertWithoutStatsInput
+input AthleteUpdateOneRequiredWithoutAthleteStatsInput {
+  create: AthleteCreateWithoutAthleteStatsInput
+  update: AthleteUpdateWithoutAthleteStatsDataInput
+  upsert: AthleteUpsertWithoutAthleteStatsInput
   connect: AthleteWhereUniqueInput
 }
 
-input AthleteUpdateWithoutLogBookDataInput {
-  fullName: String
-  email: String
-  password: String
-  stats: AthleteStatsUpdateManyWithoutUserInput
-  parents: ParentUpdateManyWithoutAthleteInput
-  team: TeamUpdateOneWithoutAthletesInput
-  teamKey: String
-  library: WorkoutUpdateManyInput
+input AthleteUpdateOneWithoutUserInput {
+  create: AthleteCreateWithoutUserInput
+  update: AthleteUpdateWithoutUserDataInput
+  upsert: AthleteUpsertWithoutUserInput
+  delete: Boolean
+  disconnect: Boolean
+  connect: AthleteWhereUniqueInput
+}
+
+input AthleteUpdateWithoutAthleteScheduleDataInput {
+  user: UserUpdateOneWithoutAthleteInput
+  athleteStats: AthleteStatsUpdateOneWithoutAthleteInput
+  teamSchedule: TeamScheduleUpdateOneWithoutAthletesInput
+  logBook: LogItemUpdateManyInput
   phase: String
 }
 
-input AthleteUpdateWithoutParentsDataInput {
-  fullName: String
-  email: String
-  password: String
-  stats: AthleteStatsUpdateManyWithoutUserInput
-  team: TeamUpdateOneWithoutAthletesInput
-  teamKey: String
-  library: WorkoutUpdateManyInput
-  logBook: LogItemUpdateManyWithoutUserInput
+input AthleteUpdateWithoutAthleteStatsDataInput {
+  user: UserUpdateOneWithoutAthleteInput
+  athleteSchedule: AthleteScheduleUpdateOneWithoutAthleteInput
+  teamSchedule: TeamScheduleUpdateOneWithoutAthletesInput
+  logBook: LogItemUpdateManyInput
   phase: String
 }
 
-input AthleteUpdateWithoutStatsDataInput {
-  fullName: String
-  email: String
-  password: String
-  parents: ParentUpdateManyWithoutAthleteInput
-  team: TeamUpdateOneWithoutAthletesInput
-  teamKey: String
-  library: WorkoutUpdateManyInput
-  logBook: LogItemUpdateManyWithoutUserInput
+input AthleteUpdateWithoutTeamScheduleDataInput {
+  user: UserUpdateOneWithoutAthleteInput
+  athleteStats: AthleteStatsUpdateOneWithoutAthleteInput
+  athleteSchedule: AthleteScheduleUpdateOneWithoutAthleteInput
+  logBook: LogItemUpdateManyInput
   phase: String
 }
 
-input AthleteUpdateWithoutTeamDataInput {
-  fullName: String
-  email: String
-  password: String
-  stats: AthleteStatsUpdateManyWithoutUserInput
-  parents: ParentUpdateManyWithoutAthleteInput
-  teamKey: String
-  library: WorkoutUpdateManyInput
-  logBook: LogItemUpdateManyWithoutUserInput
+input AthleteUpdateWithoutUserDataInput {
+  athleteStats: AthleteStatsUpdateOneWithoutAthleteInput
+  athleteSchedule: AthleteScheduleUpdateOneWithoutAthleteInput
+  teamSchedule: TeamScheduleUpdateOneWithoutAthletesInput
+  logBook: LogItemUpdateManyInput
   phase: String
 }
 
@@ -1051,14 +869,9 @@ input AthleteUpdateWithWhereUniqueNestedInput {
   data: AthleteUpdateDataInput!
 }
 
-input AthleteUpdateWithWhereUniqueWithoutParentsInput {
+input AthleteUpdateWithWhereUniqueWithoutTeamScheduleInput {
   where: AthleteWhereUniqueInput!
-  data: AthleteUpdateWithoutParentsDataInput!
-}
-
-input AthleteUpdateWithWhereUniqueWithoutTeamInput {
-  where: AthleteWhereUniqueInput!
-  data: AthleteUpdateWithoutTeamDataInput!
+  data: AthleteUpdateWithoutTeamScheduleDataInput!
 }
 
 input AthleteUpsertNestedInput {
@@ -1066,14 +879,19 @@ input AthleteUpsertNestedInput {
   create: AthleteCreateInput!
 }
 
-input AthleteUpsertWithoutLogBookInput {
-  update: AthleteUpdateWithoutLogBookDataInput!
-  create: AthleteCreateWithoutLogBookInput!
+input AthleteUpsertWithoutAthleteScheduleInput {
+  update: AthleteUpdateWithoutAthleteScheduleDataInput!
+  create: AthleteCreateWithoutAthleteScheduleInput!
 }
 
-input AthleteUpsertWithoutStatsInput {
-  update: AthleteUpdateWithoutStatsDataInput!
-  create: AthleteCreateWithoutStatsInput!
+input AthleteUpsertWithoutAthleteStatsInput {
+  update: AthleteUpdateWithoutAthleteStatsDataInput!
+  create: AthleteCreateWithoutAthleteStatsInput!
+}
+
+input AthleteUpsertWithoutUserInput {
+  update: AthleteUpdateWithoutUserDataInput!
+  create: AthleteCreateWithoutUserInput!
 }
 
 input AthleteUpsertWithWhereUniqueNestedInput {
@@ -1082,16 +900,10 @@ input AthleteUpsertWithWhereUniqueNestedInput {
   create: AthleteCreateInput!
 }
 
-input AthleteUpsertWithWhereUniqueWithoutParentsInput {
+input AthleteUpsertWithWhereUniqueWithoutTeamScheduleInput {
   where: AthleteWhereUniqueInput!
-  update: AthleteUpdateWithoutParentsDataInput!
-  create: AthleteCreateWithoutParentsInput!
-}
-
-input AthleteUpsertWithWhereUniqueWithoutTeamInput {
-  where: AthleteWhereUniqueInput!
-  update: AthleteUpdateWithoutTeamDataInput!
-  create: AthleteCreateWithoutTeamInput!
+  update: AthleteUpdateWithoutTeamScheduleDataInput!
+  create: AthleteCreateWithoutTeamScheduleInput!
 }
 
 input AthleteWhereInput {
@@ -1109,72 +921,10 @@ input AthleteWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
-  fullName: String
-  fullName_not: String
-  fullName_in: [String!]
-  fullName_not_in: [String!]
-  fullName_lt: String
-  fullName_lte: String
-  fullName_gt: String
-  fullName_gte: String
-  fullName_contains: String
-  fullName_not_contains: String
-  fullName_starts_with: String
-  fullName_not_starts_with: String
-  fullName_ends_with: String
-  fullName_not_ends_with: String
-  email: String
-  email_not: String
-  email_in: [String!]
-  email_not_in: [String!]
-  email_lt: String
-  email_lte: String
-  email_gt: String
-  email_gte: String
-  email_contains: String
-  email_not_contains: String
-  email_starts_with: String
-  email_not_starts_with: String
-  email_ends_with: String
-  email_not_ends_with: String
-  password: String
-  password_not: String
-  password_in: [String!]
-  password_not_in: [String!]
-  password_lt: String
-  password_lte: String
-  password_gt: String
-  password_gte: String
-  password_contains: String
-  password_not_contains: String
-  password_starts_with: String
-  password_not_starts_with: String
-  password_ends_with: String
-  password_not_ends_with: String
-  stats_every: AthleteStatsWhereInput
-  stats_some: AthleteStatsWhereInput
-  stats_none: AthleteStatsWhereInput
-  parents_every: ParentWhereInput
-  parents_some: ParentWhereInput
-  parents_none: ParentWhereInput
-  team: TeamWhereInput
-  teamKey: String
-  teamKey_not: String
-  teamKey_in: [String!]
-  teamKey_not_in: [String!]
-  teamKey_lt: String
-  teamKey_lte: String
-  teamKey_gt: String
-  teamKey_gte: String
-  teamKey_contains: String
-  teamKey_not_contains: String
-  teamKey_starts_with: String
-  teamKey_not_starts_with: String
-  teamKey_ends_with: String
-  teamKey_not_ends_with: String
-  library_every: WorkoutWhereInput
-  library_some: WorkoutWhereInput
-  library_none: WorkoutWhereInput
+  user: UserWhereInput
+  athleteStats: AthleteStatsWhereInput
+  athleteSchedule: AthleteScheduleWhereInput
+  teamSchedule: TeamScheduleWhereInput
   logBook_every: LogItemWhereInput
   logBook_some: LogItemWhereInput
   logBook_none: LogItemWhereInput
@@ -1199,7 +949,6 @@ input AthleteWhereInput {
 
 input AthleteWhereUniqueInput {
   id: ID
-  email: String
 }
 
 type BatchPayload {
@@ -1208,13 +957,7 @@ type BatchPayload {
 
 type Coach {
   id: ID!
-  fullName: String!
-  team: Team
-  teams(where: SubTeamWhereInput, orderBy: SubTeamOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [SubTeam!]
-  email: String!
-  password: String!
-  teamKey: String!
-  coachKey: String!
+  user: User
 }
 
 type CoachConnection {
@@ -1225,22 +968,11 @@ type CoachConnection {
 
 input CoachCreateInput {
   id: ID
-  fullName: String!
-  team: TeamCreateOneWithoutCoahcesInput
-  teams: SubTeamCreateManyWithoutCoahcesInput
-  email: String!
-  password: String!
-  teamKey: String!
-  coachKey: String!
+  user: UserCreateOneWithoutCoachInput
 }
 
-input CoachCreateManyWithoutTeamInput {
-  create: [CoachCreateWithoutTeamInput!]
-  connect: [CoachWhereUniqueInput!]
-}
-
-input CoachCreateManyWithoutTeamsInput {
-  create: [CoachCreateWithoutTeamsInput!]
+input CoachCreateManyInput {
+  create: [CoachCreateInput!]
   connect: [CoachWhereUniqueInput!]
 }
 
@@ -1249,24 +981,13 @@ input CoachCreateOneInput {
   connect: CoachWhereUniqueInput
 }
 
-input CoachCreateWithoutTeamInput {
-  id: ID
-  fullName: String!
-  teams: SubTeamCreateManyWithoutCoahcesInput
-  email: String!
-  password: String!
-  teamKey: String!
-  coachKey: String!
+input CoachCreateOneWithoutUserInput {
+  create: CoachCreateWithoutUserInput
+  connect: CoachWhereUniqueInput
 }
 
-input CoachCreateWithoutTeamsInput {
+input CoachCreateWithoutUserInput {
   id: ID
-  fullName: String!
-  team: TeamCreateOneWithoutCoahcesInput
-  email: String!
-  password: String!
-  teamKey: String!
-  coachKey: String!
 }
 
 type CoachEdge {
@@ -1277,25 +998,10 @@ type CoachEdge {
 enum CoachOrderByInput {
   id_ASC
   id_DESC
-  fullName_ASC
-  fullName_DESC
-  email_ASC
-  email_DESC
-  password_ASC
-  password_DESC
-  teamKey_ASC
-  teamKey_DESC
-  coachKey_ASC
-  coachKey_DESC
 }
 
 type CoachPreviousValues {
   id: ID!
-  fullName: String!
-  email: String!
-  password: String!
-  teamKey: String!
-  coachKey: String!
 }
 
 input CoachScalarWhereInput {
@@ -1313,76 +1019,6 @@ input CoachScalarWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
-  fullName: String
-  fullName_not: String
-  fullName_in: [String!]
-  fullName_not_in: [String!]
-  fullName_lt: String
-  fullName_lte: String
-  fullName_gt: String
-  fullName_gte: String
-  fullName_contains: String
-  fullName_not_contains: String
-  fullName_starts_with: String
-  fullName_not_starts_with: String
-  fullName_ends_with: String
-  fullName_not_ends_with: String
-  email: String
-  email_not: String
-  email_in: [String!]
-  email_not_in: [String!]
-  email_lt: String
-  email_lte: String
-  email_gt: String
-  email_gte: String
-  email_contains: String
-  email_not_contains: String
-  email_starts_with: String
-  email_not_starts_with: String
-  email_ends_with: String
-  email_not_ends_with: String
-  password: String
-  password_not: String
-  password_in: [String!]
-  password_not_in: [String!]
-  password_lt: String
-  password_lte: String
-  password_gt: String
-  password_gte: String
-  password_contains: String
-  password_not_contains: String
-  password_starts_with: String
-  password_not_starts_with: String
-  password_ends_with: String
-  password_not_ends_with: String
-  teamKey: String
-  teamKey_not: String
-  teamKey_in: [String!]
-  teamKey_not_in: [String!]
-  teamKey_lt: String
-  teamKey_lte: String
-  teamKey_gt: String
-  teamKey_gte: String
-  teamKey_contains: String
-  teamKey_not_contains: String
-  teamKey_starts_with: String
-  teamKey_not_starts_with: String
-  teamKey_ends_with: String
-  teamKey_not_ends_with: String
-  coachKey: String
-  coachKey_not: String
-  coachKey_in: [String!]
-  coachKey_not_in: [String!]
-  coachKey_lt: String
-  coachKey_lte: String
-  coachKey_gt: String
-  coachKey_gte: String
-  coachKey_contains: String
-  coachKey_not_contains: String
-  coachKey_starts_with: String
-  coachKey_not_starts_with: String
-  coachKey_ends_with: String
-  coachKey_not_ends_with: String
   AND: [CoachScalarWhereInput!]
   OR: [CoachScalarWhereInput!]
   NOT: [CoachScalarWhereInput!]
@@ -1407,68 +1043,22 @@ input CoachSubscriptionWhereInput {
 }
 
 input CoachUpdateDataInput {
-  fullName: String
-  team: TeamUpdateOneWithoutCoahcesInput
-  teams: SubTeamUpdateManyWithoutCoahcesInput
-  email: String
-  password: String
-  teamKey: String
-  coachKey: String
+  user: UserUpdateOneWithoutCoachInput
 }
 
 input CoachUpdateInput {
-  fullName: String
-  team: TeamUpdateOneWithoutCoahcesInput
-  teams: SubTeamUpdateManyWithoutCoahcesInput
-  email: String
-  password: String
-  teamKey: String
-  coachKey: String
+  user: UserUpdateOneWithoutCoachInput
 }
 
-input CoachUpdateManyDataInput {
-  fullName: String
-  email: String
-  password: String
-  teamKey: String
-  coachKey: String
-}
-
-input CoachUpdateManyMutationInput {
-  fullName: String
-  email: String
-  password: String
-  teamKey: String
-  coachKey: String
-}
-
-input CoachUpdateManyWithoutTeamInput {
-  create: [CoachCreateWithoutTeamInput!]
+input CoachUpdateManyInput {
+  create: [CoachCreateInput!]
+  update: [CoachUpdateWithWhereUniqueNestedInput!]
+  upsert: [CoachUpsertWithWhereUniqueNestedInput!]
   delete: [CoachWhereUniqueInput!]
   connect: [CoachWhereUniqueInput!]
   set: [CoachWhereUniqueInput!]
   disconnect: [CoachWhereUniqueInput!]
-  update: [CoachUpdateWithWhereUniqueWithoutTeamInput!]
-  upsert: [CoachUpsertWithWhereUniqueWithoutTeamInput!]
   deleteMany: [CoachScalarWhereInput!]
-  updateMany: [CoachUpdateManyWithWhereNestedInput!]
-}
-
-input CoachUpdateManyWithoutTeamsInput {
-  create: [CoachCreateWithoutTeamsInput!]
-  delete: [CoachWhereUniqueInput!]
-  connect: [CoachWhereUniqueInput!]
-  set: [CoachWhereUniqueInput!]
-  disconnect: [CoachWhereUniqueInput!]
-  update: [CoachUpdateWithWhereUniqueWithoutTeamsInput!]
-  upsert: [CoachUpsertWithWhereUniqueWithoutTeamsInput!]
-  deleteMany: [CoachScalarWhereInput!]
-  updateMany: [CoachUpdateManyWithWhereNestedInput!]
-}
-
-input CoachUpdateManyWithWhereNestedInput {
-  where: CoachScalarWhereInput!
-  data: CoachUpdateManyDataInput!
 }
 
 input CoachUpdateOneInput {
@@ -1480,39 +1070,16 @@ input CoachUpdateOneInput {
   connect: CoachWhereUniqueInput
 }
 
-input CoachUpdateOneRequiredInput {
-  create: CoachCreateInput
-  update: CoachUpdateDataInput
-  upsert: CoachUpsertNestedInput
+input CoachUpdateOneWithoutUserInput {
+  create: CoachCreateWithoutUserInput
+  delete: Boolean
+  disconnect: Boolean
   connect: CoachWhereUniqueInput
 }
 
-input CoachUpdateWithoutTeamDataInput {
-  fullName: String
-  teams: SubTeamUpdateManyWithoutCoahcesInput
-  email: String
-  password: String
-  teamKey: String
-  coachKey: String
-}
-
-input CoachUpdateWithoutTeamsDataInput {
-  fullName: String
-  team: TeamUpdateOneWithoutCoahcesInput
-  email: String
-  password: String
-  teamKey: String
-  coachKey: String
-}
-
-input CoachUpdateWithWhereUniqueWithoutTeamInput {
+input CoachUpdateWithWhereUniqueNestedInput {
   where: CoachWhereUniqueInput!
-  data: CoachUpdateWithoutTeamDataInput!
-}
-
-input CoachUpdateWithWhereUniqueWithoutTeamsInput {
-  where: CoachWhereUniqueInput!
-  data: CoachUpdateWithoutTeamsDataInput!
+  data: CoachUpdateDataInput!
 }
 
 input CoachUpsertNestedInput {
@@ -1520,16 +1087,10 @@ input CoachUpsertNestedInput {
   create: CoachCreateInput!
 }
 
-input CoachUpsertWithWhereUniqueWithoutTeamInput {
+input CoachUpsertWithWhereUniqueNestedInput {
   where: CoachWhereUniqueInput!
-  update: CoachUpdateWithoutTeamDataInput!
-  create: CoachCreateWithoutTeamInput!
-}
-
-input CoachUpsertWithWhereUniqueWithoutTeamsInput {
-  where: CoachWhereUniqueInput!
-  update: CoachUpdateWithoutTeamsDataInput!
-  create: CoachCreateWithoutTeamsInput!
+  update: CoachUpdateDataInput!
+  create: CoachCreateInput!
 }
 
 input CoachWhereInput {
@@ -1547,80 +1108,7 @@ input CoachWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
-  fullName: String
-  fullName_not: String
-  fullName_in: [String!]
-  fullName_not_in: [String!]
-  fullName_lt: String
-  fullName_lte: String
-  fullName_gt: String
-  fullName_gte: String
-  fullName_contains: String
-  fullName_not_contains: String
-  fullName_starts_with: String
-  fullName_not_starts_with: String
-  fullName_ends_with: String
-  fullName_not_ends_with: String
-  team: TeamWhereInput
-  teams_every: SubTeamWhereInput
-  teams_some: SubTeamWhereInput
-  teams_none: SubTeamWhereInput
-  email: String
-  email_not: String
-  email_in: [String!]
-  email_not_in: [String!]
-  email_lt: String
-  email_lte: String
-  email_gt: String
-  email_gte: String
-  email_contains: String
-  email_not_contains: String
-  email_starts_with: String
-  email_not_starts_with: String
-  email_ends_with: String
-  email_not_ends_with: String
-  password: String
-  password_not: String
-  password_in: [String!]
-  password_not_in: [String!]
-  password_lt: String
-  password_lte: String
-  password_gt: String
-  password_gte: String
-  password_contains: String
-  password_not_contains: String
-  password_starts_with: String
-  password_not_starts_with: String
-  password_ends_with: String
-  password_not_ends_with: String
-  teamKey: String
-  teamKey_not: String
-  teamKey_in: [String!]
-  teamKey_not_in: [String!]
-  teamKey_lt: String
-  teamKey_lte: String
-  teamKey_gt: String
-  teamKey_gte: String
-  teamKey_contains: String
-  teamKey_not_contains: String
-  teamKey_starts_with: String
-  teamKey_not_starts_with: String
-  teamKey_ends_with: String
-  teamKey_not_ends_with: String
-  coachKey: String
-  coachKey_not: String
-  coachKey_in: [String!]
-  coachKey_not_in: [String!]
-  coachKey_lt: String
-  coachKey_lte: String
-  coachKey_gt: String
-  coachKey_gte: String
-  coachKey_contains: String
-  coachKey_not_contains: String
-  coachKey_starts_with: String
-  coachKey_not_starts_with: String
-  coachKey_ends_with: String
-  coachKey_not_ends_with: String
+  user: UserWhereInput
   AND: [CoachWhereInput!]
   OR: [CoachWhereInput!]
   NOT: [CoachWhereInput!]
@@ -1628,7 +1116,6 @@ input CoachWhereInput {
 
 input CoachWhereUniqueInput {
   id: ID
-  email: String
 }
 
 type Comment {
@@ -1828,12 +1315,7 @@ scalar DateTime
 
 type HeadCoach {
   id: ID!
-  team: Team
-  fullName: String!
-  email: String!
-  password: String!
-  teamKey: String!
-  coachKey: String!
+  user: User
 }
 
 type HeadCoachConnection {
@@ -1844,12 +1326,7 @@ type HeadCoachConnection {
 
 input HeadCoachCreateInput {
   id: ID
-  team: TeamCreateOneWithoutHeadCoachInput
-  fullName: String!
-  email: String!
-  password: String!
-  teamKey: String!
-  coachKey: String!
+  user: UserCreateOneWithoutHeadCoachInput
 }
 
 input HeadCoachCreateOneInput {
@@ -1857,18 +1334,13 @@ input HeadCoachCreateOneInput {
   connect: HeadCoachWhereUniqueInput
 }
 
-input HeadCoachCreateOneWithoutTeamInput {
-  create: HeadCoachCreateWithoutTeamInput
+input HeadCoachCreateOneWithoutUserInput {
+  create: HeadCoachCreateWithoutUserInput
   connect: HeadCoachWhereUniqueInput
 }
 
-input HeadCoachCreateWithoutTeamInput {
+input HeadCoachCreateWithoutUserInput {
   id: ID
-  fullName: String!
-  email: String!
-  password: String!
-  teamKey: String!
-  coachKey: String!
 }
 
 type HeadCoachEdge {
@@ -1879,25 +1351,10 @@ type HeadCoachEdge {
 enum HeadCoachOrderByInput {
   id_ASC
   id_DESC
-  fullName_ASC
-  fullName_DESC
-  email_ASC
-  email_DESC
-  password_ASC
-  password_DESC
-  teamKey_ASC
-  teamKey_DESC
-  coachKey_ASC
-  coachKey_DESC
 }
 
 type HeadCoachPreviousValues {
   id: ID!
-  fullName: String!
-  email: String!
-  password: String!
-  teamKey: String!
-  coachKey: String!
 }
 
 type HeadCoachSubscriptionPayload {
@@ -1919,29 +1376,20 @@ input HeadCoachSubscriptionWhereInput {
 }
 
 input HeadCoachUpdateDataInput {
-  team: TeamUpdateOneWithoutHeadCoachInput
-  fullName: String
-  email: String
-  password: String
-  teamKey: String
-  coachKey: String
+  user: UserUpdateOneWithoutHeadCoachInput
 }
 
 input HeadCoachUpdateInput {
-  team: TeamUpdateOneWithoutHeadCoachInput
-  fullName: String
-  email: String
-  password: String
-  teamKey: String
-  coachKey: String
+  user: UserUpdateOneWithoutHeadCoachInput
 }
 
-input HeadCoachUpdateManyMutationInput {
-  fullName: String
-  email: String
-  password: String
-  teamKey: String
-  coachKey: String
+input HeadCoachUpdateOneInput {
+  create: HeadCoachCreateInput
+  update: HeadCoachUpdateDataInput
+  upsert: HeadCoachUpsertNestedInput
+  delete: Boolean
+  disconnect: Boolean
+  connect: HeadCoachWhereUniqueInput
 }
 
 input HeadCoachUpdateOneRequiredInput {
@@ -1951,31 +1399,16 @@ input HeadCoachUpdateOneRequiredInput {
   connect: HeadCoachWhereUniqueInput
 }
 
-input HeadCoachUpdateOneWithoutTeamInput {
-  create: HeadCoachCreateWithoutTeamInput
-  update: HeadCoachUpdateWithoutTeamDataInput
-  upsert: HeadCoachUpsertWithoutTeamInput
+input HeadCoachUpdateOneWithoutUserInput {
+  create: HeadCoachCreateWithoutUserInput
   delete: Boolean
   disconnect: Boolean
   connect: HeadCoachWhereUniqueInput
 }
 
-input HeadCoachUpdateWithoutTeamDataInput {
-  fullName: String
-  email: String
-  password: String
-  teamKey: String
-  coachKey: String
-}
-
 input HeadCoachUpsertNestedInput {
   update: HeadCoachUpdateDataInput!
   create: HeadCoachCreateInput!
-}
-
-input HeadCoachUpsertWithoutTeamInput {
-  update: HeadCoachUpdateWithoutTeamDataInput!
-  create: HeadCoachCreateWithoutTeamInput!
 }
 
 input HeadCoachWhereInput {
@@ -1993,77 +1426,7 @@ input HeadCoachWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
-  team: TeamWhereInput
-  fullName: String
-  fullName_not: String
-  fullName_in: [String!]
-  fullName_not_in: [String!]
-  fullName_lt: String
-  fullName_lte: String
-  fullName_gt: String
-  fullName_gte: String
-  fullName_contains: String
-  fullName_not_contains: String
-  fullName_starts_with: String
-  fullName_not_starts_with: String
-  fullName_ends_with: String
-  fullName_not_ends_with: String
-  email: String
-  email_not: String
-  email_in: [String!]
-  email_not_in: [String!]
-  email_lt: String
-  email_lte: String
-  email_gt: String
-  email_gte: String
-  email_contains: String
-  email_not_contains: String
-  email_starts_with: String
-  email_not_starts_with: String
-  email_ends_with: String
-  email_not_ends_with: String
-  password: String
-  password_not: String
-  password_in: [String!]
-  password_not_in: [String!]
-  password_lt: String
-  password_lte: String
-  password_gt: String
-  password_gte: String
-  password_contains: String
-  password_not_contains: String
-  password_starts_with: String
-  password_not_starts_with: String
-  password_ends_with: String
-  password_not_ends_with: String
-  teamKey: String
-  teamKey_not: String
-  teamKey_in: [String!]
-  teamKey_not_in: [String!]
-  teamKey_lt: String
-  teamKey_lte: String
-  teamKey_gt: String
-  teamKey_gte: String
-  teamKey_contains: String
-  teamKey_not_contains: String
-  teamKey_starts_with: String
-  teamKey_not_starts_with: String
-  teamKey_ends_with: String
-  teamKey_not_ends_with: String
-  coachKey: String
-  coachKey_not: String
-  coachKey_in: [String!]
-  coachKey_not_in: [String!]
-  coachKey_lt: String
-  coachKey_lte: String
-  coachKey_gt: String
-  coachKey_gte: String
-  coachKey_contains: String
-  coachKey_not_contains: String
-  coachKey_starts_with: String
-  coachKey_not_starts_with: String
-  coachKey_ends_with: String
-  coachKey_not_ends_with: String
+  user: UserWhereInput
   AND: [HeadCoachWhereInput!]
   OR: [HeadCoachWhereInput!]
   NOT: [HeadCoachWhereInput!]
@@ -2074,7 +1437,7 @@ input HeadCoachWhereUniqueInput {
 }
 
 type LogItem {
-  user: Athlete!
+  user: User!
   id: ID!
   createdAt: DateTime!
   title: String!
@@ -2090,7 +1453,7 @@ type LogItemConnection {
 }
 
 input LogItemCreateInput {
-  user: AthleteCreateOneWithoutLogBookInput!
+  user: UserCreateOneInput!
   id: ID
   title: String!
   description: String!
@@ -2098,17 +1461,9 @@ input LogItemCreateInput {
   comment: String
 }
 
-input LogItemCreateManyWithoutUserInput {
-  create: [LogItemCreateWithoutUserInput!]
+input LogItemCreateManyInput {
+  create: [LogItemCreateInput!]
   connect: [LogItemWhereUniqueInput!]
-}
-
-input LogItemCreateWithoutUserInput {
-  id: ID
-  title: String!
-  description: String!
-  results: ResultCreateOneInput!
-  comment: String
 }
 
 type LogItemEdge {
@@ -2225,8 +1580,16 @@ input LogItemSubscriptionWhereInput {
   NOT: [LogItemSubscriptionWhereInput!]
 }
 
+input LogItemUpdateDataInput {
+  user: UserUpdateOneRequiredInput
+  title: String
+  description: String
+  results: ResultUpdateOneRequiredInput
+  comment: String
+}
+
 input LogItemUpdateInput {
-  user: AthleteUpdateOneRequiredWithoutLogBookInput
+  user: UserUpdateOneRequiredInput
   title: String
   description: String
   results: ResultUpdateOneRequiredInput
@@ -2239,22 +1602,22 @@ input LogItemUpdateManyDataInput {
   comment: String
 }
 
-input LogItemUpdateManyMutationInput {
-  title: String
-  description: String
-  comment: String
-}
-
-input LogItemUpdateManyWithoutUserInput {
-  create: [LogItemCreateWithoutUserInput!]
+input LogItemUpdateManyInput {
+  create: [LogItemCreateInput!]
+  update: [LogItemUpdateWithWhereUniqueNestedInput!]
+  upsert: [LogItemUpsertWithWhereUniqueNestedInput!]
   delete: [LogItemWhereUniqueInput!]
   connect: [LogItemWhereUniqueInput!]
   set: [LogItemWhereUniqueInput!]
   disconnect: [LogItemWhereUniqueInput!]
-  update: [LogItemUpdateWithWhereUniqueWithoutUserInput!]
-  upsert: [LogItemUpsertWithWhereUniqueWithoutUserInput!]
   deleteMany: [LogItemScalarWhereInput!]
   updateMany: [LogItemUpdateManyWithWhereNestedInput!]
+}
+
+input LogItemUpdateManyMutationInput {
+  title: String
+  description: String
+  comment: String
 }
 
 input LogItemUpdateManyWithWhereNestedInput {
@@ -2262,26 +1625,19 @@ input LogItemUpdateManyWithWhereNestedInput {
   data: LogItemUpdateManyDataInput!
 }
 
-input LogItemUpdateWithoutUserDataInput {
-  title: String
-  description: String
-  results: ResultUpdateOneRequiredInput
-  comment: String
+input LogItemUpdateWithWhereUniqueNestedInput {
+  where: LogItemWhereUniqueInput!
+  data: LogItemUpdateDataInput!
 }
 
-input LogItemUpdateWithWhereUniqueWithoutUserInput {
+input LogItemUpsertWithWhereUniqueNestedInput {
   where: LogItemWhereUniqueInput!
-  data: LogItemUpdateWithoutUserDataInput!
-}
-
-input LogItemUpsertWithWhereUniqueWithoutUserInput {
-  where: LogItemWhereUniqueInput!
-  update: LogItemUpdateWithoutUserDataInput!
-  create: LogItemCreateWithoutUserInput!
+  update: LogItemUpdateDataInput!
+  create: LogItemCreateInput!
 }
 
 input LogItemWhereInput {
-  user: AthleteWhereInput
+  user: UserWhereInput
   id: ID
   id_not: ID
   id_in: [ID!]
@@ -2365,6 +1721,11 @@ type Mutation {
   upsertAthlete(where: AthleteWhereUniqueInput!, create: AthleteCreateInput!, update: AthleteUpdateInput!): Athlete!
   deleteAthlete(where: AthleteWhereUniqueInput!): Athlete
   deleteManyAthletes(where: AthleteWhereInput): BatchPayload!
+  createAthleteSchedule(data: AthleteScheduleCreateInput!): AthleteSchedule!
+  updateAthleteSchedule(data: AthleteScheduleUpdateInput!, where: AthleteScheduleWhereUniqueInput!): AthleteSchedule
+  upsertAthleteSchedule(where: AthleteScheduleWhereUniqueInput!, create: AthleteScheduleCreateInput!, update: AthleteScheduleUpdateInput!): AthleteSchedule!
+  deleteAthleteSchedule(where: AthleteScheduleWhereUniqueInput!): AthleteSchedule
+  deleteManyAthleteSchedules(where: AthleteScheduleWhereInput): BatchPayload!
   createAthleteStats(data: AthleteStatsCreateInput!): AthleteStats!
   updateAthleteStats(data: AthleteStatsUpdateInput!, where: AthleteStatsWhereUniqueInput!): AthleteStats
   updateManyAthleteStatses(data: AthleteStatsUpdateManyMutationInput!, where: AthleteStatsWhereInput): BatchPayload!
@@ -2373,7 +1734,6 @@ type Mutation {
   deleteManyAthleteStatses(where: AthleteStatsWhereInput): BatchPayload!
   createCoach(data: CoachCreateInput!): Coach!
   updateCoach(data: CoachUpdateInput!, where: CoachWhereUniqueInput!): Coach
-  updateManyCoaches(data: CoachUpdateManyMutationInput!, where: CoachWhereInput): BatchPayload!
   upsertCoach(where: CoachWhereUniqueInput!, create: CoachCreateInput!, update: CoachUpdateInput!): Coach!
   deleteCoach(where: CoachWhereUniqueInput!): Coach
   deleteManyCoaches(where: CoachWhereInput): BatchPayload!
@@ -2385,7 +1745,6 @@ type Mutation {
   deleteManyComments(where: CommentWhereInput): BatchPayload!
   createHeadCoach(data: HeadCoachCreateInput!): HeadCoach!
   updateHeadCoach(data: HeadCoachUpdateInput!, where: HeadCoachWhereUniqueInput!): HeadCoach
-  updateManyHeadCoaches(data: HeadCoachUpdateManyMutationInput!, where: HeadCoachWhereInput): BatchPayload!
   upsertHeadCoach(where: HeadCoachWhereUniqueInput!, create: HeadCoachCreateInput!, update: HeadCoachUpdateInput!): HeadCoach!
   deleteHeadCoach(where: HeadCoachWhereUniqueInput!): HeadCoach
   deleteManyHeadCoaches(where: HeadCoachWhereInput): BatchPayload!
@@ -2397,7 +1756,6 @@ type Mutation {
   deleteManyLogItems(where: LogItemWhereInput): BatchPayload!
   createParent(data: ParentCreateInput!): Parent!
   updateParent(data: ParentUpdateInput!, where: ParentWhereUniqueInput!): Parent
-  updateManyParents(data: ParentUpdateManyMutationInput!, where: ParentWhereInput): BatchPayload!
   upsertParent(where: ParentWhereUniqueInput!, create: ParentCreateInput!, update: ParentUpdateInput!): Parent!
   deleteParent(where: ParentWhereUniqueInput!): Parent
   deleteManyParents(where: ParentWhereInput): BatchPayload!
@@ -2413,11 +1771,6 @@ type Mutation {
   upsertResult(where: ResultWhereUniqueInput!, create: ResultCreateInput!, update: ResultUpdateInput!): Result!
   deleteResult(where: ResultWhereUniqueInput!): Result
   deleteManyResults(where: ResultWhereInput): BatchPayload!
-  createSchedule(data: ScheduleCreateInput!): Schedule!
-  updateSchedule(data: ScheduleUpdateInput!, where: ScheduleWhereUniqueInput!): Schedule
-  upsertSchedule(where: ScheduleWhereUniqueInput!, create: ScheduleCreateInput!, update: ScheduleUpdateInput!): Schedule!
-  deleteSchedule(where: ScheduleWhereUniqueInput!): Schedule
-  deleteManySchedules(where: ScheduleWhereInput): BatchPayload!
   createSubTeam(data: SubTeamCreateInput!): SubTeam!
   updateSubTeam(data: SubTeamUpdateInput!, where: SubTeamWhereUniqueInput!): SubTeam
   upsertSubTeam(where: SubTeamWhereUniqueInput!, create: SubTeamCreateInput!, update: SubTeamUpdateInput!): SubTeam!
@@ -2429,6 +1782,17 @@ type Mutation {
   upsertTeam(where: TeamWhereUniqueInput!, create: TeamCreateInput!, update: TeamUpdateInput!): Team!
   deleteTeam(where: TeamWhereUniqueInput!): Team
   deleteManyTeams(where: TeamWhereInput): BatchPayload!
+  createTeamSchedule(data: TeamScheduleCreateInput!): TeamSchedule!
+  updateTeamSchedule(data: TeamScheduleUpdateInput!, where: TeamScheduleWhereUniqueInput!): TeamSchedule
+  upsertTeamSchedule(where: TeamScheduleWhereUniqueInput!, create: TeamScheduleCreateInput!, update: TeamScheduleUpdateInput!): TeamSchedule!
+  deleteTeamSchedule(where: TeamScheduleWhereUniqueInput!): TeamSchedule
+  deleteManyTeamSchedules(where: TeamScheduleWhereInput): BatchPayload!
+  createUser(data: UserCreateInput!): User!
+  updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
+  updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
+  upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
+  deleteUser(where: UserWhereUniqueInput!): User
+  deleteManyUsers(where: UserWhereInput): BatchPayload!
   createWorkout(data: WorkoutCreateInput!): Workout!
   updateWorkout(data: WorkoutUpdateInput!, where: WorkoutWhereUniqueInput!): Workout
   updateManyWorkouts(data: WorkoutUpdateManyMutationInput!, where: WorkoutWhereInput): BatchPayload!
@@ -2456,10 +1820,8 @@ type PageInfo {
 
 type Parent {
   id: ID!
-  athlete(where: AthleteWhereInput, orderBy: AthleteOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Athlete!]
-  email: String!
-  password: String!
-  phoneNumber: String!
+  user: User
+  athlete: Athlete
 }
 
 type ParentConnection {
@@ -2470,22 +1832,18 @@ type ParentConnection {
 
 input ParentCreateInput {
   id: ID
-  athlete: AthleteCreateManyWithoutParentsInput
-  email: String!
-  password: String!
-  phoneNumber: String!
+  user: UserCreateOneWithoutParentInput
+  athlete: AthleteCreateOneInput
 }
 
-input ParentCreateManyWithoutAthleteInput {
-  create: [ParentCreateWithoutAthleteInput!]
-  connect: [ParentWhereUniqueInput!]
+input ParentCreateOneWithoutUserInput {
+  create: ParentCreateWithoutUserInput
+  connect: ParentWhereUniqueInput
 }
 
-input ParentCreateWithoutAthleteInput {
+input ParentCreateWithoutUserInput {
   id: ID
-  email: String!
-  password: String!
-  phoneNumber: String!
+  athlete: AthleteCreateOneInput
 }
 
 type ParentEdge {
@@ -2496,81 +1854,10 @@ type ParentEdge {
 enum ParentOrderByInput {
   id_ASC
   id_DESC
-  email_ASC
-  email_DESC
-  password_ASC
-  password_DESC
-  phoneNumber_ASC
-  phoneNumber_DESC
 }
 
 type ParentPreviousValues {
   id: ID!
-  email: String!
-  password: String!
-  phoneNumber: String!
-}
-
-input ParentScalarWhereInput {
-  id: ID
-  id_not: ID
-  id_in: [ID!]
-  id_not_in: [ID!]
-  id_lt: ID
-  id_lte: ID
-  id_gt: ID
-  id_gte: ID
-  id_contains: ID
-  id_not_contains: ID
-  id_starts_with: ID
-  id_not_starts_with: ID
-  id_ends_with: ID
-  id_not_ends_with: ID
-  email: String
-  email_not: String
-  email_in: [String!]
-  email_not_in: [String!]
-  email_lt: String
-  email_lte: String
-  email_gt: String
-  email_gte: String
-  email_contains: String
-  email_not_contains: String
-  email_starts_with: String
-  email_not_starts_with: String
-  email_ends_with: String
-  email_not_ends_with: String
-  password: String
-  password_not: String
-  password_in: [String!]
-  password_not_in: [String!]
-  password_lt: String
-  password_lte: String
-  password_gt: String
-  password_gte: String
-  password_contains: String
-  password_not_contains: String
-  password_starts_with: String
-  password_not_starts_with: String
-  password_ends_with: String
-  password_not_ends_with: String
-  phoneNumber: String
-  phoneNumber_not: String
-  phoneNumber_in: [String!]
-  phoneNumber_not_in: [String!]
-  phoneNumber_lt: String
-  phoneNumber_lte: String
-  phoneNumber_gt: String
-  phoneNumber_gte: String
-  phoneNumber_contains: String
-  phoneNumber_not_contains: String
-  phoneNumber_starts_with: String
-  phoneNumber_not_starts_with: String
-  phoneNumber_ends_with: String
-  phoneNumber_not_ends_with: String
-  AND: [ParentScalarWhereInput!]
-  OR: [ParentScalarWhereInput!]
-  NOT: [ParentScalarWhereInput!]
 }
 
 type ParentSubscriptionPayload {
@@ -2592,56 +1879,26 @@ input ParentSubscriptionWhereInput {
 }
 
 input ParentUpdateInput {
-  athlete: AthleteUpdateManyWithoutParentsInput
-  email: String
-  password: String
-  phoneNumber: String
+  user: UserUpdateOneWithoutParentInput
+  athlete: AthleteUpdateOneInput
 }
 
-input ParentUpdateManyDataInput {
-  email: String
-  password: String
-  phoneNumber: String
+input ParentUpdateOneWithoutUserInput {
+  create: ParentCreateWithoutUserInput
+  update: ParentUpdateWithoutUserDataInput
+  upsert: ParentUpsertWithoutUserInput
+  delete: Boolean
+  disconnect: Boolean
+  connect: ParentWhereUniqueInput
 }
 
-input ParentUpdateManyMutationInput {
-  email: String
-  password: String
-  phoneNumber: String
+input ParentUpdateWithoutUserDataInput {
+  athlete: AthleteUpdateOneInput
 }
 
-input ParentUpdateManyWithoutAthleteInput {
-  create: [ParentCreateWithoutAthleteInput!]
-  delete: [ParentWhereUniqueInput!]
-  connect: [ParentWhereUniqueInput!]
-  set: [ParentWhereUniqueInput!]
-  disconnect: [ParentWhereUniqueInput!]
-  update: [ParentUpdateWithWhereUniqueWithoutAthleteInput!]
-  upsert: [ParentUpsertWithWhereUniqueWithoutAthleteInput!]
-  deleteMany: [ParentScalarWhereInput!]
-  updateMany: [ParentUpdateManyWithWhereNestedInput!]
-}
-
-input ParentUpdateManyWithWhereNestedInput {
-  where: ParentScalarWhereInput!
-  data: ParentUpdateManyDataInput!
-}
-
-input ParentUpdateWithoutAthleteDataInput {
-  email: String
-  password: String
-  phoneNumber: String
-}
-
-input ParentUpdateWithWhereUniqueWithoutAthleteInput {
-  where: ParentWhereUniqueInput!
-  data: ParentUpdateWithoutAthleteDataInput!
-}
-
-input ParentUpsertWithWhereUniqueWithoutAthleteInput {
-  where: ParentWhereUniqueInput!
-  update: ParentUpdateWithoutAthleteDataInput!
-  create: ParentCreateWithoutAthleteInput!
+input ParentUpsertWithoutUserInput {
+  update: ParentUpdateWithoutUserDataInput!
+  create: ParentCreateWithoutUserInput!
 }
 
 input ParentWhereInput {
@@ -2659,51 +1916,8 @@ input ParentWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
-  athlete_every: AthleteWhereInput
-  athlete_some: AthleteWhereInput
-  athlete_none: AthleteWhereInput
-  email: String
-  email_not: String
-  email_in: [String!]
-  email_not_in: [String!]
-  email_lt: String
-  email_lte: String
-  email_gt: String
-  email_gte: String
-  email_contains: String
-  email_not_contains: String
-  email_starts_with: String
-  email_not_starts_with: String
-  email_ends_with: String
-  email_not_ends_with: String
-  password: String
-  password_not: String
-  password_in: [String!]
-  password_not_in: [String!]
-  password_lt: String
-  password_lte: String
-  password_gt: String
-  password_gte: String
-  password_contains: String
-  password_not_contains: String
-  password_starts_with: String
-  password_not_starts_with: String
-  password_ends_with: String
-  password_not_ends_with: String
-  phoneNumber: String
-  phoneNumber_not: String
-  phoneNumber_in: [String!]
-  phoneNumber_not_in: [String!]
-  phoneNumber_lt: String
-  phoneNumber_lte: String
-  phoneNumber_gt: String
-  phoneNumber_gte: String
-  phoneNumber_contains: String
-  phoneNumber_not_contains: String
-  phoneNumber_starts_with: String
-  phoneNumber_not_starts_with: String
-  phoneNumber_ends_with: String
-  phoneNumber_not_ends_with: String
+  user: UserWhereInput
+  athlete: AthleteWhereInput
   AND: [ParentWhereInput!]
   OR: [ParentWhereInput!]
   NOT: [ParentWhereInput!]
@@ -2715,7 +1929,7 @@ input ParentWhereUniqueInput {
 
 type Post {
   id: ID!
-  coach: Coach!
+  postedBy: User!
   title: String!
   content: String!
   comments(where: CommentWhereInput, orderBy: CommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Comment!]
@@ -2729,7 +1943,7 @@ type PostConnection {
 
 input PostCreateInput {
   id: ID
-  coach: CoachCreateOneInput!
+  postedBy: UserCreateOneWithoutPostsInput!
   title: String!
   content: String!
   comments: CommentCreateManyWithoutPostInput
@@ -2740,6 +1954,11 @@ input PostCreateManyInput {
   connect: [PostWhereUniqueInput!]
 }
 
+input PostCreateManyWithoutPostedByInput {
+  create: [PostCreateWithoutPostedByInput!]
+  connect: [PostWhereUniqueInput!]
+}
+
 input PostCreateOneWithoutCommentsInput {
   create: PostCreateWithoutCommentsInput
   connect: PostWhereUniqueInput
@@ -2747,9 +1966,16 @@ input PostCreateOneWithoutCommentsInput {
 
 input PostCreateWithoutCommentsInput {
   id: ID
-  coach: CoachCreateOneInput!
+  postedBy: UserCreateOneWithoutPostsInput!
   title: String!
   content: String!
+}
+
+input PostCreateWithoutPostedByInput {
+  id: ID
+  title: String!
+  content: String!
+  comments: CommentCreateManyWithoutPostInput
 }
 
 type PostEdge {
@@ -2839,14 +2065,14 @@ input PostSubscriptionWhereInput {
 }
 
 input PostUpdateDataInput {
-  coach: CoachUpdateOneRequiredInput
+  postedBy: UserUpdateOneRequiredWithoutPostsInput
   title: String
   content: String
   comments: CommentUpdateManyWithoutPostInput
 }
 
 input PostUpdateInput {
-  coach: CoachUpdateOneRequiredInput
+  postedBy: UserUpdateOneRequiredWithoutPostsInput
   title: String
   content: String
   comments: CommentUpdateManyWithoutPostInput
@@ -2874,6 +2100,18 @@ input PostUpdateManyMutationInput {
   content: String
 }
 
+input PostUpdateManyWithoutPostedByInput {
+  create: [PostCreateWithoutPostedByInput!]
+  delete: [PostWhereUniqueInput!]
+  connect: [PostWhereUniqueInput!]
+  set: [PostWhereUniqueInput!]
+  disconnect: [PostWhereUniqueInput!]
+  update: [PostUpdateWithWhereUniqueWithoutPostedByInput!]
+  upsert: [PostUpsertWithWhereUniqueWithoutPostedByInput!]
+  deleteMany: [PostScalarWhereInput!]
+  updateMany: [PostUpdateManyWithWhereNestedInput!]
+}
+
 input PostUpdateManyWithWhereNestedInput {
   where: PostScalarWhereInput!
   data: PostUpdateManyDataInput!
@@ -2887,14 +2125,25 @@ input PostUpdateOneRequiredWithoutCommentsInput {
 }
 
 input PostUpdateWithoutCommentsDataInput {
-  coach: CoachUpdateOneRequiredInput
+  postedBy: UserUpdateOneRequiredWithoutPostsInput
   title: String
   content: String
+}
+
+input PostUpdateWithoutPostedByDataInput {
+  title: String
+  content: String
+  comments: CommentUpdateManyWithoutPostInput
 }
 
 input PostUpdateWithWhereUniqueNestedInput {
   where: PostWhereUniqueInput!
   data: PostUpdateDataInput!
+}
+
+input PostUpdateWithWhereUniqueWithoutPostedByInput {
+  where: PostWhereUniqueInput!
+  data: PostUpdateWithoutPostedByDataInput!
 }
 
 input PostUpsertWithoutCommentsInput {
@@ -2906,6 +2155,12 @@ input PostUpsertWithWhereUniqueNestedInput {
   where: PostWhereUniqueInput!
   update: PostUpdateDataInput!
   create: PostCreateInput!
+}
+
+input PostUpsertWithWhereUniqueWithoutPostedByInput {
+  where: PostWhereUniqueInput!
+  update: PostUpdateWithoutPostedByDataInput!
+  create: PostCreateWithoutPostedByInput!
 }
 
 input PostWhereInput {
@@ -2923,7 +2178,7 @@ input PostWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
-  coach: CoachWhereInput
+  postedBy: UserWhereInput
   title: String
   title_not: String
   title_in: [String!]
@@ -2968,6 +2223,9 @@ type Query {
   athlete(where: AthleteWhereUniqueInput!): Athlete
   athletes(where: AthleteWhereInput, orderBy: AthleteOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Athlete]!
   athletesConnection(where: AthleteWhereInput, orderBy: AthleteOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): AthleteConnection!
+  athleteSchedule(where: AthleteScheduleWhereUniqueInput!): AthleteSchedule
+  athleteSchedules(where: AthleteScheduleWhereInput, orderBy: AthleteScheduleOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [AthleteSchedule]!
+  athleteSchedulesConnection(where: AthleteScheduleWhereInput, orderBy: AthleteScheduleOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): AthleteScheduleConnection!
   athleteStats(where: AthleteStatsWhereUniqueInput!): AthleteStats
   athleteStatses(where: AthleteStatsWhereInput, orderBy: AthleteStatsOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [AthleteStats]!
   athleteStatsesConnection(where: AthleteStatsWhereInput, orderBy: AthleteStatsOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): AthleteStatsConnection!
@@ -2992,15 +2250,18 @@ type Query {
   result(where: ResultWhereUniqueInput!): Result
   results(where: ResultWhereInput, orderBy: ResultOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Result]!
   resultsConnection(where: ResultWhereInput, orderBy: ResultOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ResultConnection!
-  schedule(where: ScheduleWhereUniqueInput!): Schedule
-  schedules(where: ScheduleWhereInput, orderBy: ScheduleOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Schedule]!
-  schedulesConnection(where: ScheduleWhereInput, orderBy: ScheduleOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ScheduleConnection!
   subTeam(where: SubTeamWhereUniqueInput!): SubTeam
   subTeams(where: SubTeamWhereInput, orderBy: SubTeamOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [SubTeam]!
   subTeamsConnection(where: SubTeamWhereInput, orderBy: SubTeamOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): SubTeamConnection!
   team(where: TeamWhereUniqueInput!): Team
   teams(where: TeamWhereInput, orderBy: TeamOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Team]!
   teamsConnection(where: TeamWhereInput, orderBy: TeamOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TeamConnection!
+  teamSchedule(where: TeamScheduleWhereUniqueInput!): TeamSchedule
+  teamSchedules(where: TeamScheduleWhereInput, orderBy: TeamScheduleOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TeamSchedule]!
+  teamSchedulesConnection(where: TeamScheduleWhereInput, orderBy: TeamScheduleOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TeamScheduleConnection!
+  user(where: UserWhereUniqueInput!): User
+  users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
+  usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
   workout(where: WorkoutWhereUniqueInput!): Workout
   workouts(where: WorkoutWhereInput, orderBy: WorkoutOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Workout]!
   workoutsConnection(where: WorkoutWhereInput, orderBy: WorkoutOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): WorkoutConnection!
@@ -3162,137 +2423,9 @@ input ResultWhereUniqueInput {
   id: ID
 }
 
-type Schedule {
-  id: ID!
-  createdBy: Coach
-  createdAt: DateTime!
-  team: Team
-  athletes(where: AthleteWhereInput, orderBy: AthleteOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Athlete!]
-}
-
-type ScheduleConnection {
-  pageInfo: PageInfo!
-  edges: [ScheduleEdge]!
-  aggregate: AggregateSchedule!
-}
-
-input ScheduleCreateInput {
-  id: ID
-  createdBy: CoachCreateOneInput
-  team: TeamCreateOneWithoutScheduleInput
-  athletes: AthleteCreateManyInput
-}
-
-input ScheduleCreateOneWithoutTeamInput {
-  create: ScheduleCreateWithoutTeamInput
-  connect: ScheduleWhereUniqueInput
-}
-
-input ScheduleCreateWithoutTeamInput {
-  id: ID
-  createdBy: CoachCreateOneInput
-  athletes: AthleteCreateManyInput
-}
-
-type ScheduleEdge {
-  node: Schedule!
-  cursor: String!
-}
-
-enum ScheduleOrderByInput {
-  id_ASC
-  id_DESC
-  createdAt_ASC
-  createdAt_DESC
-}
-
-type SchedulePreviousValues {
-  id: ID!
-  createdAt: DateTime!
-}
-
-type ScheduleSubscriptionPayload {
-  mutation: MutationType!
-  node: Schedule
-  updatedFields: [String!]
-  previousValues: SchedulePreviousValues
-}
-
-input ScheduleSubscriptionWhereInput {
-  mutation_in: [MutationType!]
-  updatedFields_contains: String
-  updatedFields_contains_every: [String!]
-  updatedFields_contains_some: [String!]
-  node: ScheduleWhereInput
-  AND: [ScheduleSubscriptionWhereInput!]
-  OR: [ScheduleSubscriptionWhereInput!]
-  NOT: [ScheduleSubscriptionWhereInput!]
-}
-
-input ScheduleUpdateInput {
-  createdBy: CoachUpdateOneInput
-  team: TeamUpdateOneWithoutScheduleInput
-  athletes: AthleteUpdateManyInput
-}
-
-input ScheduleUpdateOneWithoutTeamInput {
-  create: ScheduleCreateWithoutTeamInput
-  update: ScheduleUpdateWithoutTeamDataInput
-  upsert: ScheduleUpsertWithoutTeamInput
-  delete: Boolean
-  disconnect: Boolean
-  connect: ScheduleWhereUniqueInput
-}
-
-input ScheduleUpdateWithoutTeamDataInput {
-  createdBy: CoachUpdateOneInput
-  athletes: AthleteUpdateManyInput
-}
-
-input ScheduleUpsertWithoutTeamInput {
-  update: ScheduleUpdateWithoutTeamDataInput!
-  create: ScheduleCreateWithoutTeamInput!
-}
-
-input ScheduleWhereInput {
-  id: ID
-  id_not: ID
-  id_in: [ID!]
-  id_not_in: [ID!]
-  id_lt: ID
-  id_lte: ID
-  id_gt: ID
-  id_gte: ID
-  id_contains: ID
-  id_not_contains: ID
-  id_starts_with: ID
-  id_not_starts_with: ID
-  id_ends_with: ID
-  id_not_ends_with: ID
-  createdBy: CoachWhereInput
-  createdAt: DateTime
-  createdAt_not: DateTime
-  createdAt_in: [DateTime!]
-  createdAt_not_in: [DateTime!]
-  createdAt_lt: DateTime
-  createdAt_lte: DateTime
-  createdAt_gt: DateTime
-  createdAt_gte: DateTime
-  team: TeamWhereInput
-  athletes_every: AthleteWhereInput
-  athletes_some: AthleteWhereInput
-  athletes_none: AthleteWhereInput
-  AND: [ScheduleWhereInput!]
-  OR: [ScheduleWhereInput!]
-  NOT: [ScheduleWhereInput!]
-}
-
-input ScheduleWhereUniqueInput {
-  id: ID
-}
-
 type Subscription {
   athlete(where: AthleteSubscriptionWhereInput): AthleteSubscriptionPayload
+  athleteSchedule(where: AthleteScheduleSubscriptionWhereInput): AthleteScheduleSubscriptionPayload
   athleteStats(where: AthleteStatsSubscriptionWhereInput): AthleteStatsSubscriptionPayload
   coach(where: CoachSubscriptionWhereInput): CoachSubscriptionPayload
   comment(where: CommentSubscriptionWhereInput): CommentSubscriptionPayload
@@ -3301,9 +2434,10 @@ type Subscription {
   parent(where: ParentSubscriptionWhereInput): ParentSubscriptionPayload
   post(where: PostSubscriptionWhereInput): PostSubscriptionPayload
   result(where: ResultSubscriptionWhereInput): ResultSubscriptionPayload
-  schedule(where: ScheduleSubscriptionWhereInput): ScheduleSubscriptionPayload
   subTeam(where: SubTeamSubscriptionWhereInput): SubTeamSubscriptionPayload
   team(where: TeamSubscriptionWhereInput): TeamSubscriptionPayload
+  teamSchedule(where: TeamScheduleSubscriptionWhereInput): TeamScheduleSubscriptionPayload
+  user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
   workout(where: WorkoutSubscriptionWhereInput): WorkoutSubscriptionPayload
 }
 
@@ -3326,7 +2460,7 @@ input SubTeamCreateInput {
   id: ID
   headCoach: HeadCoachCreateOneInput!
   ahtletes: AthleteCreateManyInput
-  coahces: CoachCreateManyWithoutTeamsInput
+  coahces: CoachCreateManyInput
   library: WorkoutCreateManyInput
   posts: PostCreateManyInput
 }
@@ -3334,19 +2468,6 @@ input SubTeamCreateInput {
 input SubTeamCreateManyInput {
   create: [SubTeamCreateInput!]
   connect: [SubTeamWhereUniqueInput!]
-}
-
-input SubTeamCreateManyWithoutCoahcesInput {
-  create: [SubTeamCreateWithoutCoahcesInput!]
-  connect: [SubTeamWhereUniqueInput!]
-}
-
-input SubTeamCreateWithoutCoahcesInput {
-  id: ID
-  headCoach: HeadCoachCreateOneInput!
-  ahtletes: AthleteCreateManyInput
-  library: WorkoutCreateManyInput
-  posts: PostCreateManyInput
 }
 
 type SubTeamEdge {
@@ -3404,7 +2525,7 @@ input SubTeamSubscriptionWhereInput {
 input SubTeamUpdateDataInput {
   headCoach: HeadCoachUpdateOneRequiredInput
   ahtletes: AthleteUpdateManyInput
-  coahces: CoachUpdateManyWithoutTeamsInput
+  coahces: CoachUpdateManyInput
   library: WorkoutUpdateManyInput
   posts: PostUpdateManyInput
 }
@@ -3412,7 +2533,7 @@ input SubTeamUpdateDataInput {
 input SubTeamUpdateInput {
   headCoach: HeadCoachUpdateOneRequiredInput
   ahtletes: AthleteUpdateManyInput
-  coahces: CoachUpdateManyWithoutTeamsInput
+  coahces: CoachUpdateManyInput
   library: WorkoutUpdateManyInput
   posts: PostUpdateManyInput
 }
@@ -3428,44 +2549,15 @@ input SubTeamUpdateManyInput {
   deleteMany: [SubTeamScalarWhereInput!]
 }
 
-input SubTeamUpdateManyWithoutCoahcesInput {
-  create: [SubTeamCreateWithoutCoahcesInput!]
-  delete: [SubTeamWhereUniqueInput!]
-  connect: [SubTeamWhereUniqueInput!]
-  set: [SubTeamWhereUniqueInput!]
-  disconnect: [SubTeamWhereUniqueInput!]
-  update: [SubTeamUpdateWithWhereUniqueWithoutCoahcesInput!]
-  upsert: [SubTeamUpsertWithWhereUniqueWithoutCoahcesInput!]
-  deleteMany: [SubTeamScalarWhereInput!]
-}
-
-input SubTeamUpdateWithoutCoahcesDataInput {
-  headCoach: HeadCoachUpdateOneRequiredInput
-  ahtletes: AthleteUpdateManyInput
-  library: WorkoutUpdateManyInput
-  posts: PostUpdateManyInput
-}
-
 input SubTeamUpdateWithWhereUniqueNestedInput {
   where: SubTeamWhereUniqueInput!
   data: SubTeamUpdateDataInput!
-}
-
-input SubTeamUpdateWithWhereUniqueWithoutCoahcesInput {
-  where: SubTeamWhereUniqueInput!
-  data: SubTeamUpdateWithoutCoahcesDataInput!
 }
 
 input SubTeamUpsertWithWhereUniqueNestedInput {
   where: SubTeamWhereUniqueInput!
   update: SubTeamUpdateDataInput!
   create: SubTeamCreateInput!
-}
-
-input SubTeamUpsertWithWhereUniqueWithoutCoahcesInput {
-  where: SubTeamWhereUniqueInput!
-  update: SubTeamUpdateWithoutCoahcesDataInput!
-  create: SubTeamCreateWithoutCoahcesInput!
 }
 
 input SubTeamWhereInput {
@@ -3514,7 +2606,7 @@ type Team {
   subTeams(where: SubTeamWhereInput, orderBy: SubTeamOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [SubTeam!]
   library(where: WorkoutWhereInput, orderBy: WorkoutOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Workout!]
   posts(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Post!]
-  schedule: Schedule
+  schedule: TeamSchedule
   phase: String
   city: String!
   state: String!
@@ -3532,13 +2624,13 @@ type TeamConnection {
 input TeamCreateInput {
   id: ID
   teamName: String!
-  headCoach: HeadCoachCreateOneWithoutTeamInput
-  athletes: AthleteCreateManyWithoutTeamInput
-  coahces: CoachCreateManyWithoutTeamInput
+  headCoach: HeadCoachCreateOneInput
+  athletes: AthleteCreateManyInput
+  coahces: CoachCreateManyInput
   subTeams: SubTeamCreateManyInput
   library: WorkoutCreateManyInput
   posts: PostCreateManyInput
-  schedule: ScheduleCreateOneWithoutTeamInput
+  schedule: TeamScheduleCreateOneWithoutTeamInput
   phase: String
   city: String!
   state: String!
@@ -3547,18 +2639,8 @@ input TeamCreateInput {
   coachKey: String
 }
 
-input TeamCreateOneWithoutAthletesInput {
-  create: TeamCreateWithoutAthletesInput
-  connect: TeamWhereUniqueInput
-}
-
-input TeamCreateOneWithoutCoahcesInput {
-  create: TeamCreateWithoutCoahcesInput
-  connect: TeamWhereUniqueInput
-}
-
-input TeamCreateOneWithoutHeadCoachInput {
-  create: TeamCreateWithoutHeadCoachInput
+input TeamCreateOneInput {
+  create: TeamCreateInput
   connect: TeamWhereUniqueInput
 }
 
@@ -3567,63 +2649,12 @@ input TeamCreateOneWithoutScheduleInput {
   connect: TeamWhereUniqueInput
 }
 
-input TeamCreateWithoutAthletesInput {
-  id: ID
-  teamName: String!
-  headCoach: HeadCoachCreateOneWithoutTeamInput
-  coahces: CoachCreateManyWithoutTeamInput
-  subTeams: SubTeamCreateManyInput
-  library: WorkoutCreateManyInput
-  posts: PostCreateManyInput
-  schedule: ScheduleCreateOneWithoutTeamInput
-  phase: String
-  city: String!
-  state: String!
-  homeGym: String!
-  teamKey: String
-  coachKey: String
-}
-
-input TeamCreateWithoutCoahcesInput {
-  id: ID
-  teamName: String!
-  headCoach: HeadCoachCreateOneWithoutTeamInput
-  athletes: AthleteCreateManyWithoutTeamInput
-  subTeams: SubTeamCreateManyInput
-  library: WorkoutCreateManyInput
-  posts: PostCreateManyInput
-  schedule: ScheduleCreateOneWithoutTeamInput
-  phase: String
-  city: String!
-  state: String!
-  homeGym: String!
-  teamKey: String
-  coachKey: String
-}
-
-input TeamCreateWithoutHeadCoachInput {
-  id: ID
-  teamName: String!
-  athletes: AthleteCreateManyWithoutTeamInput
-  coahces: CoachCreateManyWithoutTeamInput
-  subTeams: SubTeamCreateManyInput
-  library: WorkoutCreateManyInput
-  posts: PostCreateManyInput
-  schedule: ScheduleCreateOneWithoutTeamInput
-  phase: String
-  city: String!
-  state: String!
-  homeGym: String!
-  teamKey: String
-  coachKey: String
-}
-
 input TeamCreateWithoutScheduleInput {
   id: ID
   teamName: String!
-  headCoach: HeadCoachCreateOneWithoutTeamInput
-  athletes: AthleteCreateManyWithoutTeamInput
-  coahces: CoachCreateManyWithoutTeamInput
+  headCoach: HeadCoachCreateOneInput
+  athletes: AthleteCreateManyInput
+  coahces: CoachCreateManyInput
   subTeams: SubTeamCreateManyInput
   library: WorkoutCreateManyInput
   posts: PostCreateManyInput
@@ -3670,6 +2701,175 @@ type TeamPreviousValues {
   coachKey: String
 }
 
+type TeamSchedule {
+  id: ID!
+  createdBy: Coach
+  createdAt: DateTime!
+  team: Team
+  athletes(where: AthleteWhereInput, orderBy: AthleteOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Athlete!]
+  library(where: WorkoutWhereInput, orderBy: WorkoutOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Workout!]
+}
+
+type TeamScheduleConnection {
+  pageInfo: PageInfo!
+  edges: [TeamScheduleEdge]!
+  aggregate: AggregateTeamSchedule!
+}
+
+input TeamScheduleCreateInput {
+  id: ID
+  createdBy: CoachCreateOneInput
+  team: TeamCreateOneWithoutScheduleInput
+  athletes: AthleteCreateManyWithoutTeamScheduleInput
+  library: WorkoutCreateManyInput
+}
+
+input TeamScheduleCreateOneWithoutAthletesInput {
+  create: TeamScheduleCreateWithoutAthletesInput
+  connect: TeamScheduleWhereUniqueInput
+}
+
+input TeamScheduleCreateOneWithoutTeamInput {
+  create: TeamScheduleCreateWithoutTeamInput
+  connect: TeamScheduleWhereUniqueInput
+}
+
+input TeamScheduleCreateWithoutAthletesInput {
+  id: ID
+  createdBy: CoachCreateOneInput
+  team: TeamCreateOneWithoutScheduleInput
+  library: WorkoutCreateManyInput
+}
+
+input TeamScheduleCreateWithoutTeamInput {
+  id: ID
+  createdBy: CoachCreateOneInput
+  athletes: AthleteCreateManyWithoutTeamScheduleInput
+  library: WorkoutCreateManyInput
+}
+
+type TeamScheduleEdge {
+  node: TeamSchedule!
+  cursor: String!
+}
+
+enum TeamScheduleOrderByInput {
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type TeamSchedulePreviousValues {
+  id: ID!
+  createdAt: DateTime!
+}
+
+type TeamScheduleSubscriptionPayload {
+  mutation: MutationType!
+  node: TeamSchedule
+  updatedFields: [String!]
+  previousValues: TeamSchedulePreviousValues
+}
+
+input TeamScheduleSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: TeamScheduleWhereInput
+  AND: [TeamScheduleSubscriptionWhereInput!]
+  OR: [TeamScheduleSubscriptionWhereInput!]
+  NOT: [TeamScheduleSubscriptionWhereInput!]
+}
+
+input TeamScheduleUpdateInput {
+  createdBy: CoachUpdateOneInput
+  team: TeamUpdateOneWithoutScheduleInput
+  athletes: AthleteUpdateManyWithoutTeamScheduleInput
+  library: WorkoutUpdateManyInput
+}
+
+input TeamScheduleUpdateOneWithoutAthletesInput {
+  create: TeamScheduleCreateWithoutAthletesInput
+  update: TeamScheduleUpdateWithoutAthletesDataInput
+  upsert: TeamScheduleUpsertWithoutAthletesInput
+  delete: Boolean
+  disconnect: Boolean
+  connect: TeamScheduleWhereUniqueInput
+}
+
+input TeamScheduleUpdateOneWithoutTeamInput {
+  create: TeamScheduleCreateWithoutTeamInput
+  update: TeamScheduleUpdateWithoutTeamDataInput
+  upsert: TeamScheduleUpsertWithoutTeamInput
+  delete: Boolean
+  disconnect: Boolean
+  connect: TeamScheduleWhereUniqueInput
+}
+
+input TeamScheduleUpdateWithoutAthletesDataInput {
+  createdBy: CoachUpdateOneInput
+  team: TeamUpdateOneWithoutScheduleInput
+  library: WorkoutUpdateManyInput
+}
+
+input TeamScheduleUpdateWithoutTeamDataInput {
+  createdBy: CoachUpdateOneInput
+  athletes: AthleteUpdateManyWithoutTeamScheduleInput
+  library: WorkoutUpdateManyInput
+}
+
+input TeamScheduleUpsertWithoutAthletesInput {
+  update: TeamScheduleUpdateWithoutAthletesDataInput!
+  create: TeamScheduleCreateWithoutAthletesInput!
+}
+
+input TeamScheduleUpsertWithoutTeamInput {
+  update: TeamScheduleUpdateWithoutTeamDataInput!
+  create: TeamScheduleCreateWithoutTeamInput!
+}
+
+input TeamScheduleWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  createdBy: CoachWhereInput
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  team: TeamWhereInput
+  athletes_every: AthleteWhereInput
+  athletes_some: AthleteWhereInput
+  athletes_none: AthleteWhereInput
+  library_every: WorkoutWhereInput
+  library_some: WorkoutWhereInput
+  library_none: WorkoutWhereInput
+  AND: [TeamScheduleWhereInput!]
+  OR: [TeamScheduleWhereInput!]
+  NOT: [TeamScheduleWhereInput!]
+}
+
+input TeamScheduleWhereUniqueInput {
+  id: ID
+}
+
 type TeamSubscriptionPayload {
   mutation: MutationType!
   node: Team
@@ -3688,15 +2888,32 @@ input TeamSubscriptionWhereInput {
   NOT: [TeamSubscriptionWhereInput!]
 }
 
-input TeamUpdateInput {
+input TeamUpdateDataInput {
   teamName: String
-  headCoach: HeadCoachUpdateOneWithoutTeamInput
-  athletes: AthleteUpdateManyWithoutTeamInput
-  coahces: CoachUpdateManyWithoutTeamInput
+  headCoach: HeadCoachUpdateOneInput
+  athletes: AthleteUpdateManyInput
+  coahces: CoachUpdateManyInput
   subTeams: SubTeamUpdateManyInput
   library: WorkoutUpdateManyInput
   posts: PostUpdateManyInput
-  schedule: ScheduleUpdateOneWithoutTeamInput
+  schedule: TeamScheduleUpdateOneWithoutTeamInput
+  phase: String
+  city: String
+  state: String
+  homeGym: String
+  teamKey: String
+  coachKey: String
+}
+
+input TeamUpdateInput {
+  teamName: String
+  headCoach: HeadCoachUpdateOneInput
+  athletes: AthleteUpdateManyInput
+  coahces: CoachUpdateManyInput
+  subTeams: SubTeamUpdateManyInput
+  library: WorkoutUpdateManyInput
+  posts: PostUpdateManyInput
+  schedule: TeamScheduleUpdateOneWithoutTeamInput
   phase: String
   city: String
   state: String
@@ -3715,28 +2932,10 @@ input TeamUpdateManyMutationInput {
   coachKey: String
 }
 
-input TeamUpdateOneWithoutAthletesInput {
-  create: TeamCreateWithoutAthletesInput
-  update: TeamUpdateWithoutAthletesDataInput
-  upsert: TeamUpsertWithoutAthletesInput
-  delete: Boolean
-  disconnect: Boolean
-  connect: TeamWhereUniqueInput
-}
-
-input TeamUpdateOneWithoutCoahcesInput {
-  create: TeamCreateWithoutCoahcesInput
-  update: TeamUpdateWithoutCoahcesDataInput
-  upsert: TeamUpsertWithoutCoahcesInput
-  delete: Boolean
-  disconnect: Boolean
-  connect: TeamWhereUniqueInput
-}
-
-input TeamUpdateOneWithoutHeadCoachInput {
-  create: TeamCreateWithoutHeadCoachInput
-  update: TeamUpdateWithoutHeadCoachDataInput
-  upsert: TeamUpsertWithoutHeadCoachInput
+input TeamUpdateOneInput {
+  create: TeamCreateInput
+  update: TeamUpdateDataInput
+  upsert: TeamUpsertNestedInput
   delete: Boolean
   disconnect: Boolean
   connect: TeamWhereUniqueInput
@@ -3751,59 +2950,11 @@ input TeamUpdateOneWithoutScheduleInput {
   connect: TeamWhereUniqueInput
 }
 
-input TeamUpdateWithoutAthletesDataInput {
-  teamName: String
-  headCoach: HeadCoachUpdateOneWithoutTeamInput
-  coahces: CoachUpdateManyWithoutTeamInput
-  subTeams: SubTeamUpdateManyInput
-  library: WorkoutUpdateManyInput
-  posts: PostUpdateManyInput
-  schedule: ScheduleUpdateOneWithoutTeamInput
-  phase: String
-  city: String
-  state: String
-  homeGym: String
-  teamKey: String
-  coachKey: String
-}
-
-input TeamUpdateWithoutCoahcesDataInput {
-  teamName: String
-  headCoach: HeadCoachUpdateOneWithoutTeamInput
-  athletes: AthleteUpdateManyWithoutTeamInput
-  subTeams: SubTeamUpdateManyInput
-  library: WorkoutUpdateManyInput
-  posts: PostUpdateManyInput
-  schedule: ScheduleUpdateOneWithoutTeamInput
-  phase: String
-  city: String
-  state: String
-  homeGym: String
-  teamKey: String
-  coachKey: String
-}
-
-input TeamUpdateWithoutHeadCoachDataInput {
-  teamName: String
-  athletes: AthleteUpdateManyWithoutTeamInput
-  coahces: CoachUpdateManyWithoutTeamInput
-  subTeams: SubTeamUpdateManyInput
-  library: WorkoutUpdateManyInput
-  posts: PostUpdateManyInput
-  schedule: ScheduleUpdateOneWithoutTeamInput
-  phase: String
-  city: String
-  state: String
-  homeGym: String
-  teamKey: String
-  coachKey: String
-}
-
 input TeamUpdateWithoutScheduleDataInput {
   teamName: String
-  headCoach: HeadCoachUpdateOneWithoutTeamInput
-  athletes: AthleteUpdateManyWithoutTeamInput
-  coahces: CoachUpdateManyWithoutTeamInput
+  headCoach: HeadCoachUpdateOneInput
+  athletes: AthleteUpdateManyInput
+  coahces: CoachUpdateManyInput
   subTeams: SubTeamUpdateManyInput
   library: WorkoutUpdateManyInput
   posts: PostUpdateManyInput
@@ -3815,19 +2966,9 @@ input TeamUpdateWithoutScheduleDataInput {
   coachKey: String
 }
 
-input TeamUpsertWithoutAthletesInput {
-  update: TeamUpdateWithoutAthletesDataInput!
-  create: TeamCreateWithoutAthletesInput!
-}
-
-input TeamUpsertWithoutCoahcesInput {
-  update: TeamUpdateWithoutCoahcesDataInput!
-  create: TeamCreateWithoutCoahcesInput!
-}
-
-input TeamUpsertWithoutHeadCoachInput {
-  update: TeamUpdateWithoutHeadCoachDataInput!
-  create: TeamCreateWithoutHeadCoachInput!
+input TeamUpsertNestedInput {
+  update: TeamUpdateDataInput!
+  create: TeamCreateInput!
 }
 
 input TeamUpsertWithoutScheduleInput {
@@ -3880,7 +3021,7 @@ input TeamWhereInput {
   posts_every: PostWhereInput
   posts_some: PostWhereInput
   posts_none: PostWhereInput
-  schedule: ScheduleWhereInput
+  schedule: TeamScheduleWhereInput
   phase: String
   phase_not: String
   phase_in: [String!]
@@ -3972,6 +3113,482 @@ input TeamWhereInput {
 
 input TeamWhereUniqueInput {
   id: ID
+}
+
+type User {
+  id: ID!
+  fullName: String!
+  userType: USER_TYPE
+  createdAt: DateTime
+  athlete: Athlete
+  coach: Coach
+  parent: Parent
+  headCoach: HeadCoach
+  email: String!
+  password: String!
+  team: Team
+  phoneNumber: String!
+  posts(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Post!]
+}
+
+enum USER_TYPE {
+  ATHLETE
+  COACH
+  HEAD_COACH
+  PARENT
+}
+
+type UserConnection {
+  pageInfo: PageInfo!
+  edges: [UserEdge]!
+  aggregate: AggregateUser!
+}
+
+input UserCreateInput {
+  id: ID
+  fullName: String!
+  userType: USER_TYPE
+  athlete: AthleteCreateOneWithoutUserInput
+  coach: CoachCreateOneWithoutUserInput
+  parent: ParentCreateOneWithoutUserInput
+  headCoach: HeadCoachCreateOneWithoutUserInput
+  email: String!
+  password: String!
+  team: TeamCreateOneInput
+  phoneNumber: String!
+  posts: PostCreateManyWithoutPostedByInput
+}
+
+input UserCreateOneInput {
+  create: UserCreateInput
+  connect: UserWhereUniqueInput
+}
+
+input UserCreateOneWithoutAthleteInput {
+  create: UserCreateWithoutAthleteInput
+  connect: UserWhereUniqueInput
+}
+
+input UserCreateOneWithoutCoachInput {
+  create: UserCreateWithoutCoachInput
+  connect: UserWhereUniqueInput
+}
+
+input UserCreateOneWithoutHeadCoachInput {
+  create: UserCreateWithoutHeadCoachInput
+  connect: UserWhereUniqueInput
+}
+
+input UserCreateOneWithoutParentInput {
+  create: UserCreateWithoutParentInput
+  connect: UserWhereUniqueInput
+}
+
+input UserCreateOneWithoutPostsInput {
+  create: UserCreateWithoutPostsInput
+  connect: UserWhereUniqueInput
+}
+
+input UserCreateWithoutAthleteInput {
+  id: ID
+  fullName: String!
+  userType: USER_TYPE
+  coach: CoachCreateOneWithoutUserInput
+  parent: ParentCreateOneWithoutUserInput
+  headCoach: HeadCoachCreateOneWithoutUserInput
+  email: String!
+  password: String!
+  team: TeamCreateOneInput
+  phoneNumber: String!
+  posts: PostCreateManyWithoutPostedByInput
+}
+
+input UserCreateWithoutCoachInput {
+  id: ID
+  fullName: String!
+  userType: USER_TYPE
+  athlete: AthleteCreateOneWithoutUserInput
+  parent: ParentCreateOneWithoutUserInput
+  headCoach: HeadCoachCreateOneWithoutUserInput
+  email: String!
+  password: String!
+  team: TeamCreateOneInput
+  phoneNumber: String!
+  posts: PostCreateManyWithoutPostedByInput
+}
+
+input UserCreateWithoutHeadCoachInput {
+  id: ID
+  fullName: String!
+  userType: USER_TYPE
+  athlete: AthleteCreateOneWithoutUserInput
+  coach: CoachCreateOneWithoutUserInput
+  parent: ParentCreateOneWithoutUserInput
+  email: String!
+  password: String!
+  team: TeamCreateOneInput
+  phoneNumber: String!
+  posts: PostCreateManyWithoutPostedByInput
+}
+
+input UserCreateWithoutParentInput {
+  id: ID
+  fullName: String!
+  userType: USER_TYPE
+  athlete: AthleteCreateOneWithoutUserInput
+  coach: CoachCreateOneWithoutUserInput
+  headCoach: HeadCoachCreateOneWithoutUserInput
+  email: String!
+  password: String!
+  team: TeamCreateOneInput
+  phoneNumber: String!
+  posts: PostCreateManyWithoutPostedByInput
+}
+
+input UserCreateWithoutPostsInput {
+  id: ID
+  fullName: String!
+  userType: USER_TYPE
+  athlete: AthleteCreateOneWithoutUserInput
+  coach: CoachCreateOneWithoutUserInput
+  parent: ParentCreateOneWithoutUserInput
+  headCoach: HeadCoachCreateOneWithoutUserInput
+  email: String!
+  password: String!
+  team: TeamCreateOneInput
+  phoneNumber: String!
+}
+
+type UserEdge {
+  node: User!
+  cursor: String!
+}
+
+enum UserOrderByInput {
+  id_ASC
+  id_DESC
+  fullName_ASC
+  fullName_DESC
+  userType_ASC
+  userType_DESC
+  createdAt_ASC
+  createdAt_DESC
+  email_ASC
+  email_DESC
+  password_ASC
+  password_DESC
+  phoneNumber_ASC
+  phoneNumber_DESC
+}
+
+type UserPreviousValues {
+  id: ID!
+  fullName: String!
+  userType: USER_TYPE
+  createdAt: DateTime
+  email: String!
+  password: String!
+  phoneNumber: String!
+}
+
+type UserSubscriptionPayload {
+  mutation: MutationType!
+  node: User
+  updatedFields: [String!]
+  previousValues: UserPreviousValues
+}
+
+input UserSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: UserWhereInput
+  AND: [UserSubscriptionWhereInput!]
+  OR: [UserSubscriptionWhereInput!]
+  NOT: [UserSubscriptionWhereInput!]
+}
+
+input UserUpdateDataInput {
+  fullName: String
+  userType: USER_TYPE
+  athlete: AthleteUpdateOneWithoutUserInput
+  coach: CoachUpdateOneWithoutUserInput
+  parent: ParentUpdateOneWithoutUserInput
+  headCoach: HeadCoachUpdateOneWithoutUserInput
+  email: String
+  password: String
+  team: TeamUpdateOneInput
+  phoneNumber: String
+  posts: PostUpdateManyWithoutPostedByInput
+}
+
+input UserUpdateInput {
+  fullName: String
+  userType: USER_TYPE
+  athlete: AthleteUpdateOneWithoutUserInput
+  coach: CoachUpdateOneWithoutUserInput
+  parent: ParentUpdateOneWithoutUserInput
+  headCoach: HeadCoachUpdateOneWithoutUserInput
+  email: String
+  password: String
+  team: TeamUpdateOneInput
+  phoneNumber: String
+  posts: PostUpdateManyWithoutPostedByInput
+}
+
+input UserUpdateManyMutationInput {
+  fullName: String
+  userType: USER_TYPE
+  email: String
+  password: String
+  phoneNumber: String
+}
+
+input UserUpdateOneRequiredInput {
+  create: UserCreateInput
+  update: UserUpdateDataInput
+  upsert: UserUpsertNestedInput
+  connect: UserWhereUniqueInput
+}
+
+input UserUpdateOneRequiredWithoutPostsInput {
+  create: UserCreateWithoutPostsInput
+  update: UserUpdateWithoutPostsDataInput
+  upsert: UserUpsertWithoutPostsInput
+  connect: UserWhereUniqueInput
+}
+
+input UserUpdateOneWithoutAthleteInput {
+  create: UserCreateWithoutAthleteInput
+  update: UserUpdateWithoutAthleteDataInput
+  upsert: UserUpsertWithoutAthleteInput
+  delete: Boolean
+  disconnect: Boolean
+  connect: UserWhereUniqueInput
+}
+
+input UserUpdateOneWithoutCoachInput {
+  create: UserCreateWithoutCoachInput
+  update: UserUpdateWithoutCoachDataInput
+  upsert: UserUpsertWithoutCoachInput
+  delete: Boolean
+  disconnect: Boolean
+  connect: UserWhereUniqueInput
+}
+
+input UserUpdateOneWithoutHeadCoachInput {
+  create: UserCreateWithoutHeadCoachInput
+  update: UserUpdateWithoutHeadCoachDataInput
+  upsert: UserUpsertWithoutHeadCoachInput
+  delete: Boolean
+  disconnect: Boolean
+  connect: UserWhereUniqueInput
+}
+
+input UserUpdateOneWithoutParentInput {
+  create: UserCreateWithoutParentInput
+  update: UserUpdateWithoutParentDataInput
+  upsert: UserUpsertWithoutParentInput
+  delete: Boolean
+  disconnect: Boolean
+  connect: UserWhereUniqueInput
+}
+
+input UserUpdateWithoutAthleteDataInput {
+  fullName: String
+  userType: USER_TYPE
+  coach: CoachUpdateOneWithoutUserInput
+  parent: ParentUpdateOneWithoutUserInput
+  headCoach: HeadCoachUpdateOneWithoutUserInput
+  email: String
+  password: String
+  team: TeamUpdateOneInput
+  phoneNumber: String
+  posts: PostUpdateManyWithoutPostedByInput
+}
+
+input UserUpdateWithoutCoachDataInput {
+  fullName: String
+  userType: USER_TYPE
+  athlete: AthleteUpdateOneWithoutUserInput
+  parent: ParentUpdateOneWithoutUserInput
+  headCoach: HeadCoachUpdateOneWithoutUserInput
+  email: String
+  password: String
+  team: TeamUpdateOneInput
+  phoneNumber: String
+  posts: PostUpdateManyWithoutPostedByInput
+}
+
+input UserUpdateWithoutHeadCoachDataInput {
+  fullName: String
+  userType: USER_TYPE
+  athlete: AthleteUpdateOneWithoutUserInput
+  coach: CoachUpdateOneWithoutUserInput
+  parent: ParentUpdateOneWithoutUserInput
+  email: String
+  password: String
+  team: TeamUpdateOneInput
+  phoneNumber: String
+  posts: PostUpdateManyWithoutPostedByInput
+}
+
+input UserUpdateWithoutParentDataInput {
+  fullName: String
+  userType: USER_TYPE
+  athlete: AthleteUpdateOneWithoutUserInput
+  coach: CoachUpdateOneWithoutUserInput
+  headCoach: HeadCoachUpdateOneWithoutUserInput
+  email: String
+  password: String
+  team: TeamUpdateOneInput
+  phoneNumber: String
+  posts: PostUpdateManyWithoutPostedByInput
+}
+
+input UserUpdateWithoutPostsDataInput {
+  fullName: String
+  userType: USER_TYPE
+  athlete: AthleteUpdateOneWithoutUserInput
+  coach: CoachUpdateOneWithoutUserInput
+  parent: ParentUpdateOneWithoutUserInput
+  headCoach: HeadCoachUpdateOneWithoutUserInput
+  email: String
+  password: String
+  team: TeamUpdateOneInput
+  phoneNumber: String
+}
+
+input UserUpsertNestedInput {
+  update: UserUpdateDataInput!
+  create: UserCreateInput!
+}
+
+input UserUpsertWithoutAthleteInput {
+  update: UserUpdateWithoutAthleteDataInput!
+  create: UserCreateWithoutAthleteInput!
+}
+
+input UserUpsertWithoutCoachInput {
+  update: UserUpdateWithoutCoachDataInput!
+  create: UserCreateWithoutCoachInput!
+}
+
+input UserUpsertWithoutHeadCoachInput {
+  update: UserUpdateWithoutHeadCoachDataInput!
+  create: UserCreateWithoutHeadCoachInput!
+}
+
+input UserUpsertWithoutParentInput {
+  update: UserUpdateWithoutParentDataInput!
+  create: UserCreateWithoutParentInput!
+}
+
+input UserUpsertWithoutPostsInput {
+  update: UserUpdateWithoutPostsDataInput!
+  create: UserCreateWithoutPostsInput!
+}
+
+input UserWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  fullName: String
+  fullName_not: String
+  fullName_in: [String!]
+  fullName_not_in: [String!]
+  fullName_lt: String
+  fullName_lte: String
+  fullName_gt: String
+  fullName_gte: String
+  fullName_contains: String
+  fullName_not_contains: String
+  fullName_starts_with: String
+  fullName_not_starts_with: String
+  fullName_ends_with: String
+  fullName_not_ends_with: String
+  userType: USER_TYPE
+  userType_not: USER_TYPE
+  userType_in: [USER_TYPE!]
+  userType_not_in: [USER_TYPE!]
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  athlete: AthleteWhereInput
+  coach: CoachWhereInput
+  parent: ParentWhereInput
+  headCoach: HeadCoachWhereInput
+  email: String
+  email_not: String
+  email_in: [String!]
+  email_not_in: [String!]
+  email_lt: String
+  email_lte: String
+  email_gt: String
+  email_gte: String
+  email_contains: String
+  email_not_contains: String
+  email_starts_with: String
+  email_not_starts_with: String
+  email_ends_with: String
+  email_not_ends_with: String
+  password: String
+  password_not: String
+  password_in: [String!]
+  password_not_in: [String!]
+  password_lt: String
+  password_lte: String
+  password_gt: String
+  password_gte: String
+  password_contains: String
+  password_not_contains: String
+  password_starts_with: String
+  password_not_starts_with: String
+  password_ends_with: String
+  password_not_ends_with: String
+  team: TeamWhereInput
+  phoneNumber: String
+  phoneNumber_not: String
+  phoneNumber_in: [String!]
+  phoneNumber_not_in: [String!]
+  phoneNumber_lt: String
+  phoneNumber_lte: String
+  phoneNumber_gt: String
+  phoneNumber_gte: String
+  phoneNumber_contains: String
+  phoneNumber_not_contains: String
+  phoneNumber_starts_with: String
+  phoneNumber_not_starts_with: String
+  phoneNumber_ends_with: String
+  phoneNumber_not_ends_with: String
+  posts_every: PostWhereInput
+  posts_some: PostWhereInput
+  posts_none: PostWhereInput
+  AND: [UserWhereInput!]
+  OR: [UserWhereInput!]
+  NOT: [UserWhereInput!]
+}
+
+input UserWhereUniqueInput {
+  id: ID
+  email: String
 }
 
 type Workout {

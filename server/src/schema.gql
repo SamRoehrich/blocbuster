@@ -1,58 +1,69 @@
+enum USER_TYPE {
+    ATHLETE
+    COACH
+    HEAD_COACH
+    PARENT
+}
+
+input LoginInput {
+    email: String!
+    password: String!
+}
+
+input SignUpInput {
+    fullName: String!
+    email: String!
+    password: String!
+    phoneNumber: String!
+    userType: USER_TYPE
+}
+
 type Query {
-    getAthletes: [Athlete!]!
-    getCoaches: QueryPayload
+    getUser(email: String!): UserPayload
+    currentUser: User
 }
 
 type Mutation {
-    createHeadCoach(
-        fullName: String!,
-        email: String!,
-        password: String!,
-        teamKey: String!,
-        coachKey: String!
-    ): AuthPayload
-
-    signUpAthlete(
-        fullName: String!,
-        email: String!,
-        password: String!,
-        teamKey: String!
-    ): AuthPayload
-
-    signUpCoach(
-        fullName: String!,
-        email: String!,
-        password: String!,
-        teamKey: String!,
-        coachKey: String!
-    ): AuthPayload
-
     createTeam(
         teamName: String!,
         city: String!,
         state: String!,
         homeGym: String!,
-    ): TeamPayload
+    ): Team
 
-    loginAthlete(email: String!, password: String!): AuthPayload
+    createPost(
+        title: String!
+        content: String!
+    ) : Post!
 
-    loginCoach(email: String!, password: String!): AuthPayload
+    loginUser(email: String!, password: String!) : AuthPayload
+
+    signUpUser(
+        fullName: String!
+        email: String!
+        password: String!
+        phoneNumber: String!
+        userType: USER_TYPE
+    ): AuthPayload
 }
 
-type QueryPayload {
-    coach: [Coach!]
-    athlete: Athlete
+type UserPayload {
+    user: User
+    token: String
 }
 
-type AuthPayload {
-    token: String!
-    coach: Coach
-    athlete: Athlete
-}
-
-type TeamPayload {
-    token: String!
+type User {
+    id: ID!
+    fullName: String!
+    userType: USER_TYPE
+    email: String!
+    password: String!
+    phoneNumber: String!
     team: Team
+    athlete: Athlete
+    coach: Coach
+    headCoach: HeadCoach
+    parent: Parent
 }
 
 type Team {
@@ -71,6 +82,10 @@ type Team {
     homeGym: String!
 }
 
+type AuthPayload {
+    token: String
+    user: User
+}
 type Schedule {
     id: ID!
     createdBy: Coach
@@ -163,7 +178,7 @@ type AthleteStats {
 
 type Post {
     id: ID
-    coach: Coach!
+    posteBy: User!
     title: String!
     content: String!
     comments: [Comment!]

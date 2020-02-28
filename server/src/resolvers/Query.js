@@ -1,13 +1,20 @@
-async function getAthletes(args, context) {
-    return await context.prisma.Athletes()
+async function getUser(parent, args, ctx, info) {
+    const user = await ctx.prisma.user({ email: args.email })
+
+    return {
+        user
+    }
 }
 
-async function getCoaches(args, context) {
-    return await context.prisma.Coaches()
+async function currentUser(parent, args, { user, prisma }, info) {
+    if(!user) {
+        throw new Error('Not Authenticated')
+    }
+    return prisma.user({ id: user.userId })
 }
 
 module.exports = {
-    getAthletes,
-    getCoaches
+    getUser,
+    currentUser,
 }
 
