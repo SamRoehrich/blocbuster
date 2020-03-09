@@ -21,6 +21,7 @@ input SignUpInput {
 type Query {
     getUser(email: String!): UserPayload
     currentUser: User
+    getTeamsInfo: [Team!] 
 }
 
 type Mutation {
@@ -29,7 +30,7 @@ type Mutation {
         city: String!,
         state: String!,
         homeGym: String!,
-    ): Team
+    ): TeamPayload
 
     createPost(
         title: String!
@@ -44,12 +45,17 @@ type Mutation {
         password: String!
         phoneNumber: String!
         userType: USER_TYPE
+        team: String!
     ): AuthPayload
 }
 
 type UserPayload {
     user: User
     token: String
+}
+
+type TeamPayload {
+    team: Team!
 }
 
 type User {
@@ -106,45 +112,29 @@ type SubTeam {
 
 type HeadCoach {
     id: ID!
-    team: Team 
-    fullName: String!
-    email: String!
-    password: String!
-    teamKey: String!
-    coachKey: String!
+    user: User!
 }
 
 type Coach {
     id: ID!
-    fullName: String!
-    team: Team 
+    user: User!
     teams: [SubTeam!]
-    email: String!
-    password: String!
-    teamKey: String!
-    coachKey: String!
 }
 
 type Athlete {
     id: ID!
-    fullName: String!
-    email: String!
-    password: String!
+    user: User!
     stats: [AthleteStats!]
-    parents: [Parent!]!
-    team: Team
-    teamKey: String!
     library: [Workout!]
     logBook: [LogItem!]
     phase: String
+    parents: [Parent!]
 }
 
 type Parent {
     id: ID!
     athlete: [Athlete!] 
-    email: String!
-    password: String!
-    phoneNumber: String!
+    user: User!
 }
 
 type LogItem {

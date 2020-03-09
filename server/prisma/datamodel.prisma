@@ -16,21 +16,21 @@ type User {
     headCoach: HeadCoach @relation(link: INLINE, name: "UserOnHeadCoach")
     email: String! @unique
     password: String!
-    team: Team
+    team: Team @relation(link: INLINE)
     phoneNumber: String!
     posts: [Post!]
 }
 
 type Team {
     id: ID! @id
-    teamName: String!
-    headCoach: HeadCoach @relation (link: TABLE)
+    teamName: String! @unique
+    headCoach: HeadCoach @relation (link: INLINE)
     athletes: [Athlete!]
     coahces: [Coach!] 
     subTeams: [SubTeam!]
     library: [Workout!]
     posts: [Post!]
-    schedule: TeamSchedule @relation(link: TABLE)
+    schedule: TeamSchedule @relation(link: INLINE)
     phase: String
     city: String!
     state: String!
@@ -68,7 +68,6 @@ type SubTeam {
 type HeadCoach {
     id: ID! @id
     user: User @relation(name: "UserOnHeadCoach")
-
 }
 
 type Coach {

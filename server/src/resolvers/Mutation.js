@@ -22,28 +22,82 @@ async function loginUser(parent, args, ctx, info) {
     }
   }
 
-
-async function signUpUser(parent, args, ctx, info) {
+async function signUpUser(parent, args, { prisma }, info) {
     let password = await bcrypt.hash(args.password, 10)
 
-    const user = await ctx.prisma.createUser({
+    const team = await prisma.team({ id: args.team })
+    console.log(team)
+
+    const user = await prisma.createUser({
         ...args,
-        password
+        password,
+        team: { connect: { id: team.id } }
     })
+    //create special user based on user type from args
+    switch(args.userType) {
+        case "ATHLETE":
+            athlete = createAthlete(user, prisma)
+            upsertTeam(athlete, prisma)
+            break
+        case "COACH":
+            createCoach(user, prisma)
+            break
+        case "HEAD_COACH":
+            createHeadCoach(user, prisma)
+            break
+        case "PARENT":
+            createParent(user, prisma)
+            break
+        default:
+            createAthlete(user, prisma)
+    }
 
     return {
         user
     }
 }
 
+async function createAthlete(user, prisma) {
+
+    const athlete = await prisma.createAthlete({
+       user: { connect: { id: user.id } }
+    })
+
+    return athlete
+}
+
+async function createCoach(user, prisma) {
+
+    const coach = await prisma.createCoach({
+       user: { connect: { id: user.id } }
+    })
+
+    return coach
+}
+
+async function createHeadCoach(user, prisma) {
+
+    const headCoach = await prisma.createHeadCoach({
+       user: { connect: { id: user.id } }
+    })
+
+    return headCoach
+}
+
+async function createParent(user, prisma) {
+
+    const parent = await prisma.createParent({
+       user: { connect: { id: user.id } }
+    })
+
+    return parent
+}
+
 async function createTeam(parent, args, context, info) {
     const team = await context.prisma.createTeam({...args})
 
-    const token = jwt.sign({ id: team.id }, APP_SECRET)
-
     return {
         team,
-        token
     }
 }
 
