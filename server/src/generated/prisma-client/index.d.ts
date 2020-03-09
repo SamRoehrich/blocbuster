@@ -1822,6 +1822,7 @@ export interface AthleteUpdateWithoutUserDataInput {
 
 export type TeamWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
+  teamName?: Maybe<String>;
 }>;
 
 export interface UserUpsertWithoutAthleteInput {

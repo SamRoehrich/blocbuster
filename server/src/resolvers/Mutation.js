@@ -26,7 +26,6 @@ async function signUpUser(parent, args, { prisma }, info) {
     let password = await bcrypt.hash(args.password, 10)
 
     const team = await prisma.team({ id: args.team })
-    console.log(team)
 
     const user = await prisma.createUser({
         ...args,
@@ -36,20 +35,19 @@ async function signUpUser(parent, args, { prisma }, info) {
     //create special user based on user type from args
     switch(args.userType) {
         case "ATHLETE":
-            athlete = createAthlete(user, prisma)
-            upsertTeam(athlete, prisma)
+            createAthlete(user, team, prisma)
             break
         case "COACH":
-            createCoach(user, prisma)
+            createCoach(user, team, prisma)
             break
         case "HEAD_COACH":
-            createHeadCoach(user, prisma)
+            createHeadCoach(user, team, prisma)
             break
         case "PARENT":
-            createParent(user, prisma)
+            createParent(user, team, prisma)
             break
         default:
-            createAthlete(user, prisma)
+            throw new Error('ERROR')
     }
 
     return {
@@ -57,34 +55,72 @@ async function signUpUser(parent, args, { prisma }, info) {
     }
 }
 
-async function createAthlete(user, prisma) {
+async function createAthlete(user, team, prisma) {
 
     const athlete = await prisma.createAthlete({
        user: { connect: { id: user.id } }
     })
 
-    return athlete
+    const updatedTeam = await prisma.updateTeam({
+        where: { id: team.id },
+        data: {
+            athletes: {
+                connect: {
+                    id: athlete.id,
+                }
+            }
+        },
+    })
+    return {athlete, updatedTeam}
 }
 
-async function createCoach(user, prisma) {
+async function createCoach(user, team, prisma) {
 
     const coach = await prisma.createCoach({
        user: { connect: { id: user.id } }
     })
 
-    return coach
+    const updatedTeam = await prisma.updateTeam({
+        where: { id: team.id },
+        data: {
+            coahces: {
+                connect: {
+                    id: coach.id,
+                }
+            }
+        },
+    })
+
+    return {
+        coach,
+        updatedTeam
+    }
 }
 
-async function createHeadCoach(user, prisma) {
+async function createHeadCoach(user, team, prisma) {
 
     const headCoach = await prisma.createHeadCoach({
        user: { connect: { id: user.id } }
     })
 
-    return headCoach
+    const updatedTeam = await prisma.updateTeam({
+        where: { id: team.id },
+        data: {
+            headCoach: {
+                connect: {
+                    id: headCoach.id,
+                }
+            }
+        },
+    })
+
+    return {
+        headCoach,
+        updatedTeam
+    }
 }
 
-async function createParent(user, prisma) {
+async function createParent(user, team, prisma) {
 
     const parent = await prisma.createParent({
        user: { connect: { id: user.id } }

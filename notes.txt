@@ -136,3 +136,23 @@ apollo
 prisma
 docker
 postgres
+
+
+
+rules to login/sign up page
+
+2 buttons 
+Login / signup
+
+sign up form 
+    -coach
+    -athlete
+        --both need to be associated to a team with their USER_TYPE assigned 
+    
+
+    -createTeam
+        --create a user account first
+        --create a team and assign that user as a head coach
+
+questions?
+    how do you guarantee that a the head coach role cant be changed?

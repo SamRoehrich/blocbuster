@@ -3113,6 +3113,7 @@ input TeamWhereInput {
 
 input TeamWhereUniqueInput {
   id: ID
+  teamName: String
 }
 
 type User {
