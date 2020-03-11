@@ -21,7 +21,8 @@ input SignUpInput {
 type Query {
     getUser(email: String!): UserPayload
     currentUser: User
-    getTeamsInfo: [Team!] 
+    getTeamInfo: Team!
+    getTeamById(id: String!): Team
 }
 
 type Mutation {

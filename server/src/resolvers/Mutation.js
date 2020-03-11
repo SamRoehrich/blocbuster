@@ -56,11 +56,11 @@ async function signUpUser(parent, args, { prisma }, info) {
 }
 
 async function createAthlete(user, team, prisma) {
-
+    //create athlete
     const athlete = await prisma.createAthlete({
        user: { connect: { id: user.id } }
     })
-
+    //update the team to show the newly created athlete
     const updatedTeam = await prisma.updateTeam({
         where: { id: team.id },
         data: {
