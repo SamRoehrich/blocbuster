@@ -8,5 +8,6 @@ function coaches(parent, args, { prisma }) {
 
 module.exports = {
     athletes,
-    coaches
+    coaches,
 }
+

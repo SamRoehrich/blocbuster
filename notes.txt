@@ -156,3 +156,6 @@ sign up form
 
 questions?
     how do you guarantee that a the head coach role cant be changed?
+
+
+    {"__id":"ck7my0q8s02fd0821co9j2gvl","parent":null,"phoneNumber":"520-882-5924","email":"eliadfasdfssa@icloud.com","fullName":"Elissa Moss","__typename":"User","coach":{"id":"ck7my0q9x02fj082105ec2y2c","__typename":"Coach","__id":"ck7my0q9x02fj082105ec2y2c","__path":"User:ck7my0q8s02fd0821co9j2gvl:coach=>Coach:ck7my0q9x02fj082105ec2y2c"},"id":"ck7my0q8s02fd0821co9j2gvl","headCoach":null,"team":{"id":"ck7jz069c01pj0821t9sf00ny","__typename":"Team","__id":"ck7jz069c01pj0821t9sf00ny","__path":"User:ck7my0q8s02fd0821co9j2gvl:team=>Team:ck7jz069c01pj0821t9sf00ny"},"athlete":null,"userType":"COACH","password":"$2a$10$hIrUA14lSTKucYWgomIPmuL9qK4Jo0cgg4NZm26V6yMnzHkGfTnY6","__path":"User:ck7my0q8s02fd0821co9j2gvl"}

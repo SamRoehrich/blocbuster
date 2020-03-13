@@ -5,27 +5,7 @@ var typeDefs = require("./prisma-schema").typeDefs;
 
 var models = [
   {
-    name: "USER_TYPE",
-    embedded: false
-  },
-  {
-    name: "User",
-    embedded: false
-  },
-  {
-    name: "Team",
-    embedded: false
-  },
-  {
-    name: "TeamSchedule",
-    embedded: false
-  },
-  {
-    name: "AthleteSchedule",
-    embedded: false
-  },
-  {
-    name: "SubTeam",
+    name: "Athlete",
     embedded: false
   },
   {
@@ -37,11 +17,27 @@ var models = [
     embedded: false
   },
   {
-    name: "Athlete",
+    name: "Parent",
     embedded: false
   },
   {
-    name: "Parent",
+    name: "Team",
+    embedded: false
+  },
+  {
+    name: "SubTeam",
+    embedded: false
+  },
+  {
+    name: "TeamSchedule",
+    embedded: false
+  },
+  {
+    name: "AthleteSchedule",
+    embedded: false
+  },
+  {
+    name: "Workout",
     embedded: false
   },
   {
@@ -62,10 +58,6 @@ var models = [
   },
   {
     name: "Comment",
-    embedded: false
-  },
-  {
-    name: "Workout",
     embedded: false
   }
 ];
