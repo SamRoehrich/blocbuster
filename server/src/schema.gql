@@ -13,9 +13,30 @@ type Query {
     getTeamInfo: Team!
     getTeamById(id: String!): Team
     getAthletes: [Athlete!]
+    coachDetails: Coach 
 }
 
 type Mutation {
+
+    createAthleteStats(
+        athlete: String!
+        apeIndex: Int!
+        height: Int!
+        weight: Int!
+        maxVGrade: Int!
+        maxSportGrade: String!
+        maxEdgeLoad: Int!
+        maxEdgeTestSize: Int!
+        SWREdge: Float
+        maxPullLoad: Int!
+        SWRBar: Float
+        oneArmHangLoadLeft: Int!
+        oneArmHangLoadRight: Int!
+        oneArmHangSWR: Float!
+        goalVGrade: Int!
+        goalSportGrade: String!
+    ): AthletePayload
+
     createTeam(
         teamName: String!,
         city: String!,
@@ -23,12 +44,18 @@ type Mutation {
         homeGym: String!,
     ): TeamPayload
 
+    createSubTeam(
+        subTeamName: String!,
+        parentTeam: String!,
+    ): SubTeam
+
     createPost(
         title: String!
         content: String!
     ) : Post!
 
-    loginUser(email: String!, password: String!) : AuthPayload
+    loginCoach(email: String!, password: String!) : CoachPayload
+    loginHeadCoach(email: String!, password: String!): HeadCoachPayload
 
     signUpAthlete(
         fullName: String!
@@ -58,6 +85,20 @@ type Mutation {
         team: String!
     ): Parent
     
+}
+
+type AthletePayload {
+    athlete: Athlete!
+}
+
+type CoachPayload {
+    coach: Coach!
+    token: String!
+}
+
+type HeadCoachPayload {
+    headCoach: HeadCoach!
+    token: String!
 }
 
 type AuthPayload {
@@ -101,8 +142,10 @@ type Schedule {
 
 type SubTeam {
     id: ID!
+    subTeamName: String!
     headCoach: HeadCoach! 
-    ahtletes: [Athlete!]
+    parentTeam: Team!
+    athletes: [Athlete!]
     coaches: [Coach!]
     library: [Workout!]
     posts: [Post!]
@@ -131,7 +174,8 @@ type Athlete {
     email: String!
     password: String!
     team: Team!
-    stats: [AthleteStats!]
+    subTeam: SubTeam
+    stats: AthleteStats!
     library: [Workout!]
     logBook: [LogItem!]
     phase: String
@@ -160,6 +204,7 @@ type AthleteStats {
     id: ID! 
     athlete: Athlete!
     createdAt: String!
+    createdBy: Coach!
     apeIndex: Int!
     height: Int!
     weight: Int!
@@ -172,14 +217,14 @@ type AthleteStats {
     SWRBar: Float
     oneArmHangLoadLeft: Int!
     oneArmHangLoadRight: Int!
-    oneArmHangSWR: Float!
+    oneArmHangSWR: Float
     goalVGrade: Int!
     goalSportGrade: String!
 }
 
 type Post {
     id: ID
-    postedBy: User!
+    postedBy: Coach!
     title: String!
     content: String!
     comments: [Comment!]

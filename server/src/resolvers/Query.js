@@ -20,17 +20,31 @@ async function getTeamById(parent, args, { prisma }, info) {
     return team
 }
 
-async function getAthletes(parent, args, { prisma }, info) {
+
+async function getAthletes(parent, args, { user, prisma }, info) {
+    if(!user) {
+        throw new Error('Not Authenticated')
+    }
+
     const athletes = await prisma.athletes({}, info)
 
     return athletes
+}
+
+async function coachDetails(parent, args, { user, prisma }, info) {
+    if(!user) {
+        throw new Error('Not Authenticted')
+    }
+    console.log(user)
+    return prisma.coach({ id: user.coachId })
 }
 
 module.exports = {
     getUser,
     currentUser,
     getTeamById,
-    getAthletes
+    getAthletes,
+    coachDetails
 }
 
 

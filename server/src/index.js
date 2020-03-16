@@ -11,6 +11,8 @@ const Coach = require('./resolvers/Coach')
 const HeadCoach = require('./resolvers/HeadCoach')
 const Athlete = require('./resolvers/Athlete')
 const Post = require('./resolvers/Post')
+const AthleteStats = require('./resolvers/AthleteStats')
+const SubTeam = require('./resolvers/SubTeam')
 
 const typeDefs = gql`${fs.readFileSync(__dirname.concat('/schema.gql'), 'utf8')}`
 
@@ -20,31 +22,10 @@ const resolvers = {
     Team,
     Coach,
     Athlete,
+    AthleteStats,
     HeadCoach,
     Post,
-    User: {
-        
-        __resolveType(obj, ctx, info) {
-
-            console.log(obj)
-
-            if(obj.athleteSchedule) {
-                return 'Athlete'
-            }
-
-            if(obj.subTeams) {
-                return 'Coach'
-            }
-
-            if(obj.athlete) {
-                return 'Parent'
-            }
-
-            else {
-                return 'HeadCoach'
-            }
-        }
-    }
+    SubTeam
 }
 
 const getUser = token => {
@@ -76,8 +57,12 @@ const server = new ApolloServer({
         }
     },
     tracing: true,
+    engine: {
+        apiKey: "service:blocBuster:uukDWPJmAxI1ICdlT0ofpg"
+    }
 })
 
 server.listen().then(({ url }) => {
     console.log(`Server running at ${url}`)
 })
+

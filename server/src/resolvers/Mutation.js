@@ -2,26 +2,41 @@ const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const { APP_SECRET, getUserId } = require('../utils')
 
-async function loginUser(parent, args, ctx, info) {
-    const user = await ctx.prisma.user({ email: args.email })
+async function loginCoach(parent, args, ctx, info) {
+    const coach = await ctx.prisma.coach({ email: args.email })
 
-    if(!user) {
-        throw new Error('No such user found')
+    if(!coach) {
+        throw new Error('No such coach found')
     }
 
-    const valid = await bcrypt.compare(args.password, user.password)
+    const valid = await bcrypt.compare(args.password, coach.password)
     if(!valid){
         throw new Error('Incorrect Login')
     }
 
-    const token = jwt.sign({ userId: user.id}, APP_SECRET, { expiresIn: '30d'})
+    const token = jwt.sign({ coachId: coach.id}, APP_SECRET, { expiresIn: '30d'})
 
     return {
-        user,
+        coach,
         token
     }
 }
 
+async function loginHeadCoach(parent, args, { user, prisma }) {
+    const headCoach = await prisma.headCoach({ email: args.email })
+
+    if(!headCoach) { throw new Error('No such user found')}
+
+    const valid = await bcrypt.compare(args.password, headCoach.password)
+    if(!valid) {throw new Error('Incorrect Login')}
+
+    const token = jwt.sign({ headCoachId: headCoach.id}, APP_SECRET, { expiresIn: '30d'})
+
+    return {
+        headCoach,
+        token
+    }
+}
 
 async function signUpAthlete(parent, args, { prisma }, info) {
     let password = await bcrypt.hash(args.password, 10)
@@ -80,20 +95,43 @@ async function createPost(parent, args, { user, prisma }, info) {
     if(!user) {
         throw new Error('Not authenticated')
     }
+
     return prisma.createPost({
         title: args.title,
         content: args.content,
-        postedBy: { connect: { id: user.userId } }
+        postedBy: { connect: { id: user.coachId } }
+    })
+}
+
+async function createAthleteStats(parent, args, { user, prisma }, info) {
+
+    const athlete = prisma.athlete({ id: args.athlete })
+
+    return await prisma.createAthleteStats({
+        ...args,
+        createdBy: { connect: { id: user.coachId } },
+        athlete: { connect: { id: args.athlete } }
+    })
+}
+
+async function createSubTeam(parent, args, { user, prisma }, info) {
+    
+    return await prisma.createSubTeam({
+        ...args,
+        parentTeam: { connect: { id: args.parentTeam }},
+        headCoach: { connect: { id: user.headCoachId }}
     })
 }
 
 module.exports = {
     createTeam,
-    loginUser,
+    loginCoach,
+    loginHeadCoach,
     createPost,
     signUpAthlete,
     signUpCoach,
     signUpParent,
-    signUpHeadCoach
+    signUpHeadCoach,
+    createAthleteStats,
+    createSubTeam,
 }
-

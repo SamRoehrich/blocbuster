@@ -1,13 +1,14 @@
 type Athlete {
     id: ID! @id
-    fullName: String!
+    fullName: String! @unique
     email: String! @unique
     password: String!
+    DOB: String
     createdAt: DateTime! @createdAt
     team: Team
-    subTeam: [SubTeam!]
+    subTeam: SubTeam
     parents: [Parent!]
-    athleteStats: AthleteStats @relation(link: INLINE, name: "AthleteOnStats")
+    athleteStats: AthleteStats @relation(link: TABLE, name: "AthleteOnStats")
     athleteSchedule: AthleteSchedule @relation(link: INLINE, name:"AthleteOnSchedule")
     logBook: [LogItem!]
     phase: String
@@ -20,6 +21,7 @@ type HeadCoach {
     password: String!
     createdAt: DateTime! @createdAt
     team: Team @relation(name: "HeadCoachToTeam")
+    subTeams: [SubTeam!] @relation(name: "HeadCoachToSubTeam")
 }
 
 type Coach {
@@ -29,10 +31,15 @@ type Coach {
     password: String!
     createdAt: DateTime! @createdAt
     team: Team @relation(name: "CoachToTeam")
+    subTeams: [SubTeam!] @relation(name: "CoachToSubTeam")
 }
 
 type Parent {
     id: ID! @id
+    fullName: String!
+    email: String!
+    password: String!
+    phoneNumber: String!
     team: Team!
     athlete: Athlete
 }
@@ -57,8 +64,12 @@ type Team {
 
 type SubTeam {
     id: ID! @id
-    ahtletes: [Athlete!]
-    coaches: [Coach!]
+    subTeamName: String!
+    subTeamSchedule: TeamSchedule
+    parentTeam: Team!
+    athletes: [Athlete!]
+    coaches: [Coach!] @relation(name: "CoachToSubTeam")
+    headCoach: HeadCoach! @relation(name: "HeadCoachToSubTeam")
     library: [Workout!]
     posts: [Post!]
 }
@@ -109,6 +120,7 @@ type AthleteStats {
     id: ID! @id
     athlete: Athlete! @relation(name: "AthleteOnStats")
     createdAt: DateTime! @createdAt
+    createdBy: Coach
     apeIndex: Int!
     height: Int!
     weight: Int!
@@ -121,7 +133,7 @@ type AthleteStats {
     SWRBar: Float
     oneArmHangLoadLeft: Int!
     oneArmHangLoadRight: Int!
-    oneArmHangSWR: Float!
+    oneArmHangSWR: Float
     goalVGrade: Int!
     goalSportGrade: String!
 }
