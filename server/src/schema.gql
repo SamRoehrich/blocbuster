@@ -1,22 +1,76 @@
-enum USER_TYPE {
+#import * from ./generated/prisma-schema.js'
+
+enum Permission {
+    ADMIN
+    SUPERUSER
+    CREATEATHLETE
+    CREATETEAM
+    UPDATETEAM
+    UPDATEATHLETE
+    UPDATECOACH
+    DELETEATHLETE
+    DELETECOACH
+    POST
+}
+
+enum UserType {
     ATHLETE
     COACH
-    HEAD_COACH
+    HEADCOACH
     PARENT
 }
 
-union User = Athlete | Coach | HeadCoach | Parent
-
 type Query {
+    users: [User!]
     getUser(email: String!): UserPayload
+    getUserById(token: String!): User!
+    getAllTeams: [Team!]!
     currentUser: User
     getTeamInfo: Team!
     getTeamById(id: String!): Team
     getAthletes: [Athlete!]
     coachDetails: Coach 
+    getAthleteById(id: String!): Athlete!
 }
 
 type Mutation {
+
+    signupUser(
+        fullName: String!
+        email: String!
+        password: String!
+        confirmPassword: String!
+        teamId: String!
+        teamKey: String!
+        coachKey: String
+    ): UserPayload!
+
+    loginUser(
+        email: String!
+        password: String!
+    ): UserPayload!
+
+    createHeadCoach(
+        userId: String!
+        teamId: String!
+    ): HeadCoach!
+
+    createCoach(
+        userId: String!
+        teamId: String!
+        coachKey: String!
+        teamKey: String!
+    ): Coach!
+
+    requestReset(
+        email: String!
+    ): SuccessMessage!
+
+    resetPassword(
+        resetToken: String!
+        password: String!
+        confirmPassword: String!
+    ): User!
 
     createAthleteStats(
         athlete: String!
@@ -47,44 +101,16 @@ type Mutation {
     createSubTeam(
         subTeamName: String!,
         parentTeam: String!,
+        practiceDays: String,
+        coaches: String,
+        athletes: String,
+        description: String,
     ): SubTeam
 
     createPost(
         title: String!
         content: String!
     ) : Post!
-
-    loginCoach(email: String!, password: String!) : CoachPayload
-    loginHeadCoach(email: String!, password: String!): HeadCoachPayload
-
-    signUpAthlete(
-        fullName: String!
-        email: String!
-        password: String!
-        team: String!
-    ): Athlete
-
-    signUpCoach(
-        fullName: String!
-        email: String!
-        password: String!
-        team: String!
-    ): Coach
-
-    signUpHeadCoach(
-        fullName: String!
-        email: String!
-        password: String!
-        team: String!
-    ): HeadCoach
-
-    signUpParent(
-        fullName: String!
-        email: String!
-        password: String!
-        team: String!
-    ): Parent
-    
 }
 
 type AthletePayload {
@@ -116,6 +142,41 @@ type TeamPayload {
     team: Team!
 }
 
+type SuccessMessage {
+    message: String!
+}
+
+type User {
+    id: ID!
+    team: Team
+    fullName: String!
+    email: String!
+    password: String!
+    permissions: [Permission!]
+    userType: UserType!
+    DOB: String
+    phoneNumber: String
+}
+
+type Athlete {
+    id: ID!
+    user: User!
+    team: Team!
+    stats: AthleteStats
+}
+
+type Coach {
+    id: ID!
+    user: User!
+    team: Team!
+}
+
+type HeadCoach {
+    id: ID!
+    user: User!
+    team: Team
+}
+
 type Team {
     id: ID!
     teamName: String!
@@ -144,42 +205,12 @@ type SubTeam {
     id: ID!
     subTeamName: String!
     headCoach: HeadCoach! 
+    practiceDays: String!
     parentTeam: Team!
     athletes: [Athlete!]
     coaches: [Coach!]
     library: [Workout!]
     posts: [Post!]
-}
-
-type HeadCoach {
-    id: ID!
-    fullName: String!
-    email: String!
-    password: String!
-    team: Team!
-}
-
-type Coach {
-    id: ID!
-    fullName: String!
-    email: String!
-    password: String!
-    team: Team!
-    teams: [SubTeam!]
-}
-
-type Athlete {
-    id: ID!
-    fullName: String!
-    email: String!
-    password: String!
-    team: Team!
-    subTeam: SubTeam
-    stats: AthleteStats!
-    library: [Workout!]
-    logBook: [LogItem!]
-    phase: String
-    parents: [Parent!]
 }
 
 type Parent {

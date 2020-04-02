@@ -13,6 +13,7 @@ const Athlete = require('./resolvers/Athlete')
 const Post = require('./resolvers/Post')
 const AthleteStats = require('./resolvers/AthleteStats')
 const SubTeam = require('./resolvers/SubTeam')
+const User = require('./resolvers/User')
 
 const typeDefs = gql`${fs.readFileSync(__dirname.concat('/schema.gql'), 'utf8')}`
 
@@ -25,7 +26,8 @@ const resolvers = {
     AthleteStats,
     HeadCoach,
     Post,
-    SubTeam
+    SubTeam,
+    User
 }
 
 const getUser = token => {
@@ -62,7 +64,7 @@ const server = new ApolloServer({
     }
 })
 
-server.listen().then(({ url }) => {
-    console.log(`Server running at ${url}`)
-})
+server.listen({ port: process.env.PORT || 4000 }).then(({ url }) => {
+  console.log(`🚀 Server ready at ${url}`);
+});
 

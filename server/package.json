@@ -1,9 +1,14 @@
 {
   "name": "server",
   "version": "1.0.0",
+  "scripts": {
+    "start": "nodemon index.js",
+    "dev": "nodemon -e js,graphql -x node --inspect src/index.js"
+  },
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
+    "apollo-cache-persist": "^0.1.1",
     "apollo-link-context": "^1.0.19",
     "apollo-server": "^2.10.1",
     "apollo-server-express": "^2.10.1",

@@ -1,9 +1,41 @@
+enum Permission {
+    ADMIN
+    SUPERUSER
+    CREATEATHLETE
+    CREATETEAM
+    UPDATETEAM
+    UPDATEATHLETE
+    UPDATECOACH
+    DELETEATHLETE
+    DELETECOACH
+    POST
+}
+
+enum UserType {
+    ATHLETE
+    COACH
+    HEADCOACH
+    PARENT
+}
+
+type User {
+    id: ID! @id
+    fullName: String!
+    email: String! @unique
+    team: Team
+    phoneNumber: String
+    password: String!
+    resetToken: String
+    resetTokenExpirey: String
+    permissions: [Permission!] @scalarList(strategy: RELATION)
+    userType: UserType!
+    DOB: String
+    createdAt: DateTime! @createdAt
+}
+
 type Athlete {
     id: ID! @id
-    fullName: String! @unique
-    email: String! @unique
-    password: String!
-    DOB: String
+    user: User!
     createdAt: DateTime! @createdAt
     team: Team
     subTeam: SubTeam
@@ -16,9 +48,7 @@ type Athlete {
 
 type HeadCoach {
     id: ID! @id
-    fullName: String!
-    email: String! @unique
-    password: String!
+    user: User!
     createdAt: DateTime! @createdAt
     team: Team @relation(name: "HeadCoachToTeam")
     subTeams: [SubTeam!] @relation(name: "HeadCoachToSubTeam")
@@ -26,9 +56,7 @@ type HeadCoach {
 
 type Coach {
     id: ID! @id
-    fullName: String!
-    email: String! @unique
-    password: String!
+    user: User!
     createdAt: DateTime! @createdAt
     team: Team @relation(name: "CoachToTeam")
     subTeams: [SubTeam!] @relation(name: "CoachToSubTeam")
@@ -36,12 +64,9 @@ type Coach {
 
 type Parent {
     id: ID! @id
-    fullName: String!
-    email: String!
-    password: String!
-    phoneNumber: String!
+    user: User!
     team: Team!
-    athlete: Athlete
+    athlete: [Athlete!]
 }
 
 type Team {
@@ -66,6 +91,8 @@ type SubTeam {
     id: ID! @id
     subTeamName: String!
     subTeamSchedule: TeamSchedule
+    practiceDays: String
+    description: String
     parentTeam: Team!
     athletes: [Athlete!]
     coaches: [Coach!] @relation(name: "CoachToSubTeam")
