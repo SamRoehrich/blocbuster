@@ -11,7 +11,7 @@
     "apollo-cache-persist": "^0.1.1",
     "apollo-link-context": "^1.0.19",
     "apollo-server": "^2.10.1",
-    "apollo-server-express": "^2.10.1",
+    "apollo-server-express": "^2.14.2",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "express": "^4.17.1",
